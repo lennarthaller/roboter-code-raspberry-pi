@@ -12,6 +12,7 @@ int main () {
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
 	
+	//wiringPi init
 	if (g_pWiringPi->InitWiringPi() != 1) {
 		cout << "Fehler" << endl;
 	}else{
