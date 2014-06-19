@@ -1,5 +1,6 @@
 #include "Seriell.hpp"
 
+//Diese Funktion wartet 200 mSec auf verfügbare Seriell Daten
 int CSeriell::DataAvailableNoTimeOut () {
 clock_t nTimeStamp = g_pWiringPi->TimeSinceStart();
 
@@ -109,7 +110,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		return -1;
 	}
 	
-	if (g_pWiringPi->ReceiveSeriellData () == nMotor) {
+	if (g_pWiringPi->ReceiveSeriellData () == nMotor) { //nicht nMotor+19?
 		g_pWiringPi->SendSeriellInt (nSeriellData[0]);
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
@@ -121,5 +122,22 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 }
 
 int CSeriell::SetPMLPosition (int nPosition) {
-	return 1;
+	if ((nPower < 0)||(nPower > 201)) {
+		std::cout << "FALSCHE NUMMER FUER DIE POSITION!" << std::endl;
+		return -1;
+	}
+	
+	g_pWiringPi->SendSeriellInt (20);
+	
+	if (DataAvailableNoTimeOut () == -1) {
+		return -1;
+	}
+	
+	if (g_pWiringPi->ReceiveSeriellData () == 20) {
+		return 1;
+	}else{
+		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
+		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
+		return -1;
+	}
 }
