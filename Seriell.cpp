@@ -1,5 +1,6 @@
 #include "Seriell.hpp"
 
+//Diese Funktion wartet 200 mSec auf verfügbare Seriell Daten
 int CSeriell::DataAvailableNoTimeOut () {
 clock_t nTimeStamp = g_pWiringPi->TimeSinceStart();
 
@@ -109,7 +110,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		return -1;
 	}
 	
-	if (g_pWiringPi->ReceiveSeriellData () == nMotor) {
+	if (g_pWiringPi->ReceiveSeriellData () == nMotor) { //nicht nMotor+20?
 		g_pWiringPi->SendSeriellInt (nSeriellData[0]);
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
