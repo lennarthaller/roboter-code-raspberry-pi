@@ -2,9 +2,9 @@
 
 //Diese Funktion wartet 200 mSec auf verfügbare Seriell Daten
 int CSeriell::DataAvailableNoTimeOut () {
-clock_t nTimeStamp = g_pWiringPi->TimeSinceStart();
+	clock_t nTimeStamp = g_pWiringPi->TimeSinceStart();
 
-while (g_pWiringPi->SeriellDataAvailable() < 1) {
+	while (g_pWiringPi->SeriellDataAvailable() < 1) {
 		if (nTimeStamp+200 < g_pWiringPi->TimeSinceStart()) {
 			Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
 			Log_File->Textout (RED, "Timeout bei dem Uebertragen von Daten.");
@@ -40,7 +40,7 @@ int CSeriell::GetPMLDistance () {
 }
 
 int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
-		int nSeriellData[2];
+	int nSeriellData[2];
 	
 	if ((nPhotoSensor < 1)||(nPhotoSensor > 4)) {
 		std::cout << "FALSCHE LICHTSCHRANKEN NUMMER!" << std::endl;
