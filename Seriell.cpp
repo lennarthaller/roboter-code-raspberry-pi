@@ -122,7 +122,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 }
 
 int CSeriell::SetPMLPosition (int nPosition) {
-	if ((nPower < 0)||(nPower > 201)) {
+	if ((nPosition < 0)||(nPosition > 201)) {
 		std::cout << "FALSCHE NUMMER FUER DIE POSITION!" << std::endl;
 		return -1;
 	}
@@ -134,10 +134,11 @@ int CSeriell::SetPMLPosition (int nPosition) {
 	}
 	
 	if (g_pWiringPi->ReceiveSeriellData () == 20) {
-		return 1;
+		g_pWiringPi->SendSeriellInt (nPosition);
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
 		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
 		return -1;
 	}
+	return 1;
 }
