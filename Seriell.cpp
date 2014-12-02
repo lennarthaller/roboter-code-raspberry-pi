@@ -110,7 +110,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		return -1;
 	}
 	
-	if (g_pWiringPi->ReceiveSeriellData () == (nMotor - 20)) { //nicht nMotor+19?
+	if (g_pWiringPi->ReceiveSeriellData () == (nMotor + 20)) { //nicht nMotor+19?
 		g_pWiringPi->SendSeriellInt (nSeriellData[0]);
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
