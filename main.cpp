@@ -22,9 +22,9 @@ int main () {
 		cout << "Fehler" << endl;
 	}
 	
-	cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetPMLDistance () << endl;
-	cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
-	g_pSeriell->SetMotorPower (1,30);
+	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetPMLDistance () << endl;
+	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
+	g_pSeriell->SetMotorPower (1,150);
 	Log_File->Del ();
 	g_pNetwork->Del ();
 	g_pWiringPi->Del ();
