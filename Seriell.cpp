@@ -5,7 +5,7 @@ int CSeriell::DataAvailableNoTimeOut () {
 	clock_t nTimeStamp = g_pWiringPi->TimeSinceStart();
 
 	while (g_pWiringPi->SeriellDataAvailable() < 1) {
-		if (nTimeStamp+200 < g_pWiringPi->TimeSinceStart()) {
+		if (nTimeStamp+1000 < g_pWiringPi->TimeSinceStart()) {
 			Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
 			Log_File->Textout (RED, "Timeout bei dem Uebertragen von Daten.");
 			return -1;
@@ -110,7 +110,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		return -1;
 	}
 	
-	if (g_pWiringPi->ReceiveSeriellData () == (nMotor + 20)) { //nicht nMotor+19?
+	if (g_pWiringPi->ReceiveSeriellData () == (nMotor+20)) { //nicht nMotor+19?
 		g_pWiringPi->SendSeriellInt (nSeriellData[0]);
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
