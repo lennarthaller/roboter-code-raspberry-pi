@@ -24,7 +24,7 @@ int main () {
 	
 	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetPMLDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
-	g_pSeriell->SetMotorPower (1,150);
+	//g_pSeriell->SetMotorPower (1,150);
 	
 	cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
