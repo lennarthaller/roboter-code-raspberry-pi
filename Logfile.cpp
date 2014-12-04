@@ -1,53 +1,40 @@
 #include "Logfile.hpp"
 
 // Konstruktor
-
-// Aufgabe: Bisher noch keine
-
 Clogfile::Clogfile ()
 {
 
 }
 
 // Destruktor
-
-// Aufgabe: Gibt Ende-Meldung aus und schließ das Logfile
-
+//Gibt Ende-Meldung aus und schließ das Logfile
 Clogfile::~Clogfile ()
 {
     // logfile-Ende schreiben und Datei schließen
-
     //Textout ("<br><br>===End of logfile===</font></body></html>");
     fclose (m_logfile);
 }
 
-// Createlogfile
-
-// Aufgabe: logfile erstellen und Kopf schreiben
-
+//Createlogfile
+//logfile erstellen und Kopf schreiben
 void Clogfile::CreateLogfile ()
 {
     // logfile leeren und Kopf schreiben
-
     m_logfile = fopen ("Logfile.html", "w");
     Textout ("<html><head><title>Logfile</title></head>");
     Textout ("<body><font face='courier new'>");
     //fopen_s(&m_logfile, LogName, "a");
 
     // logfile schließen und mit append wieder öffnen
-
     fclose (m_logfile);
      m_logfile = fopen ("Logfile.html", "a");
 }
 
-// WriteTopic
-
-// Aufgabe: Überschrift erzeugen
-
+//WriteTopic
+//Überschrift erzeugen
 void Clogfile::WriteTopic (const char *Topic, int Size)
 {
     // Überschrift schreiben und flushen
-
     Textout ("<table cellspacing='0' cellpadding='0' width='100%%' ");
     Textout ("bgcolor='#DFDFE5'>\n<tr>\n<td>\n<font face='arial' ");
     TextoutF ("size='+%i'>\n", Size);
@@ -57,39 +44,30 @@ void Clogfile::WriteTopic (const char *Topic, int Size)
 }
 
 // Textout
-
-// Aufgabe: Text ins logfile schreiben (schwarz)
-
+//Text ins logfile schreiben (schwarz)
 void Clogfile::Textout (const char *Text)
 {
     // Text schreiben und flushen
-
     fprintf (m_logfile, Text);
     fflush (m_logfile);
 }
 
 // Textout
-
-// Aufgabe: Text ins logfile schreiben (farbig)
-
+//Text ins logfile schreiben (farbig)
 void Clogfile::Textout (int Color, const char *Text)
 {
     Textout (Color, false, Text);
 }
 
 // Textout
-
-// Aufgabe: Text ins logfile schreiben (farbig, Liste)
-
+//Text ins logfile schreiben (farbig, Liste)
 void Clogfile::Textout (int Color, bool List, const char *Text)
 {
     //Listen-Tag schreiben
-
     if (List == true)
     Textout ("<li>");
 
     // Farbtag schreiben
-
     switch (Color)
     {
         case BLACK:
@@ -104,8 +82,7 @@ void Clogfile::Textout (int Color, bool List, const char *Text)
             Textout ("<font color=purple>"); break;
     };
 
-    // Text schreiben
-
+    //Text schreiben
     Textout (Text);
     Textout ("</font>");
 
@@ -116,9 +93,7 @@ void Clogfile::Textout (int Color, bool List, const char *Text)
 }
 
 // TextoutF
-
-// Aufgabe: formatierten Text ins logfile schreiben (schwarz)
-
+//formatierten Text ins logfile schreiben (schwarz)
 void Clogfile::TextoutF (const char *Text, ...)
 {
     char *buffer = new char[MAX_BUFFER];    // char-Buffer
@@ -127,20 +102,16 @@ void Clogfile::TextoutF (const char *Text, ...)
 
 
     // String aus den Argumenten erstellen
-
     va_start (pArgList, Text);
     vsprintf (buffer, Text, pArgList);
     va_end (pArgList);
 
     // Erzeugten String schreiben
-
     Textout (buffer);
 }
 
 // TextoutF
-
-// Aufgabe: formatierten Text ins Logfile schreiben (farbig)
-
+//formatierten Text ins Logfile schreiben (farbig)
 void Clogfile::TextoutF (int Color, const char *Text, ...)
 {
     char *buffer = new char[MAX_BUFFER];    // char-Buffer
@@ -149,20 +120,16 @@ void Clogfile::TextoutF (int Color, const char *Text, ...)
 
 
     // String aus den Argumenten erstellen
-
     va_start (pArgList, Text);
     vsprintf (buffer, Text, pArgList);
     va_end (pArgList);
 
     // Erzeugten String schreiben
-
     Textout (Color, buffer);
 }
 
 // TextoutF
-
-// Aufgabe: formatierten Text ins logfile schreiben (farbig, Liste)
-
+// formatierten Text ins logfile schreiben (farbig, Liste)
 void Clogfile::TextoutF (int Color, bool List,const char *Text, ...)
 {
     char *buffer = new char[MAX_BUFFER];  // char-Buffer
@@ -171,20 +138,16 @@ void Clogfile::TextoutF (int Color, bool List,const char *Text, ...)
 
 
     // String aus den Argumenten erstellen
-
     va_start (pArgList, Text);
     vsprintf (buffer, Text, pArgList);
     va_end (pArgList);
 
     // Erzeugten String schreiben
-
     Textout (Color, List, buffer);
 }
 
 // FunctionResult
-
-// Aufgabe: OK oder ERROR für Funktionsaufruf ausgeben
-
+//OK oder ERROR für Funktionsaufruf ausgeben
 void Clogfile::FunctionResult (const char *Name, const char *ErrorMessage, bool Result)
 {
     if (L_OK == Result)
