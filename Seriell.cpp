@@ -34,7 +34,7 @@ int CSeriell::GetPMLDistance () {
 		}
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
+		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
 		return -1;
 	}
 }
@@ -59,7 +59,7 @@ int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 		return ((nSeriellData[1] << 8 ) | nSeriellData[0]);
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
+		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
 		return -1;
 	}
 }
@@ -84,7 +84,7 @@ int CSeriell::GetBatteryVoltage () {
 		}
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
+		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
 		return -1;
 	}
 }
@@ -115,7 +115,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
+		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
 		return -1;
 	}
 	return 1;
@@ -137,7 +137,7 @@ int CSeriell::SetPMLPosition (int nPosition) {
 		g_pWiringPi->SendSeriellInt (nPosition);
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Übertragen von Daten.");
+		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
 		return -1;
 	}
 	return 1;
