@@ -13,7 +13,7 @@ class CSeriell : public TSingleton<CSeriell>
   public:
   int GetPMLDistance (void);
   int GetPhotoSensorData (const int nPhotoSensor);
-  int GetBatteryVoltage (void);
+  float GetBatteryVoltage (void);
   int SetMotorPower (const int nMotor, const int nPower);
   int SetPMLPosition (int nPosition);
   
