@@ -66,6 +66,7 @@ int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 
 float CSeriell::GetBatteryVoltage () {
 	float fData = 0;
+	int nSeriellData[2];
 	
 	g_pWiringPi->SendSeriellInt (5);
 	
@@ -74,13 +75,16 @@ float CSeriell::GetBatteryVoltage () {
 	}
 	
 	if (g_pWiringPi->ReceiveSeriellData () == 5) {
-		fData = g_pWiringPi->ReceiveSeriellData ();
+		nSeriellData[0] = g_pWiringPi->ReceiveSeriellData ();
+		nSeriellData[1] = g_pWiringPi->ReceiveSeriellData ();
+		fData = (nSeriellData[1] << 8 ) | nSeriellData[0];
+		
 		if (fData == 255) {
 			Log_File->WriteTopic ("Datenuebertragung Atmega32 - Sensor", 1);
 			Log_File->Textout (RED, "ATmega32 kann die Batteriespannung nicht messen.");
 			return -1;
 		}else{
-		return (fData/10); //Batteriespannung durch 10 teilen
+		return (fData*0.028); //Batteriespannung berechnen
 		}
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
