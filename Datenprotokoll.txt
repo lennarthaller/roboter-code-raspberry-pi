@@ -1,0 +1,19 @@
+Datentransferprotokoll
+
+
+0-20 = Sensoren
+20-40 = Motoren
+40-50 = Sonderbefehle
+
+0 = PML Sensor (Fehlercode 255: Atmega hat keine Verbindung)
+1 = Lichtschranke 1 
+2 = Lichtschranke 2 
+3 = Lichtschranke 3 
+4 = Lichtschranke 4 
+5 = Batteriespannung (Fehlercode 255: Atmega hat keine Verbindung)
+
+20 = Motor PML (einen Schritt bewegen)
+21 = Motor 1
+22 = Motor 2
+23 = Motor 3
+24 = Motor 4
