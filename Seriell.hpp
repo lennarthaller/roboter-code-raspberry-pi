@@ -15,7 +15,7 @@ class CSeriell : public TSingleton<CSeriell>
   int GetPhotoSensorData (const int nPhotoSensor);
   float GetBatteryVoltage (void);
   int SetMotorPower (const int nMotor, const int nPower);
-  int SetPMLPosition (int nPosition);
+  int MovePML (const int nDirection);
   
   private:
   int DataAvailableNoTimeOut (void);
