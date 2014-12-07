@@ -14,7 +14,7 @@ int CSeriell::DataAvailableNoTimeOut () {
 	return 1;
 }
 
-int CSeriell::GetPMLDistance () {
+int CSeriell::GetInfraredDistance () {
 	int nData = 0;
 	
 	g_pWiringPi->SendSeriellInt (0);
@@ -27,7 +27,7 @@ int CSeriell::GetPMLDistance () {
 		nData = g_pWiringPi->ReceiveSeriellData ();
 		if (nData == 255) {
 			Log_File->WriteTopic ("Datenuebertragung Atmega32 - Sensor", 1);
-			Log_File->Textout (RED, "Atmega32 hat keine Verbinung zu dem PML Sensor.");
+			Log_File->Textout (RED, "Atmega32 hat keine Verbinung zu dem Infrarotsensor.");
 			return -1;
 		}else{
 		return nData;
@@ -114,7 +114,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		return -1;
 	}
 	
-	if (g_pWiringPi->ReceiveSeriellData () == (nMotor+20)) { //nicht nMotor+19?
+	if (g_pWiringPi->ReceiveSeriellData () == (nMotor+20)) {
 		g_pWiringPi->SendSeriellInt (nSeriellData[0]);
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
