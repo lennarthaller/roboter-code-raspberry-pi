@@ -125,8 +125,8 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 	return 1;
 }
 
-int CSeriell::MovePML (const int nDirection) {
-	if ((nPosition < 0)||(nPosition > 1)) {
+int CSeriell::MovePML (const int nDirection) { //1 Dreht das PML in Fahrtrichtung links
+	if ((nDirection < 0)||(nDirection > 1)) {
 		std::cout << "FALSCHE NUMMER FUER DIE RICHTUNG!" << std::endl;
 		return -1;
 	}
