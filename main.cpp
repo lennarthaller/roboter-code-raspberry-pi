@@ -25,15 +25,14 @@ int main () {
 	if (g_pNetwork->InitNetwork () != 1) {
 		cout << "Fehler" << endl;
 	}
-	
+
 	if (g_pNetwork->ConnectToClient () != 1) {
 		cout << "Fehler" << endl;
 	}
 	
-	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetPMLDistance () << endl;
+	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
 	//g_pSeriell->SetMotorPower (1,150);
-	
 	cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
@@ -48,7 +47,7 @@ int main () {
 		usleep (500000); */
 		
 		for (int i=0;i<100;i++) {
-		g_pNetwork->Send (g_pSeriell->GetPMLDistance ());
+		g_pNetwork->Send (g_pSeriell->GetInfraredDistance ());
 		g_pSeriell->MovePML (1);
 		usleep (30000);
 		cout << i << endl;
@@ -59,7 +58,6 @@ int main () {
 		}
 		g_pNetwork->Send (1025);
 	}
-	//g_pSeriell->MovePML(1);
 	
 	Log_File->Del ();
 	g_pNetwork->Del ();

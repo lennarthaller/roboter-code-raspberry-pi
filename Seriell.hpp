@@ -11,7 +11,7 @@
 class CSeriell : public TSingleton<CSeriell>
 {
   public:
-  int GetPMLDistance (void);
+  int GetInfraredDistance (void);
   int GetPhotoSensorData (const int nPhotoSensor);
   float GetBatteryVoltage (void);
   int SetMotorPower (const int nMotor, const int nPower);
