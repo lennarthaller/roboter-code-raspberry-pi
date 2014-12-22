@@ -9,11 +9,11 @@ class CLidarScan
 		CLidarScan ();
 		
 		void 	Scan ();
-		int 	GetScanData () {return m_nScanData};
+		int* 	GetScanData () {return m_nScanData;}
 		
 	private:
 		int 	m_nScanData[100];
-		clock_t m_nTimeStampSinceLastCall;
+		std::clock_t m_nTimeStampSinceLastCall;
 		int		m_nScanStepCounter;
 		bool 	m_bScanActive;
 };

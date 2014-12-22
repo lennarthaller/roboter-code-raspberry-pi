@@ -1,12 +1,12 @@
 #include "LidarScan.hpp"
 
-CLidarScan::CLidarScan () [
+CLidarScan::CLidarScan () {
 	m_nTimeStampSinceLastCall = 0;
 	m_nScanStepCounter = 0;
 	m_bScanActive = true;
 }
 
-CLidarScan::Scan () {
+void CLidarScan::Scan () {
 	if (m_bScanActive == true) {	//Scan durchführen
 		if (m_nTimeStampSinceLastCall + 30 < g_pWiringPi->TimeSinceStart()) { //30 Millisekunden seit dem letzten Aufruf vergangen?
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
@@ -15,7 +15,7 @@ CLidarScan::Scan () {
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pWiringPi->TimeSinceStart();
 				
-				std::cout << m_nScanData[m_nScanStepCounter] << endl;
+				std::cout << m_nScanData[m_nScanStepCounter] << std::endl;
 			}else{		//Scan fertig
 				m_nScanStepCounter = 0;
 				m_bScanActive = false;
