@@ -12,7 +12,7 @@ using namespace std;
 int main () {
 	Log_File->CreateLogfile();
 	
-	CLidarScaner Scaner;
+	CLidarScan Scaner;
 	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
