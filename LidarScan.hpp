@@ -1,6 +1,8 @@
 #include "WiringPi.hpp"
 #include "Seriell.hpp"
 
+#include <iostream>
+
 class CLidarScan
 {
 	public:

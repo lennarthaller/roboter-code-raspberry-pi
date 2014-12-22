@@ -14,6 +14,8 @@ CLidarScan::Scan () {
 				g_pSeriell->MovePML (1);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pWiringPi->TimeSinceStart();
+				
+				std::cout << m_nScanData[m_nScanStepCounter] << endl;
 			}else{		//Scan fertig
 				m_nScanStepCounter = 0;
 				m_bScanActive = false;
