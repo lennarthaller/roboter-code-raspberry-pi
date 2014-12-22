@@ -25,8 +25,8 @@ class CWiringPi : public TSingleton<CWiringPi>
   clock_t TimeSinceStart (void);
   
   private:
-  int nOwnSeriellAdress;
-  int nCompassAdress;
+  int m_nOwnSeriellAdress;
+  int m_nCompassAdress;
 };
 
 #endif

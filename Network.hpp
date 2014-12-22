@@ -26,10 +26,10 @@ class CNetwork : public TSingleton<CNetwork>
 	int Send (int nData);
 	int Receive (void);
   private:
-	int nSocketFromServer;
-	int nSocketFromClient;
+	int m_nSocketFromServer;
+	int m_nSocketFromClient;
 	socklen_t SizeOfClientSocket;
-	char chBuffer[BUF_SIZE];
+	char m_chBuffer[BUF_SIZE];
 	
 	struct sockaddr_in AdressFromServer;
 	struct sockaddr_in AdressfromClient;
