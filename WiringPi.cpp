@@ -36,5 +36,5 @@ float CWiringPi::GetCompassData () {
 }
 
 clock_t CWiringPi::TimeSinceStart () {
-	return  (clock () / (CLOCKS_PER_SEC/100)); //gibt die vergangene Zeit seit Start in Millisekunden/10 zurück
+	return  (clock () / (CLOCKS_PER_SEC/10000)); //gibt die vergangene Zeit seit Start in Millisekunden/10 zurück
 }
