@@ -1,15 +1,18 @@
 #include <iostream>
+#include <unistd.h>
+#include <cmath>
 
 #include "Seriell.hpp"
 #include "Network.hpp"
 #include "Logfile.hpp"
-
-#include <unistd.h>
+#include "LidarScan.hpp"
 
 using namespace std;
 
 int main () {
 	Log_File->CreateLogfile();
+	
+	CLidarScaner Scaner;
 	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
@@ -26,9 +29,9 @@ int main () {
 		cout << "Fehler" << endl;
 	}
 
-	if (g_pNetwork->ConnectToClient () != 1) {
+	/*if (g_pNetwork->ConnectToClient () != 1) {
 		cout << "Fehler" << endl;
-	}
+	} */
 	
 	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
@@ -37,6 +40,9 @@ int main () {
 	//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
 	while (1==1) { 
+	
+		Scaner.Scan();
+		
 		//cout << "Berechnet: " << g_pSeriell->GetPMLDistance () << endl;
 		/*g_pWiringPi->SendSeriellInt (6);
 		nSeriellData[0] = g_pWiringPi->ReceiveSeriellData ();
@@ -46,17 +52,17 @@ int main () {
 		cout << "-----------" << endl;
 		usleep (500000); */
 		
-		for (int i=0;i<100;i++) {
+		/*for (int i=0;i<100;i++) {
 		g_pNetwork->Send (g_pSeriell->GetInfraredDistance ());
 		g_pSeriell->MovePML (1);
 		usleep (30000);
-		cout << i << endl;
+		//cout << i << endl;
 		}
 		for (int i=0;i<100;i++) {
 		g_pSeriell->MovePML (0);
-		usleep (500);
+		usleep (800);
 		}
-		g_pNetwork->Send (1025);
+		g_pNetwork->Send (1025);*/
 	}
 	
 	Log_File->Del ();
