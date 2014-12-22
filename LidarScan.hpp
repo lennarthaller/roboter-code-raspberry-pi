@@ -1,5 +1,6 @@
 #include "WiringPi.hpp"
 #include "Seriell.hpp"
+#include "KnowledgeBase.hpp"
 
 #include <iostream>
 
