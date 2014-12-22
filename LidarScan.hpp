@@ -1,8 +1,17 @@
+#include "WiringPi.hpp"
+#include "Seriell.hpp"
+
 class CLidarScan
 {
 	public:
 		CLidarScan ();
-	
-	private:
 		
+		void 	Scan ();
+		int 	GetScanData () {return m_nScanData};
+		
+	private:
+		int 	m_nScanData[100];
+		clock_t m_nTimeStampSinceLastCall;
+		int		m_nScanStepCounter;
+		bool 	m_bScanActive;
 };
