@@ -1,43 +1,88 @@
 #include "BasicCalculations.hpp"
 
 void CBasicCalculations::CalculateDrivingDirection () {
-	int nScannerData[100];
-	float fSineValue = 0;
-	float fCosineValue = 0;
-	
-	float b, c, d, x = 0;
-	
+	int nInfraredData[100];
+	int nDrivingAngle = -50;
+	int nCounterRight = 0;
+	int nCounterLeft = 0;
+	int nAverage = 0;
+	int nStartForSearching = 50 + static_cast<int>(nDrivingAngle/1.8);
+	int i = 0;
+	int nDrivingDirectionRight = 0;
+	int nDrivingDirectionLeft = 0;
+
 	for (int i=0; i<100; i++) {
 		nScannerData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
-	}	
-	
-	for (int i=0;i<100;i++) {
-		x = DegreeToRadian(-90 + (1.8f * i));
-
-		b = sin (x);
-		// c = -0.4f * pow (x, 2) + 1;
-		c = 1;
-		d = (atan ((nScannerData[i] / 10.0f) - 11) + 1.5f) / 3;
-
-		fSineValue += b * c * d; 
-		b = cos (x);
-		fCosineValue += b * c * d; 
 	}
 	
-	std::cout << RadianToDegree (atan2 (fSineValue, fCosineValue)) << std::endl;
-	g_pNetwork->Send (1026);
-	g_pNetwork->Send(atan2 (fSineValue, fCosineValue));
-	g_pNetwork->Send(atan2 (fSineValue, fCosineValue));
-	
-	g_pKnowledgeBase->SetDrivingDirection (RadianToDegree (atan2 (fSineValue, fCosineValue)));
-}
+	for (int i=0;i<100;i++) {
+		nAverage += nInfraredData[i];
+	}
+	nAverage /= 100;
 
-float CBasicCalculations::DegreeToRadian (float fDegree) {
-	float radianValue = fDegree * (3.14159265359 / 180.0); 
-	return radianValue;
-}
+	i = 5;
+	while (nStartForSearching + i > 0) {
+		if (nInfraredData[nStartForSearching + i] >= nAverage) {
+			nCounterRight ++;
+			if (nCounterRight == 11) {
+				nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
+				break;
+			}
+		}else{
+			nCounterRight = 0;		
+		}
+		i--;
+	} 
 
-float CBasicCalculations::RadianToDegree (float fRadian) {
-	float degreeValue = fRadian * (180.0 / 3.14159265359);
-	return degreeValue;
+	i = -5;
+	while (nStartForSearching + i < 100) {
+		if (nInfraredData[nStartForSearching + i] >= nAverage) {
+			nCounterLeft ++;
+			if (nCounterLeft == 11) {
+				nDrivingDirectionLeft = (nStartForSearching + i -55) *1.8;
+				break;
+			}
+		}else{
+			nCounterLeft = 0;		
+		}
+		i++;
+	}
+
+	if (nCounterRight >= 11) {
+		if (nCounterLeft < 11) {
+			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight);
+			
+				g_pNetwork->Send (1026);
+	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight));
+	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight));
+		}
+	}
+
+	if (nCounterLeft >= 11) {
+		if (nCounterRight < 11) {
+			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
+			
+				g_pNetwork->Send (1026);
+	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
+	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
+		}
+	}
+
+	if (nCounterRight >= 11) {
+		if (nCounterLeft >= 11) {
+			if (nCounterRight >= nCounterLeft) {
+				g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
+				
+					g_pNetwork->Send (1026);
+	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
+	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
+			}
+		}
+	}
+
+	if (nCounterRight < 11) {
+		if (nCounterLeft < 11) {
+			g_pKnowledgeBase->SetDrivingDirection (-1000);
+		}
+	}
 }

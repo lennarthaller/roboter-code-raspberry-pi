@@ -12,8 +12,6 @@ class CBasicCalculations : public TSingleton<CBasicCalculations>
 	void 	CalculateDrivingDirection ();
 	
 	private:
-	float 	DegreeToRadian (float fDegree);
-	float 	RadianToDegree (float fRadian);
 };
 
 #endif
