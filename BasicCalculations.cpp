@@ -5,10 +5,10 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	float fSineValue = 0;
 	float fCosineValue = 0;
 	
-	float a, b, c, d, x = 0;
+	float b, c, d, x = 0;
 	
 	for (int i=0; i<100; i++) {
-		nScannerData[i] = g_pKnowledgeBase->GetScannerData() +i;
+		nScannerData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
 	}	
 	
 		for (int i=0;i<100;i++) {
@@ -16,14 +16,14 @@ void CBasicCalculations::CalculateDrivingDirection () {
 
 		b = sin (x);
 		c = -0.4f * pow (x, 2) + 1;
-		d = (atan ((nInfraredData[i] / 10.0f) - 11) + 1.5f) / 3;
+		d = (atan ((nScannerData[i] / 10.0f) - 11) + 1.5f) / 3;
 
 		fSineValue += b * c * d; 
 		b = cos (x);
 		fCosineValue += b * c * d; 
 	}
 	
-	cout << RadianToDegree (atan2 (fSineValue, fCosineValue)) * -1<< endl;
+	std::cout << RadianToDegree (atan2 (fSineValue, fCosineValue)) * -1<< std::endl;
 	g_pKnowledgeBase->SetDrivingDirection (RadianToDegree (atan2 (fSineValue, fCosineValue)) * -1);
 }
 

@@ -29,7 +29,7 @@ void CLidarScan::Scan () {
 				m_bScanActive = false;
 				m_nTimeStampSinceLastCall = 0;
 				
-				g_pKnowledgeBase->SetScanerData(m_nScanData);
+				g_pKnowledgeBase->SetScannerData(m_nScanData);
 				g_pBasicCalculations->CalculateDrivingDirection();
 			}
 		}

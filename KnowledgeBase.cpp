@@ -1,11 +1,11 @@
-#include "KnowledgeBase"
+#include "KnowledgeBase.hpp"
 
 CKnowledgeBase::CKnowledgeBase () {
 
 }
 
-void CKnowledgeBase::SetScanerData (int nScanerData[]) {
+void CKnowledgeBase::SetScannerData (int nScanerData[]) {
 	for (int i=0; i<100;i++) {
-		m_nScanerData[i] = nScanerData[i];
+		m_nScannerData[i] = nScanerData[i];
 	}
 }

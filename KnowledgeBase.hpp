@@ -1,6 +1,8 @@
 #ifndef KNOWLEDGEBASE_HPP
 #define KNOWLEDGEBASE_HPP
 
+#include "WiringPi.hpp"
+
 #define g_pKnowledgeBase CKnowledgeBase::Get()
 
 class CKnowledgeBase : public TSingleton<CKnowledgeBase>
