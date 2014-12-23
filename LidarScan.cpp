@@ -32,10 +32,6 @@ void CLidarScan::Scan () {
 				
 				g_pKnowledgeBase->SetScannerData(m_nScanData);
 				g_pBasicCalculations->CalculateDrivingDirection();
-				
-				usleep (250000);
-				g_pNetwork->Send (1028); ///////////aaaaaaaaaaaa
-				usleep (1000000);
 			}
 		}
 	
@@ -51,6 +47,11 @@ void CLidarScan::Scan () {
 				m_nScanStepCounter = 0;
 				m_nTimeStampSinceLastCall = 0;
 				m_bScanActive = true;
+								
+				g_pNetwork->Send (g_pKnowledgeBase->GetCalculateDrivingDirection()); ///////////aaaaaaaaaaaa
+				usleep (2000000);
+				usleep (1000000);
+				g_pNetwork->Send (1028); ///////////aaaaaaaaaaaa
 			}
 		}
 	}

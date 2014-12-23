@@ -11,11 +11,12 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		nScannerData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
 	}	
 	
-		for (int i=0;i<100;i++) {
+	for (int i=0;i<100;i++) {
 		x = DegreeToRadian(-90 + (1.8f * i));
 
 		b = sin (x);
-		c = -0.4f * pow (x, 2) + 1;
+		// c = -0.4f * pow (x, 2) + 1;
+		c = 1;
 		d = (atan ((nScannerData[i] / 10.0f) - 11) + 1.5f) / 3;
 
 		fSineValue += b * c * d; 
@@ -25,7 +26,8 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	
 	std::cout << RadianToDegree (atan2 (fSineValue, fCosineValue)) << std::endl;
 	g_pNetwork->Send (1026);
-	g_pNetwork->Send(atan2 (fSineValue, fCosineValue) * -1);
+	g_pNetwork->Send(atan2 (fSineValue, fCosineValue));
+	g_pNetwork->Send(atan2 (fSineValue, fCosineValue));
 	
 	g_pKnowledgeBase->SetDrivingDirection (RadianToDegree (atan2 (fSineValue, fCosineValue)));
 }
