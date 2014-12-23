@@ -1,18 +1,21 @@
 #ifndef KNOWLEDGEBASE_HPP
 #define KNOWLEDGEBASE_HPP
 
-#define g_pKnowledgeBase KnowledgeBase::Get()
+#define g_pKnowledgeBase CKnowledgeBase::Get()
 
 class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 {
 	public:
 	CKnowledgeBase ();
 	
-	void SetScanerData (int nSensorData[]);
+	void 	SetScannerData (int nSensorData[]);
+	int* 	GetScannerData () {return m_nScannerData;}
+	void 	SetDrivingDirection (float fDirection) {m_fCalculatedDrivingDirection = fDirection;}
+	float 	GetCalculateDrivingDirection () {return m_fCalculatedDrivingDirection;}
 	
 	private:
-	int m_nScanerData[100];
-	float m_fCalculatedDrivingDirection;
+	int 	m_nScannerData[100];
+	float 	m_fCalculatedDrivingDirection;
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "WiringPi.hpp"
 #include "Seriell.hpp"
 #include "KnowledgeBase.hpp"
+#include "BasicCalculations.hpp" 
 
 #include <iostream>
 
@@ -10,7 +11,6 @@ class CLidarScan
 		CLidarScan ();
 		
 		void 	Scan ();
-		int* 	GetScanData () {return m_nScanData;}
 		
 	private:
 		int 	m_nScanData[100];
