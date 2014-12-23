@@ -4,6 +4,7 @@
 #include "BasicCalculations.hpp" 
 
 #include <iostream>
+#include <unistd.h>
 
 class CLidarScan
 {

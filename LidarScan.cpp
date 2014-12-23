@@ -19,6 +19,7 @@ void CLidarScan::Scan () {
 				m_nScanData[m_nScanStepCounter] = g_pSeriell->GetInfraredDistance ();
 							
 				std::cout << m_nScanData[m_nScanStepCounter] << std::endl;
+				g_pNetwork->Send(m_nScanData[m_nScanStepCounter]);//////aaaaaaaaaaa
 				
 				g_pSeriell->MovePML (1);
 				m_nScanStepCounter ++;
@@ -31,6 +32,10 @@ void CLidarScan::Scan () {
 				
 				g_pKnowledgeBase->SetScannerData(m_nScanData);
 				g_pBasicCalculations->CalculateDrivingDirection();
+				
+				usleep (250000);
+				g_pNetwork->Send (1028); ///////////aaaaaaaaaaaa
+				usleep (1000000);
 			}
 		}
 	

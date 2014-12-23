@@ -2,6 +2,7 @@
 #define KNOWLEDGEBASE_HPP
 
 #include "WiringPi.hpp"
+#include "Network.hpp"
 
 #define g_pKnowledgeBase CKnowledgeBase::Get()
 

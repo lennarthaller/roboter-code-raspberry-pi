@@ -23,8 +23,11 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		fCosineValue += b * c * d; 
 	}
 	
-	std::cout << RadianToDegree (atan2 (fSineValue, fCosineValue)) * -1<< std::endl;
-	g_pKnowledgeBase->SetDrivingDirection (RadianToDegree (atan2 (fSineValue, fCosineValue)) * -1);
+	std::cout << RadianToDegree (atan2 (fSineValue, fCosineValue)) << std::endl;
+	g_pNetwork->Send (1026);
+	g_pNetwork->Send(atan2 (fSineValue, fCosineValue) * -1);
+	
+	g_pKnowledgeBase->SetDrivingDirection (RadianToDegree (atan2 (fSineValue, fCosineValue)));
 }
 
 float CBasicCalculations::DegreeToRadian (float fDegree) {
