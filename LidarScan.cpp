@@ -36,7 +36,7 @@ void CLidarScan::Scan () {
 		}
 	
 	}else{	//Zurückdrehen
-		if (m_nTimeStampSinceLastCall + 5 < g_pWiringPi->TimeSinceStart()) { //1 Millisekunde seit dem letzten Aufruf vergangen?
+		if (m_nTimeStampSinceLastCall + 50 < g_pWiringPi->TimeSinceStart()) { //0.5 Millisekunde seit dem letzten Aufruf vergangen?
 			
 			if (m_nScanStepCounter < 100) {
 				g_pSeriell->MovePML (0);
@@ -49,7 +49,6 @@ void CLidarScan::Scan () {
 				m_bScanActive = true;
 								
 				g_pNetwork->Send (g_pKnowledgeBase->GetCalculateDrivingDirection()); ///////////aaaaaaaaaaaa
-				usleep (2000000);
 				usleep (1000000);
 				g_pNetwork->Send (1028); ///////////aaaaaaaaaaaa
 			}

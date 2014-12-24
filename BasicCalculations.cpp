@@ -12,7 +12,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	int nDrivingDirectionLeft = 0;
 
 	for (int i=0; i<100; i++) {
-		nScannerData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
+		nInfraredData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
 	}
 	
 	for (int i=0;i<100;i++) {
@@ -53,8 +53,8 @@ void CBasicCalculations::CalculateDrivingDirection () {
 			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight);
 			
 				g_pNetwork->Send (1026);
-	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight));
-	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight));
+	g_pNetwork->Send(nDrivingDirectionRight);
+	g_pNetwork->Send(nDrivingDirectionRight);
 		}
 	}
 
@@ -63,8 +63,8 @@ void CBasicCalculations::CalculateDrivingDirection () {
 			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
 			
 				g_pNetwork->Send (1026);
-	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
-	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
+	g_pNetwork->Send(nDrivingDirectionLeft);
+	g_pNetwork->Send(nDrivingDirectionLeft);
 		}
 	}
 
@@ -74,8 +74,8 @@ void CBasicCalculations::CalculateDrivingDirection () {
 				g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
 				
 					g_pNetwork->Send (1026);
-	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
-	g_pNetwork->Send(atan2 (g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft));
+	g_pNetwork->Send(nDrivingDirectionLeft);
+	g_pNetwork->Send(nDrivingDirectionLeft);
 			}
 		}
 	}
