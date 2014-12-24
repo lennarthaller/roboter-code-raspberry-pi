@@ -15,13 +15,13 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		nInfraredData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
 	}
 	
-	for (int i=0;i<100;i++) {
+	for (int i=0;i<100;i++) { //Durschnittliche Entfernung des Scans
 		nAverage += nInfraredData[i];
 	}
 	nAverage /= 100;
 
 	i = 5;
-	while (nStartForSearching + i > 0) {
+	while (nStartForSearching + i > 0) { //Das Array richtung 0 durchlaufen
 		if (nInfraredData[nStartForSearching + i] >= nAverage - 10) {
 			nCounterRight ++;
 			if (nCounterRight == 11) {
@@ -35,7 +35,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	} 
 
 	i = -5;
-	while (nStartForSearching + i < 100) {
+	while (nStartForSearching + i < 100) { //Das Array richtung 100 durchlaufen
 		if (nInfraredData[nStartForSearching + i] >= nAverage - 10) {
 			nCounterLeft ++;
 			if (nCounterLeft == 11) {
@@ -48,6 +48,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		i++;
 	}
 
+	//Welcher Wert soll zurückgegeben werden:
 	if (nCounterRight >= 11) {
 		if (nCounterLeft < 11) {
 			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight);
