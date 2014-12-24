@@ -22,7 +22,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 
 	i = 5;
 	while (nStartForSearching + i > 0) {
-		if (nInfraredData[nStartForSearching + i] >= nAverage) {
+		if (nInfraredData[nStartForSearching + i] >= nAverage - 10) {
 			nCounterRight ++;
 			if (nCounterRight == 11) {
 				nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
@@ -36,7 +36,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 
 	i = -5;
 	while (nStartForSearching + i < 100) {
-		if (nInfraredData[nStartForSearching + i] >= nAverage) {
+		if (nInfraredData[nStartForSearching + i] >= nAverage - 10) {
 			nCounterLeft ++;
 			if (nCounterLeft == 11) {
 				nDrivingDirectionLeft = (nStartForSearching + i -55) *1.8;
@@ -51,20 +51,12 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	if (nCounterRight >= 11) {
 		if (nCounterLeft < 11) {
 			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight);
-			
-				g_pNetwork->Send (1026);
-	g_pNetwork->Send(nDrivingDirectionRight);
-	g_pNetwork->Send(nDrivingDirectionRight);
 		}
 	}
 
 	if (nCounterLeft >= 11) {
 		if (nCounterRight < 11) {
 			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
-			
-				g_pNetwork->Send (1026);
-	g_pNetwork->Send(nDrivingDirectionLeft);
-	g_pNetwork->Send(nDrivingDirectionLeft);
 		}
 	}
 
@@ -72,17 +64,13 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		if (nCounterLeft >= 11) {
 			if (nCounterRight >= nCounterLeft) {
 				g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
-				
-					g_pNetwork->Send (1026);
-	g_pNetwork->Send(nDrivingDirectionLeft);
-	g_pNetwork->Send(nDrivingDirectionLeft);
 			}
 		}
 	}
 
 	if (nCounterRight < 11) {
 		if (nCounterLeft < 11) {
-			g_pKnowledgeBase->SetDrivingDirection (-1000);
+			g_pKnowledgeBase->SetDrivingDirection (-180);
 		}
 	}
 }

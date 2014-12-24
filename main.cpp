@@ -29,9 +29,9 @@ int main () {
 		cout << "Fehler" << endl;
 	}
 
-	if (g_pNetwork->ConnectToClient () != 1) {
+	/*if (g_pNetwork->ConnectToClient () != 1) {
 		cout << "Fehler" << endl;
-	} 
+	}*/ 
 	
 	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
