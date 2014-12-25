@@ -12,7 +12,7 @@ using namespace std;
 int main () {
 	Log_File->CreateLogfile();
 	
-	CLidarScan Scaner;
+	CLidarScan Scanner;
 	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
@@ -41,7 +41,7 @@ int main () {
 	
 	while (1==1) { 
 	
-		Scaner.Scan();
+		Scanner.Scan();
 		
 		//cout << "Berechnet: " << g_pSeriell->GetPMLDistance () << endl;
 		/*g_pWiringPi->SendSeriellInt (6);
