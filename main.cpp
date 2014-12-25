@@ -19,7 +19,6 @@ int main () {
 	
 	int nSeriellData[2];
 	int nDaten = 0;
-	//wiringPi init
 	if (g_pWiringPi->InitWiringPi() != 1) {
 		cout << "Fehler" << endl;
 	}else{
@@ -40,29 +39,7 @@ int main () {
 	//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
 	while (1==1) { 
-	
 		Scanner.Scan();
-		
-		//cout << "Berechnet: " << g_pSeriell->GetPMLDistance () << endl;
-		/*g_pWiringPi->SendSeriellInt (6);
-		nSeriellData[0] = g_pWiringPi->ReceiveSeriellData ();
-		nSeriellData[1] = g_pWiringPi->ReceiveSeriellData ();
-	nDaten = (nSeriellData[1] << 8) | nSeriellData[0];
-		cout << "Daten des Sensors: " << nDaten << endl;
-		cout << "-----------" << endl;
-		usleep (500000); */
-		
-		/*for (int i=0;i<100;i++) {
-		g_pNetwork->Send (g_pSeriell->GetInfraredDistance ());
-		g_pSeriell->MovePML (1);
-		usleep (30000);
-		//cout << i << endl;
-		}
-		for (int i=0;i<100;i++) {
-		g_pSeriell->MovePML (0);
-		usleep (800);
-		}
-		g_pNetwork->Send (1025);*/
 	}
 	
 	Log_File->Del ();
