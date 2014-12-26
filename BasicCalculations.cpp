@@ -2,7 +2,7 @@
 
 void CBasicCalculations::CalculateDrivingDirection () {
 	int nInfraredData[100];
-	int nDrivingAngle = -50;
+	int nDrivingAngle = static_cast<int>(g_pKnowledgeBase->GetTargetDrivingDirection());
 	int nCounterRight = 0;
 	int nCounterLeft = 0;
 	int nAverage = 0;
@@ -51,27 +51,27 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	//Welcher Wert soll zurückgegeben werden:
 	if (nCounterRight >= 11) {
 		if (nCounterLeft < 11) {
-			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionRight);
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
 		}
 	}
 
 	if (nCounterLeft >= 11) {
 		if (nCounterRight < 11) {
-			g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
 		}
 	}
 
 	if (nCounterRight >= 11) {
 		if (nCounterLeft >= 11) {
 			if (nCounterRight >= nCounterLeft) {
-				g_pKnowledgeBase->SetDrivingDirection (nDrivingDirectionLeft);
+				g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
 			}
 		}
 	}
 
 	if (nCounterRight < 11) {
 		if (nCounterLeft < 11) {
-			g_pKnowledgeBase->SetDrivingDirection (-180);
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (-180);
 		}
 	}
 }
