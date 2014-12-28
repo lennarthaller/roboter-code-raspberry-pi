@@ -49,29 +49,23 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	}
 
 	//Welcher Wert soll zurückgegeben werden:
-	if (nCounterRight >= 11) {
-		if (nCounterLeft < 11) {
-			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
-		}
+	if ((nCounterRight >= 11)&(nCounterLeft < 11)) {
+		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
 	}
 
-	if (nCounterLeft >= 11) {
-		if (nCounterRight < 11) {
+	if ((nCounterLeft >= 11)&&(nCounterRight < 11)) {
+		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
+	}
+
+	if ((nCounterRight >= 11)&&(nCounterLeft >= 11)) {
+		if (nCounterRight >= nCounterLeft) {
 			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
-		}
-	}
-
-	if (nCounterRight >= 11) {
-		if (nCounterLeft >= 11) {
-			if (nCounterRight >= nCounterLeft) {
-				g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
+			}else{
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
 			}
-		}
 	}
 
-	if (nCounterRight < 11) {
-		if (nCounterLeft < 11) {
-			g_pKnowledgeBase->SetCalculatedDrivingDirection (-180);
-		}
+	if ((nCounterRight < 11)&&(nCounterLeft < 11)) {
+		g_pKnowledgeBase->SetCalculatedDrivingDirection (-180);
 	}
 }
