@@ -13,7 +13,7 @@ CLidarScan::CLidarScan () {
 void CLidarScan::Scan () {
 	if (m_bScanActive == true) {	//Scan durchführen
 		
-		if (m_nTimeStampSinceLastCall + 150 < g_pWiringPi->TimeSinceStart()) { //15 Millisekunden seit dem letzten Aufruf vergangen?
+		if (m_nTimeStampSinceLastCall + 1 < g_pWiringPi->TimeSinceStart()) { //0.1 Millisekunde seit dem letzten Aufruf vergangen?
 			
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
 				m_nScanData[m_nScanStepCounter] = g_pSeriell->GetInfraredDistance ();
