@@ -22,7 +22,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 
 	i = 5;
 	while (nStartForSearching + i > 0) { //Das Array richtung 0 durchlaufen
-		if ((nInfraredData[nStartForSearching + i] >= nAverage - 10)&&(nStartForSearching + i >= 25)) {
+		if ((nInfraredData[nStartForSearching + i] >= nAverage - 10)&&(nInfraredData[nStartForSearching + i] >= 25)) {
 			nCounterRight ++;
 			if (nCounterRight == 11) {
 				nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
@@ -36,7 +36,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 
 	i = -5;
 	while (nStartForSearching + i < 100) { //Das Array richtung 100 durchlaufen
-		if ((nInfraredData[nStartForSearching + i] >= nAverage - 10)&&(nStartForSearching + i >= 25)) {
+		if ((nInfraredData[nStartForSearching + i] >= nAverage - 10)&&(nInfraredData[nStartForSearching + i] >= 25)) {
 			nCounterLeft ++;
 			if (nCounterLeft == 11) {
 				nDrivingDirectionLeft = (nStartForSearching + i -55) *1.8;
@@ -49,7 +49,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	}
 
 	//Welcher Wert soll zurückgegeben werden:
-	if ((nCounterRight >= 11)&(nCounterLeft < 11)) {
+	if ((nCounterRight >= 11)&&(nCounterLeft < 11)) {
 		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
 	}
 
