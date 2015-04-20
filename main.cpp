@@ -6,6 +6,7 @@
 #include "Network.hpp"
 #include "Logfile.hpp"
 #include "LidarScan.hpp"
+#include "BasicFunctions.hpp"
 
 using namespace std;
 
@@ -38,12 +39,18 @@ int main () {
 	cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
+	g_pSeriell->SetMotorPower (1,40);
+	g_pSeriell->SetMotorPower (2,40);
+	g_pSeriell->SetMotorPower (3,40);
+	g_pSeriell->SetMotorPower (4,40);
+	
 	while (1==1) { 
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 		//cout << endl;
 		//usleep (2000000); 
 		Scanner.Scan();
+		g_pBasicCalculations->UpdateSensorData ();
 	}
 	
 	Log_File->Del ();
