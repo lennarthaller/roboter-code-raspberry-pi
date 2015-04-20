@@ -39,6 +39,10 @@ int main () {
 	//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
 	while (1==1) { 
+		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
+		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
+		//cout << endl;
+		//usleep (2000000); 
 		Scanner.Scan();
 	}
 	
