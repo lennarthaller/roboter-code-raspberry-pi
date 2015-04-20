@@ -1,10 +1,10 @@
 #include "BasicFunktions.hpp"
 
-CBasicFunktions::CBasicFunktions () (
+CBasicFunktions::CBasicFunktions () {
 	m_nTimeStampSinceLastCall = 0;
-)
+}
 
-CBasicFunktions::UpdateSensorData () {
+void CBasicFunktions::UpdateSensorData () {
 	unsigned long nOdometryData[4];
 	
 	if (m_nTimeStampSinceLastCall + 2000 < g_pWiringPi->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?

@@ -6,7 +6,7 @@
 #include "Network.hpp"
 #include "Logfile.hpp"
 #include "LidarScan.hpp"
-#include "BasicFunctions.hpp"
+#include "BasicFunktions.hpp"
 
 using namespace std;
 
@@ -50,7 +50,7 @@ int main () {
 		//cout << endl;
 		//usleep (2000000); 
 		Scanner.Scan();
-		g_pBasicCalculations->UpdateSensorData ();
+		g_pCBasicFunktions->UpdateSensorData ();
 	}
 	
 	Log_File->Del ();

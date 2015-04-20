@@ -11,6 +11,8 @@
 class CBasicCalculations : public TSingleton<CBasicCalculations>
 {
 	public:
+	CBasicCalculations ();
+	
 	void 	CalculateDrivingDirection ();
 	void 	CalculatePositionFromOdometry ();
 	
