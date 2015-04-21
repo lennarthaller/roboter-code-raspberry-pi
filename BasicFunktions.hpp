@@ -17,7 +17,7 @@ class CBasicFunktions : public TSingleton<CBasicFunktions>
   void UpdateSensorData ();  
   
   private:
-  std::clock_t m_nTimeStampSinceLastCall;
+  double m_nTimeStampSinceLastCall;
   
 };
 

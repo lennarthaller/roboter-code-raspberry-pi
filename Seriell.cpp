@@ -2,10 +2,10 @@
 
 //Diese Funktion wartet 200 mSec auf verfügbare Seriell Daten
 int CSeriell::DataAvailableNoTimeOut () {
-	clock_t nTimeStamp = g_pWiringPi->TimeSinceStart();
+	long nTimeStamp = g_pWiringPi->TimeSinceStart();
 
 	while (g_pWiringPi->SeriellDataAvailable() < 1) {
-		if (nTimeStamp+2000 < g_pWiringPi->TimeSinceStart()) {
+		if (nTimeStamp+200 < g_pWiringPi->TimeSinceStart()) {
 			Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
 			Log_File->Textout (RED, "Timeout bei dem Uebertragen von Daten.");
 			return -1;

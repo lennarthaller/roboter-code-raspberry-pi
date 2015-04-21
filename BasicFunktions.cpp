@@ -13,5 +13,6 @@ void CBasicFunktions::UpdateSensorData () {
 		}
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
 		g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
+		m_nTimeStampSinceLastCall = g_pWiringPi->TimeSinceStart();
 	}
 }

@@ -89,7 +89,7 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 		g_pKnowledgeBase->GetOdometryPosition()->fY += n * (cos ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition()->fTheta - cos (g_pKnowledgeBase->GetOdometryPosition()->fTheta)));
 		g_pKnowledgeBase->GetOdometryPosition()->fTheta += (nOdometryRight-nOdometryLeft) / 0.335;
 		
-		std::cout << g_pKnowledgeBase->GetOdometryPosition()->fTheta << std::endl; //////DEBUG
+		//std::cout << g_pKnowledgeBase->GetOdometryPosition()->fTheta << std::endl; //////DEBUG
 	}
 	m_nOldOdometryTicksLeft = (*(g_pKnowledgeBase->GetOdometryTicks()) + *(g_pKnowledgeBase->GetOdometryTicks()+3)) / 2;
 	m_nOldOdometryTicksRight = (*(g_pKnowledgeBase->GetOdometryTicks()+1) + *(g_pKnowledgeBase->GetOdometryTicks()+2)) / 2;

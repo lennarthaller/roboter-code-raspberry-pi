@@ -39,11 +39,11 @@ int main () {
 	cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
-	g_pSeriell->SetMotorPower (1,40);
-	g_pSeriell->SetMotorPower (2,40);
-	g_pSeriell->SetMotorPower (3,40);
-	g_pSeriell->SetMotorPower (4,40);
-	
+	g_pSeriell->SetMotorPower (1,60);
+	g_pSeriell->SetMotorPower (2,60);
+	g_pSeriell->SetMotorPower (3,60);
+	g_pSeriell->SetMotorPower (4,60);
+	int n = 0;
 	while (1==1) { 
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
