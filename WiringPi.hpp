@@ -9,7 +9,6 @@
 #include <wiringSerial.h>
 #include <wiringPiI2C.h>
 #include <time.h>
-//#include <ctime>
 
 #define g_pWiringPi CWiringPi::Get()
 
