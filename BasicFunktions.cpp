@@ -12,6 +12,7 @@ CBasicFunktions::UpdateSensorData () {
 			nOdometryData[i] = g_pSeriell->GetPhotoSensorData(i+1);
 		}
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
+		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage); //battery voltage updated
 		g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
 	}
 }

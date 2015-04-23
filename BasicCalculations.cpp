@@ -30,7 +30,8 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		if ((nInfraredData[nStartForSearching + i] >= nAverage - 10)&&(nInfraredData[nStartForSearching + i] >= 25)) {
 			nCounterRight ++;
 			if (nCounterRight == 11) {
-				nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
+			
+			nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
 				break;
 			}
 		}else{

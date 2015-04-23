@@ -10,8 +10,6 @@
 #include <wiringPiI2C.h>
 #include <ctime>
 
-//#define CLOCKS_PER_SEC  1000
-
 #define g_pWiringPi CWiringPi::Get()
 
 class CWiringPi : public TSingleton<CWiringPi>

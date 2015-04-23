@@ -5,6 +5,7 @@
 #include "Singleton.hpp"
 #include "Logfile.hpp"
 #include "WiringPi.hpp"
+#include "KnowledgeBase.hpp"
 
 #define g_pSeriell CSeriell::Get()
 
