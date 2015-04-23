@@ -17,6 +17,7 @@ void CLidarScan::Scan () {
 			
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
 				m_nScanData[m_nScanStepCounter] = g_pSeriell->GetInfraredDistance ();
+			//std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 				g_pSeriell->MovePML (1);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pWiringPi->TimeSinceStart();

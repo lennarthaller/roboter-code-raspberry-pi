@@ -14,10 +14,13 @@ class CBasicFunktions : public TSingleton<CBasicFunktions>
   public:
   CBasicFunktions ();
   
-  void UpdateSensorData ();  
+  void UpdateSensorData (); 
+  void CountLoopTicks ();
   
   private:
-  double m_nTimeStampSinceLastCall;
+  double m_nTimeStampSinceLastCallSensorUpdate;
+  double m_nTimeStampSinceLastCallLoopTicks;
+  int 	 m_nLoopTicks;
   
 };
 

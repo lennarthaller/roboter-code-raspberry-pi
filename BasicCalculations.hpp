@@ -17,8 +17,6 @@ class CBasicCalculations : public TSingleton<CBasicCalculations>
 	void 	CalculatePositionFromOdometry ();
 	
 	private:
-	unsigned long m_nOldOdometryTicksLeft;
-	unsigned long m_nOldOdometryTicksRight;
 };
 
 #endif
