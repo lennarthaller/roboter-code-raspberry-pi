@@ -1,7 +1,7 @@
 #ifndef BASICFUNKTIONS_HPP
 #define BASICFUNKTIONS_HPP
 
-#include "WiringPi"
+#include "WiringPi.hpp"
 #include "Singleton.hpp"
 #include "KnowledgeBase.hpp"
 #include "Seriell.hpp"
@@ -12,10 +12,12 @@
 class CBasicFunktions : public TSingleton<CBasicFunktions>
 {
   public:
+  CBasicFunktions ();
+  
   void UpdateSensorData ();  
   
   private:
-  std::clock_t m_nTimeStampSinceLastCall;
+  double m_nTimeStampSinceLastCall;
   
 };
 

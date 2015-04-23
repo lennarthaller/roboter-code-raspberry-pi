@@ -15,7 +15,7 @@ class CLidarScan
 		
 	private:
 		int 	m_nScanData[100];
-		std::clock_t m_nTimeStampSinceLastCall;
+		long    m_nTimeStampSinceLastCall;
 		int		m_nScanStepCounter;
 		bool 	m_bScanActive;
 };

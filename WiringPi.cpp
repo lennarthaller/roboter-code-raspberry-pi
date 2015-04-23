@@ -1,6 +1,7 @@
 #include "WiringPi.hpp"
 
 int CWiringPi::InitWiringPi () {
+	
 Log_File->WriteTopic ("Init WiringPi", 1);
 
 if (wiringPiSetup () == -1) { //wiringPi initalisierung
@@ -35,6 +36,10 @@ float CWiringPi::GetCompassData () {
 	return static_cast<float>  (((wiringPiI2CReadReg8 (m_nCompassAdress, 2) << 8) | wiringPiI2CReadReg8 (m_nCompassAdress, 3)) / 10);
 }
 
-clock_t CWiringPi::TimeSinceStart () {
-	return  (clock () / (CLOCKS_PER_SEC/10000)); //gibt die vergangene Zeit seit Start in Millisekunden/10 zurück
+long CWiringPi::TimeSinceStart () {
+	timespec Time;
+	if (clock_gettime (CLOCK_REALTIME, &Time) == -1) {
+		std::cout << "ERROR: SYSTEM CLOCK OFFLINE" << std::endl;
+	}	
+	return (((Time.tv_sec - 1429623010) * 10000) + Time.tv_nsec / 100000);
 }

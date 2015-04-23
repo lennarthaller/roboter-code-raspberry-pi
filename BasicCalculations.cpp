@@ -76,22 +76,22 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	}
 }
 
-CalculatePositionFromOdometry () {
-	int nOdometryLeft = ((*(g_pKnowledgeBase->GetOdometryTick()) + *(g_pKnowledgeBase->GetOdometryTick()+3)) / 2) - m_nOldOdometryTicksLeft; //jeweils die Mittelwerte von beiden Lichtschranken auf einer seite minus den alten wert
-	int nOdometryRight = ((*(g_pKnowledgeBase->GetOdometryTick()+1) + *(g_pKnowledgeBase->GetOdometryTick()+2)) / 2) - m_nOldOdometryTicksRight;
+void CBasicCalculations::CalculatePositionFromOdometry () {
+	int nOdometryLeft = ((*(g_pKnowledgeBase->GetOdometryTicks()) + *(g_pKnowledgeBase->GetOdometryTicks()+3)) / 2) - m_nOldOdometryTicksLeft; //jeweils die Mittelwerte von beiden Lichtschranken auf einer seite minus den alten wert
+	int nOdometryRight = ((*(g_pKnowledgeBase->GetOdometryTicks()+1) + *(g_pKnowledgeBase->GetOdometryTicks()+2)) / 2) - m_nOldOdometryTicksRight;
 	
 	if (nOdometryLeft == nOdometryRight) { //Der Bot ist gerade aus gefahren
-		g_pKnowledgeBase->GetOdometryPosition.fX += nOdometryRight * cos (g_pKnowledgeBase->GetOdometryPosition.fX);
-		g_pKnowledgeBase->GetOdometryPosition.fY += nOdometryRight * sin (g_pKnowledgeBase->GetOdometryPosition.fY);
+		g_pKnowledgeBase->GetOdometryPosition()->fX += nOdometryRight * cos (g_pKnowledgeBase->GetOdometryPosition()->fX);
+		g_pKnowledgeBase->GetOdometryPosition()->fY += nOdometryRight * sin (g_pKnowledgeBase->GetOdometryPosition()->fY);
 	}else{ //Der Bot fährt nicht gerade aus
 		int n = (nOdometryLeft + nOdometryRight) / 2.0 / (nOdometryRight - nOdometryLeft);
 		
-		g_pKnowledgeBase->GetOdometryPosition.fX += n * (sin ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition.fTheta - sin (g_pKnowledgeBase->GetOdometryPosition.fTheta)))
-		g_pKnowledgeBase->GetOdometryPosition.fY += n * (cos ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition.fTheta - cos (g_pKnowledgeBase->GetOdometryPosition.fTheta)))
-		g_pKnowledgeBase->GetOdometryPosition.fTheta += (nOdometryRight-nOdometryLeft) / 0.335;
+		g_pKnowledgeBase->GetOdometryPosition()->fX += n * (sin ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition()->fTheta - sin (g_pKnowledgeBase->GetOdometryPosition()->fTheta)));
+		g_pKnowledgeBase->GetOdometryPosition()->fY += n * (cos ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition()->fTheta - cos (g_pKnowledgeBase->GetOdometryPosition()->fTheta)));
+		g_pKnowledgeBase->GetOdometryPosition()->fTheta += (nOdometryRight-nOdometryLeft) / 0.335;
 		
-		std::cout << g_pKnowledgeBase->GetOdometryPosition.fTheta << endl; //////
+		//std::cout << g_pKnowledgeBase->GetOdometryPosition()->fTheta << std::endl; //////DEBUG
 	}
-	m_nOldOdometryTicksLeft = (*(g_pKnowledgeBase->GetOdometryTick()) + *(g_pKnowledgeBase->GetOdometryTick()+3)) / 2;
-	m_nOldOdometryTicksRight = (*(g_pKnowledgeBase->GetOdometryTick()+1) + *(g_pKnowledgeBase->GetOdometryTick()+2)) / 2;
+	m_nOldOdometryTicksLeft = (*(g_pKnowledgeBase->GetOdometryTicks()) + *(g_pKnowledgeBase->GetOdometryTicks()+3)) / 2;
+	m_nOldOdometryTicksRight = (*(g_pKnowledgeBase->GetOdometryTicks()+1) + *(g_pKnowledgeBase->GetOdometryTicks()+2)) / 2;
 }

@@ -27,7 +27,7 @@ void CKnowledgeBase::SetScannerData (int nScanerData[]) {
 	}
 }
 
-void CKnowledgeBase::SetOdometryTicks (int nOdometryTicks[]) {
+void CKnowledgeBase::SetOdometryTicks (unsigned long nOdometryTicks[]) {
 	for (int i=0; i<4;i++) {
 		m_nOdometryTicks[i] += nOdometryTicks[i];
 	}
