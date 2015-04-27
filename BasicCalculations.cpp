@@ -58,8 +58,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
 	}else{
 		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
-	}
-	/**/
+	}*/
 	if ((nCounterRight >= 11)&&(nCounterLeft < 11)) {
 		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
 	} 

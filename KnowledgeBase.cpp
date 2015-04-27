@@ -40,6 +40,7 @@ void CKnowledgeBase::SetOdometryTicksSinceLastUpdate (int nOdometryTicks[]) {
 	for (int i=0; i<4;i++) {
 		m_nOdometryTicksSinceLastupdate[i] = nOdometryTicks[i];
 	}
+}
 
 void CKnowledgeBase::SetCurrentMotorPower (int nCurrentMotorPower, int nMotorNumber) {
 	m_nCurrentMotorPower[nMotorNumber-1] = nCurrentMotorPower;

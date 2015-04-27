@@ -22,7 +22,6 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	float 	m_fTargetDrivingAngle;
 	int 	m_nMainLoopTicksPerSecond;
 	int 	m_nNetworkStatus;
-	std::auto_ptr<Position> m_pOdometriePositionPtr;
 	int 	m_nCurrentMotorPower[4]; //0 = Motor 1..
 	float 	m_fCurrentBattteryVoltage;
 	
