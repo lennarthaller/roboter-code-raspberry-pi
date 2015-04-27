@@ -13,6 +13,7 @@ CNetwork::CNetwork () {
 int CNetwork::InitNetwork () {
 	Log_File->WriteTopic ("Netzwerk initialisierung", 1);
 	m_nSocketFromServer = socket(PF_INET, SOCK_STREAM, 0);
+	fcntl(m_nSocketFromServer, F_SETFL, O_NONBLOCK);
 		if (m_nSocketFromServer == -1) {
 			Log_File->Textout (RED, "Netzwerk Setup Fehlgeschlagen!");
 			return -1;
@@ -28,14 +29,13 @@ int CNetwork::InitNetwork () {
 }
 
 int CNetwork::ConnectToClient () {
-	if (listen(m_nSocketFromServer, 3) == -1) {
-		Log_File->Textout (RED, "Keine eingehende Verbindung.");
+	if (listen(m_nSocketFromServer, 3) != 0) {
+		Log_File->Textout (RED, "Keine eingehende Verbindung!");
 		return -1;
 	}
 	
 	m_nSocketFromClient = accept(m_nSocketFromServer, (struct sockaddr*) &AdressfromClient, &SizeOfClientSocket);
 	if (m_nSocketFromClient == -1) {
-		Log_File->Textout (RED, "Fehler bei der verbindung mit dem Client!");
 		return -1;
 	}else{
 		Log_File->Textout (BLACK, "Netzwerkverbinung hergestellt.");
