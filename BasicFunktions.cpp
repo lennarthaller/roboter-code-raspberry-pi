@@ -18,6 +18,15 @@ void CBasicFunktions::UpdateSensorData () {
 		//g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
 		m_nTimeStampSinceLastCallSensorUpdate = g_pWiringPi->TimeSinceStart();
 		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage); //battery voltage updated
+		
+		if(g_pKnowledgeBase->GetNetworkStatus() == 0) { //connect to client
+			if (g_pNetwork->connect == 1) {
+				g_pKnowledgeBase->SetNetworkStatus (1);
+			}
+		}
+		if (g_pKnowledgeBase->GetNetworkStatus() == 1) {
+			NetworkProtocol.SendKnowledgeBase ();
+		}
 	}
 }
 

@@ -21,6 +21,10 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	float 	m_fCalculatedDrivingDirection;
 	float 	m_fTargetDrivingAngle;
 	int 	m_nMainLoopTicksPerSecond;
+	int 	m_nNetworkStatus;
+	std::auto_ptr<Position> m_pOdometriePositionPtr;
+	int 	m_nCurrentMotorPower[4]; //0 = Motor 1..
+	float 	m_fCurrentBattteryVoltage;
 	
 	public:
 	CKnowledgeBase ();
@@ -41,23 +45,9 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	void 	SetMainLoopTicksPerSecond (int nTicksPerSecond) {m_nMainLoopTicksPerSecond = nTicksPerSecond;}
 	int 	GetMainLoopTicksPerSecond () {return m_nMainLoopTicksPerSecond;}
 	void 	SetCurrentBatteryVoltage (float fCurrentBattteryVoltage) {m_fCurrentBattteryVoltage = fCurrentBattteryVoltage;}
-	float 	GetCurrentBatteryVoltage () {return m_fCurrentBatteryVoltage;}
-	
-	private:
-	struct Position {
-		float fX;
-		float fY;
-		float fTheta; //in radian! (counterclockwise from x-axis)
-	}
-	Position OdometryPosition;
-	
-	std::auto_ptr<Position> m_pOdometriePositionPtr;
-	unsigned long m_nOdometryTicks[4];
-	int 	m_nCurrentMotorPower[4]; //0 = Motor 1..
-	int 	m_nScannerData[100];
-	float 	m_fCalculatedDrivingDirection;
-	float 	m_fTargetDrivingAngle;
-	float 	m_fCurrentBattteryVoltage;
+	float 	GetCurrentBatteryVoltage () {return m_fCurrentBattteryVoltage;}
+	int 	GetNetworkStatus () {return m_nNetworkStatus;}
+	void 	SetNetworkStatus (int nNetworkStatus) {m_nNetworkStatus = nNetworkStatus;}
 };
 
 #endif

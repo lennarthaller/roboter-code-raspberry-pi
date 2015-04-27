@@ -2,6 +2,7 @@
 #define NETWORK_HPP
 
 #include <iostream>
+#include <fcntl.h>
 #include "Singleton.hpp"
 #include "Logfile.hpp"
 

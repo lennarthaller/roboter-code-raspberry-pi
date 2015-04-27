@@ -1,3 +1,6 @@
+#ifndef LIDARSCAN_HPP
+#define LIDARSCAN_HPP
+
 #include "WiringPi.hpp"
 #include "Seriell.hpp"
 #include "KnowledgeBase.hpp"
@@ -19,3 +22,5 @@ class CLidarScan
 		int		m_nScanStepCounter;
 		bool 	m_bScanActive;
 };
+
+#endif

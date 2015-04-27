@@ -8,6 +8,7 @@ CKnowledgeBase::CKnowledgeBase () {
 	m_fTargetDrivingAngle = 0;
 	m_nMainLoopTicksPerSecond = 0;
 	m_fCurrentBattteryVoltage = 0.0;
+	m_nNetworkStatus = 0;
 
 	
 	for (int i=0;i<100;i++) {
