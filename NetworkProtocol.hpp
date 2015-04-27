@@ -2,6 +2,7 @@
 #define NETWORKPROTOCOL
 
 #include "Network.hpp"
+#include KnowledgeBase.hpp"
 
 class CNetworkProtocol
 {

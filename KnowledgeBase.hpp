@@ -45,7 +45,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	void 	SetMainLoopTicksPerSecond (int nTicksPerSecond) {m_nMainLoopTicksPerSecond = nTicksPerSecond;}
 	int 	GetMainLoopTicksPerSecond () {return m_nMainLoopTicksPerSecond;}
 	void 	SetCurrentBatteryVoltage (float fCurrentBattteryVoltage) {m_fCurrentBattteryVoltage = fCurrentBattteryVoltage;}
-	float 	GetCurrentBatteryVoltage () {return m_fCurrentBatteryVoltage;}
+	float 	GetCurrentBatteryVoltage () {return m_fCurrentBattteryVoltage;}
 	int 	GetNetworkStatus () {return m_nNetworkStatus;}
 	void 	SetNetworkStatus (int nNetworkStatus) {m_nNetworkStatus = nNetworkStatus;}
 };
