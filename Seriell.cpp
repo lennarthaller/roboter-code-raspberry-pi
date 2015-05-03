@@ -26,8 +26,7 @@ int CSeriell::GetInfraredDistance () {
 	if (g_pWiringPi->ReceiveSeriellData () == 0) {
 		nData = g_pWiringPi->ReceiveSeriellData ();
 		if (nData == 255) {
-			Log_File->WriteTopic ("Datenuebertragung Atmega32 - Sensor", 1);
-			Log_File->Textout (RED, "Atmega32 hat keine Verbinung zu dem Infrarotsensor.");
+			std::cout << "FEHLERHAFTE IR MESSUNG!" << std::endl;
 			return -1;
 		}else{
 		return nData;

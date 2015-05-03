@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdint.h>
 #include <unistd.h>
 
 #define g_pNetwork CNetwork::Get()
@@ -24,11 +25,13 @@ class CNetwork : public TSingleton<CNetwork>
 	CNetwork (void);
 	int InitNetwork (void);
 	int ConnectToClient (void);
-	int Send (int nData);
+	int Send (void);
 	int Receive (void);
+	void CreatePackage (uint16_t nData);
   private:
 	int m_nSocketFromServer;
 	int m_nSocketFromClient;
+	int m_nBytes;
 	socklen_t SizeOfClientSocket;
 	char m_chBuffer[BUF_SIZE];
 	

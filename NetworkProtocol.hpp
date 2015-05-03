@@ -3,6 +3,8 @@
 
 #include "Network.hpp"
 #include "KnowledgeBase.hpp"
+#include <iostream> /////DEBUG
+#include <stdint.h>
 
 class CNetworkProtocol
 {

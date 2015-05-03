@@ -9,6 +9,8 @@
 #include "BasicCalculations.hpp"
 #include "NetworkProtocol.hpp"
 
+#include <iostream>
+
 #define g_pCBasicFunktions CBasicFunktions::Get()
 
 class CBasicFunktions : public TSingleton<CBasicFunktions>

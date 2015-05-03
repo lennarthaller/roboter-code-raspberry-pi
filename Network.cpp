@@ -3,6 +3,7 @@
 CNetwork::CNetwork () {
 	m_nSocketFromServer = 0;
 	m_nSocketFromClient = 0;
+	m_nBytes = 0;
 	SizeOfClientSocket = sizeof(AdressfromClient);
 	
 	AdressFromServer.sin_addr.s_addr = INADDR_ANY;
@@ -12,7 +13,7 @@ CNetwork::CNetwork () {
 	
 int CNetwork::InitNetwork () {
 	Log_File->WriteTopic ("Netzwerk initialisierung", 1);
-	m_nSocketFromServer = socket(PF_INET, SOCK_STREAM, 0);
+	m_nSocketFromServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	fcntl(m_nSocketFromServer, F_SETFL, O_NONBLOCK);
 		if (m_nSocketFromServer == -1) {
 			Log_File->Textout (RED, "Netzwerk Setup Fehlgeschlagen!");
@@ -39,24 +40,30 @@ int CNetwork::ConnectToClient () {
 		return -1;
 	}else{
 		Log_File->Textout (BLACK, "Netzwerkverbinung hergestellt.");
+		std::cout << "Verbindung hergestellt." << std::endl; /////DEBUG
 		return 1;
 	}
 }
 
-int CNetwork::Send (int nData) {
-	nData += 1024;
-	nData = htons (nData);
-
-	memcpy (&m_chBuffer, &nData, sizeof(nData));
-
-		if (send(m_nSocketFromClient, m_chBuffer, strlen(m_chBuffer), 0) == -1) {
+int CNetwork::Send (void) {
+		if (send(m_nSocketFromClient, m_chBuffer, m_nBytes, 0) == -1) {
 			Log_File->Textout (RED, "Fehler bei dem Senden von Netzwerkdaten!");
 			return -1;
 		}else{
+			for (int i=0; i<m_nBytes; i++) {
+				m_chBuffer[i] = 0;
+			}
+			m_nBytes = 0;
 			return 1;
 		}
 }
 
+void CNetwork::CreatePackage (uint16_t nData) {
+	m_chBuffer[m_nBytes] = nData;
+	m_nBytes ++;
+	m_chBuffer[m_nBytes] = (nData >> 8);
+	m_nBytes ++;
+}
 int CNetwork::Receive () {
 	return 1;
 }
