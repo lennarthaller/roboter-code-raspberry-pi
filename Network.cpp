@@ -59,6 +59,7 @@ int CNetwork::Send (void) {
 }
 
 void CNetwork::CreatePackage (uint16_t nData) {
+	nData += 1024;
 	m_chBuffer[m_nBytes] = nData;
 	m_nBytes ++;
 	m_chBuffer[m_nBytes] = (nData >> 8);

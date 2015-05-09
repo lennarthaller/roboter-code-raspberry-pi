@@ -48,6 +48,7 @@ int main () {
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 		//cout << endl;
 		//usleep (2000000); 
+		
 		Scanner.Scan();
 		g_pCBasicFunktions->UpdateSensorData ();
 		g_pCBasicFunktions->CountLoopTicks ();
