@@ -26,7 +26,7 @@ int CSeriell::GetInfraredDistance () {
 	if (g_pWiringPi->ReceiveSeriellData () == 0) {
 		nData = g_pWiringPi->ReceiveSeriellData ();
 		if (nData == 255) {
-			std::cout << "FEHLERHAFTE IR MESSUNG!" << std::endl;
+			//std::cout << "FEHLERHAFTE IR MESSUNG!" << std::endl;
 			return -1;
 		}else{
 		return nData;
