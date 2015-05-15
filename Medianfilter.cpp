@@ -3,9 +3,6 @@
 CMedianfilter::CMedianfilter (int SizeOfFilter, int NumberOfDatapoints) {
 	m_nSizeOfFilter = SizeOfFilter;
 	m_nNumberOfDatapoints = NumberOfDatapoints;
-	if (NumberOfDatapoints > 100) {
-		std::cout << "ZU VIELE DATEN IM MEDIANFILTER!" << std::endl; /////DEBUG
-	}
 }
 
  void CMedianfilter::FilterData (int Data[]) {

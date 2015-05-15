@@ -15,8 +15,8 @@ class CMedianfilter
 	private:
 	int m_nSizeOfFilter;
 	int m_nNumberOfDatapoints;
-	int m_nData[100]; 
-	int m_nFilteredData[100];
+	int m_nData[]; 
+	int m_nFilteredData[];
 };
 
 #endif
