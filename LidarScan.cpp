@@ -5,6 +5,8 @@ CLidarScan::CLidarScan () {
 	m_nScanStepCounter = 0;
 	m_bScanActive = true;
 	
+	Medianfilter = new CMedianfilter (5, 100);
+	
 	for (int i=0;i<100;i++) {
 		m_nScanData[i] = 0;
 	}
@@ -26,7 +28,8 @@ void CLidarScan::Scan () {
 				m_nScanStepCounter = 0;
 				m_bScanActive = false;
 				m_nTimeStampSinceLastCall = 0;
-				g_pKnowledgeBase->SetScannerData(m_nScanData);
+				Medianfilter->FilterData (m_nScanData);
+				g_pKnowledgeBase->SetScannerData(Medianfilter->GetFilteredData());
 				g_pBasicCalculations->CalculateDrivingDirection();
 			}
 		}

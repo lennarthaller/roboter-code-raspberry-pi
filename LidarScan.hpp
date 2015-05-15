@@ -5,6 +5,7 @@
 #include "Seriell.hpp"
 #include "KnowledgeBase.hpp"
 #include "BasicCalculations.hpp" 
+#include "Medianfilter.hpp"
 
 #include <iostream>
 #include <unistd.h>
@@ -21,6 +22,7 @@ class CLidarScan
 		long    m_nTimeStampSinceLastCall;
 		int		m_nScanStepCounter;
 		bool 	m_bScanActive;
+		CMedianfilter *Medianfilter;
 };
 
 #endif
