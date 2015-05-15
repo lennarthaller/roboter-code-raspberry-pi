@@ -11,8 +11,8 @@ void CNetworkProtocol::SendKnowledgeBase () {
 		g_pNetwork->CreatePackage (*(g_pKnowledgeBase->GetCurrentMotorPower()+i)); //Motor Power (4 ints)
 	}
 	
-	g_pNetwork->CreatePackage (static_cast <uint16_t> (g_pKnowledgeBase->GetCalculatedDrivingDirection()*100)); //Calculated direction * 100 (1 int)
-	g_pNetwork->CreatePackage (static_cast <uint16_t> (g_pKnowledgeBase->GetTargetDrivingDirection()*100)); //Target direction * 100 (1 int)
+	g_pNetwork->CreatePackage (static_cast <uint16_t> ((g_pKnowledgeBase->GetCalculatedDrivingDirection()+90)*100)); //Calculated direction * 100 (1 int)
+	g_pNetwork->CreatePackage (static_cast <uint16_t> ((g_pKnowledgeBase->GetTargetDrivingDirection()+90)*100)); //Target direction * 100 (1 int)
 	g_pNetwork->CreatePackage (static_cast <uint16_t> ((g_pKnowledgeBase->GetCurrentBatteryVoltage()*100))); //operating voltage * 100 (1 int)
 	g_pNetwork->CreatePackage (static_cast <uint16_t> (g_pKnowledgeBase->GetMainLoopTicksPerSecond()/10000)); //loop ticks /10000 (1 int)
 	
