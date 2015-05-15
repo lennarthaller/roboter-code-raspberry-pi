@@ -28,6 +28,9 @@ void CBasicFunktions::UpdateSensorData () {
 		}
 		m_nTimeStampSinceLastCallSensorUpdate = g_pWiringPi->TimeSinceStart();
 	}
+	
+	std::cout << "CDD: " << g_pKnowledgeBase->GetCalculatedDrivingDirection () << std::endl; //////DEBUG
+	
 }
 
 void CBasicFunktions::CountLoopTicks () {
