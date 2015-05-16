@@ -21,7 +21,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	float 	m_fCalculatedDrivingDirection;
 	float 	m_fTargetDrivingAngle;
 	int 	m_nMainLoopTicksPerSecond;
-	int 	m_nNetworkStatus;
+	bool 	m_bIsConnected;
 	int 	m_nCurrentMotorPower[4]; //0 = Motor 1..
 	float 	m_fCurrentBattteryVoltage;
 	
@@ -45,8 +45,8 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	int 	GetMainLoopTicksPerSecond () {return m_nMainLoopTicksPerSecond;}
 	void 	SetCurrentBatteryVoltage (float fCurrentBattteryVoltage) {m_fCurrentBattteryVoltage = fCurrentBattteryVoltage;}
 	float 	GetCurrentBatteryVoltage () {return m_fCurrentBattteryVoltage;}
-	int 	GetNetworkStatus () {return m_nNetworkStatus;}
-	void 	SetNetworkStatus (int nNetworkStatus) {m_nNetworkStatus = nNetworkStatus;}
+	bool 	GetIsConnected() {return m_bIsConnected;}
+	void 	SetIsConnected (bool bNetworkStatus) {m_bIsConnected = bNetworkStatus;}
 };
 
 #endif
