@@ -42,5 +42,5 @@ long CWiringPi::TimeSinceStart () {
 		std::cout << "ERROR: SYSTEM CLOCK OFFLINE" << std::endl;
 	}	
 	//return (((Time.tv_sec - 1429623010) * 10000) + Time.tv_nsec / 100000);
-	return (((Time.tv_sec - 1429823010) * 10000) + Time.tv_nsec / 100000);
+	return (((Time.tv_sec - 1430823010) * 10000) + Time.tv_nsec / 100000);
 }
