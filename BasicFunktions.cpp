@@ -2,28 +2,34 @@
 
 CBasicFunktions::CBasicFunktions () {
 	m_nTimeStampSinceLastCallSensorUpdate = 0;
+	m_nTimeStampSinceLastCallSensorUpdateOdometry = 0;
 	m_nTimeStampSinceLastCallLoopTicks = 0;
 	m_nLoopTicks = 0;
 }
 
 void CBasicFunktions::UpdateSensorData () {
-	int nOdometryData[4];
+
 	
-	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pWiringPi->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?
+	if (m_nTimeStampSinceLastCallSensorUpdateOdometry + 200 < g_pWiringPi->TimeSinceStart()) {
+		int nOdometryData[4];
+		
 		for(int i=0;i<4;i++) {
 			nOdometryData[i] = g_pSeriell->GetPhotoSensorData(i+1);
 		}
+		
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
 		g_pKnowledgeBase->SetOdometryTicksSinceLastUpdate(nOdometryData);
-		//g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
+		//g_pBasicCalculations->CalculatePositionFromOdometry (200); //Neue Position auf grund der odometrie berechnen
+	}
+	
+	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pWiringPi->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?
 		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
 		
-		if(g_pKnowledgeBase->GetNetworkStatus() == 0) { //connect to client
+		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
 			if (g_pNetwork->ConnectToClient() == 1) {
-				g_pKnowledgeBase->SetNetworkStatus (1);
+				g_pKnowledgeBase->SetIsConnected(true);
 			}
-		}
-		if (g_pKnowledgeBase->GetNetworkStatus() == 1) {
+		}else{
 			NetworkProtocol.SendKnowledgeBase ();
 		}
 		m_nTimeStampSinceLastCallSensorUpdate = g_pWiringPi->TimeSinceStart();
