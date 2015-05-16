@@ -36,7 +36,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	float 	GetCalculatedDrivingDirection () {return m_fCalculatedDrivingDirection;}
 	void 	SetTargetDrivingDirection (float fDirection) {m_fTargetDrivingAngle = fDirection;}
 	float 	GetTargetDrivingDirection () {return m_fTargetDrivingAngle;}
-	Position* GetOdometryPosition () {return &OdometryPosition;}
+	Position* OdometryPosition () {return &OdometryPosition;}
 	void 	SetOdometryTicks (int nOdometryTicks[]);
 	unsigned long* 	GetOdometryTicks () {return m_nOdometryTicks;}
 	void 	SetOdometryTicksSinceLastUpdate (int nOdometryTicks[]);

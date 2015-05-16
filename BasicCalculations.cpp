@@ -1,6 +1,9 @@
 #include "BasicCalculations.hpp"
 
 CBasicCalculations::CBasicCalculations () {
+	m_fLegthOfAxis = 34.4;
+	m_fTireCircumference = 61.26f;
+	m_nTicksPerTurn = 32;
 }
 
 void CBasicCalculations::CalculateDrivingDirection () {
@@ -80,34 +83,32 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	}
 }
 
-void CBasicCalculations::CalculatePositionFromOdometry () {
-	int nOdometryLeft = (*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3) +  *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2)) / 2; //jeweils die Mittelwerte von beiden Lichtschranken auf einer seite minus den alten wert
-	int nOdometryRight = (*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()) +  *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+4)) / 2;
+void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
+	float fVL = 0.0f;
+	float fVR = 0.0f;
+	const float fElapsedTime = ((1/10000) * nDeltaT);
+	float fDeltaTheta = 0.0f;
 	
-	std::cout << *(g_pKnowledgeBase->GetOdometryTicks()) << std::endl; ///////DEBUG
-	std::cout << *(g_pKnowledgeBase->GetOdometryTicks()+1) << std::endl;
-	std::cout << *(g_pKnowledgeBase->GetOdometryTicks()+2) << std::endl;
-	std::cout << *(g_pKnowledgeBase->GetOdometryTicks()+3) << std::endl;
-	std::cout << "--------" << std::endl;
-	std::cout << nOdometryLeft << std::endl;
-	std::cout << nOdometryRight << std::endl;
-	std::cout << std::endl;
+	const float fXPosOld = g_pKnowledgeBase->OdometryPosition()->fX;
+	const float fYposOld = g_pKnowledgeBase->OdometryPosition()->fY;
+	const float fThetaOld = g_pKnowledgeBase->OdometryPosition()->fTheta;
 	
-	if (nOdometryLeft == nOdometryRight) { //Der Bot ist gerade aus gefahren
-		g_pKnowledgeBase->GetOdometryPosition()->fX += nOdometryRight * cos (g_pKnowledgeBase->GetOdometryPosition()->fX);
-		g_pKnowledgeBase->GetOdometryPosition()->fY += nOdometryRight * sin (g_pKnowledgeBase->GetOdometryPosition()->fY);
-	}else{ //Der Bot fährt nicht gerade aus
-		int n = (nOdometryLeft + nOdometryRight) / 2.0 / (nOdometryRight - nOdometryLeft);
-		
-		g_pKnowledgeBase->GetOdometryPosition()->fX += n * (sin ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition()->fTheta - sin (g_pKnowledgeBase->GetOdometryPosition()->fTheta)));
-		g_pKnowledgeBase->GetOdometryPosition()->fY += n * (cos ((nOdometryRight-nOdometryLeft) / g_pKnowledgeBase->GetOdometryPosition()->fTheta - cos (g_pKnowledgeBase->GetOdometryPosition()->fTheta)));
-		g_pKnowledgeBase->GetOdometryPosition()->fTheta += (nOdometryRight-nOdometryLeft) / 0.335;
-		
-		while (g_pKnowledgeBase->GetOdometryPosition()->fTheta > 3.1415)
-			g_pKnowledgeBase->GetOdometryPosition()->fTheta -= (2*3.1415);
-		while (g_pKnowledgeBase->GetOdometryPosition()->fTheta < 3.1415)
-			g_pKnowledgeBase->GetOdometryPosition()->fTheta += (2*3.1415);
-		
-		std::cout << g_pKnowledgeBase->GetOdometryPosition()->fTheta << std::endl; //////DEBUG
-	}
+	float fX = 0.0f;
+	float fY = 0.0f;
+	float fTheta = 0.0f;
+	
+	fVL = (((ODOMETRYLEFT1 + ODOMETRYLEFT2) / 2) * m_fTireCircumference) / m_nTicksPerTurn;
+	fVL *= fElapsedTime;
+	fVR = (((ODOMETRYRIGH1 + ODOMETRYRIGHT2) / 2) * m_fTireCircumference) / m_nTicksPerTurn;
+	fVR *= fElapsedTime;
+	
+	fDeltaTheta = (fVL - fVR) / m_fLegthOfAxis;
+	
+	fX = fXPosOld + (((fVL+fVR)/2) * fElapsedTime * sin (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
+	fY = fYposOld + (((fVL+fVR)/2) * fElapsedTime * cos (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
+	fTheta = fThetaOld + (fDeltaTheta * fElapsedTime);
+	
+	g_pKnowledgeBase->OdometryPosition()->fX = fX;
+	g_pKnowledgeBase->OdometryPosition()->fY = fY;
+	g_pKnowledgeBase->OdometryPosition()->fTheta = fTheta;
 }

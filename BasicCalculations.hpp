@@ -4,7 +4,7 @@
 #include "KnowledgeBase.hpp"
 #include <iostream>
 
-#include <cmath>
+#include <math.h>
 
 #define g_pBasicCalculations CBasicCalculations::Get()
 
@@ -14,9 +14,12 @@ class CBasicCalculations : public TSingleton<CBasicCalculations>
 	CBasicCalculations ();
 	
 	void 	CalculateDrivingDirection ();
-	void 	CalculatePositionFromOdometry ();
+	void 	CalculatePositionFromOdometry (const int nDeltaT);
 	
 	private:
+	float m_fLegthOfAxis;
+	float m_fTireCircumference;
+	int m_nTicksPerTurn;
 };
 
 #endif
