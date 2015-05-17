@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+#include <iostream>
 
 class CMedianfilter
 {
@@ -15,8 +16,7 @@ class CMedianfilter
 	private:
 	int m_nSizeOfFilter;
 	int m_nNumberOfDatapoints;
-	int m_nData[]; 
-	int m_nFilteredData[];
+	int m_nFilteredData[100];
 };
 
 #endif
