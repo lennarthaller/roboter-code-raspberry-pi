@@ -14,7 +14,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 		float fTheta; //in radian! (counterclockwise from x-axis)
 	} Position;
 	
-	Position OdometryPosition;
+	Position OdometryPositionData;
 	unsigned long m_nOdometryTicks[4];
 	int		m_nOdometryTicksSinceLastupdate[4];
 	int 	m_nScannerData[100];
@@ -36,7 +36,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	float 	GetCalculatedDrivingDirection () {return m_fCalculatedDrivingDirection;}
 	void 	SetTargetDrivingDirection (float fDirection) {m_fTargetDrivingAngle = fDirection;}
 	float 	GetTargetDrivingDirection () {return m_fTargetDrivingAngle;}
-	Position* OdometryPosition () {return &OdometryPosition;}
+	Position* OdometryPosition () {return &OdometryPositionData;}
 	void 	SetOdometryTicks (int nOdometryTicks[]);
 	unsigned long* 	GetOdometryTicks () {return m_nOdometryTicks;}
 	void 	SetOdometryTicksSinceLastUpdate (int nOdometryTicks[]);
