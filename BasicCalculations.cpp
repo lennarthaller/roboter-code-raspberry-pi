@@ -97,9 +97,9 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	float fY = 0.0f;
 	float fTheta = 0.0f;
 	
-	fVL = (((ODOMETRYLEFT1 + ODOMETRYLEFT2) / 2) * m_fTireCircumference) / m_nTicksPerTurn;
+	fVL = ((((*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+1) + (*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2)) / 2) * m_fTireCircumference) / m_nTicksPerTurn;
 	fVL *= fElapsedTime;
-	fVR = (((ODOMETRYRIGH1 + ODOMETRYRIGHT2) / 2) * m_fTireCircumference) / m_nTicksPerTurn;
+	fVR = ((((*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+0) + (*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2) * m_fTireCircumference) / m_nTicksPerTurn;
 	fVR *= fElapsedTime;
 	
 	fDeltaTheta = (fVL - fVR) / m_fLegthOfAxis;
