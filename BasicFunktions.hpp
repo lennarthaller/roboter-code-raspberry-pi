@@ -24,6 +24,7 @@ class CBasicFunktions : public TSingleton<CBasicFunktions>
   private:
   double m_nTimeStampSinceLastCallSensorUpdate;
   double m_nTimeStampSinceLastCallLoopTicks;
+  double m_nTimeStampSinceLastCallSensorUpdateOdometry;
   int 	 m_nLoopTicks;
   
   CNetworkProtocol NetworkProtocol;
