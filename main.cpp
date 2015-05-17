@@ -17,9 +17,7 @@ int main () {
 	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
-	
-	int nSeriellData[2];
-	int nDaten = 0;
+
 	if (g_pWiringPi->InitWiringPi() != 1) {
 		cout << "Fehler" << endl;
 	}else{
