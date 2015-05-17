@@ -10,7 +10,7 @@ CBasicFunktions::CBasicFunktions () {
 void CBasicFunktions::UpdateSensorData () {
 
 	
-	if (m_nTimeStampSinceLastCallSensorUpdateOdometry + 500 < g_pWiringPi->TimeSinceStart()) {
+	if (m_nTimeStampSinceLastCallSensorUpdateOdometry + 1000 < g_pWiringPi->TimeSinceStart()) {
 		int nOdometryData[4];
 		
 		for(int i=0;i<4;i++) {
@@ -19,11 +19,13 @@ void CBasicFunktions::UpdateSensorData () {
 		
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
 		g_pKnowledgeBase->SetOdometryTicksSinceLastUpdate(nOdometryData);
-		//g_pBasicCalculations->CalculatePositionFromOdometry (200); //Neue Position auf grund der odometrie berechnen
+		g_pBasicCalculations->CalculatePositionFromOdometry (500); //Neue Position auf grund der odometrie berechnen
 		m_nTimeStampSinceLastCallSensorUpdateOdometry = g_pWiringPi->TimeSinceStart();
 	}
 	
 	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pWiringPi->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?
+		std::cout << "X: " << g_pKnowledgeBase->OdometryPosition()->fX << std::endl;
+	
 		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
 		
 		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
