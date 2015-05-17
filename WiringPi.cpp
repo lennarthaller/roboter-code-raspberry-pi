@@ -10,7 +10,7 @@ if (wiringPiSetup () == -1) { //wiringPi initalisierung
   }else{
 	Log_File->Textout (BLACK, "WiringPi initialisiert.");
   }
-  m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 9600); //initalisierung der rs232 Schnittstelle
+  m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 38400); //initalisierung der rs232 Schnittstelle
   m_nCompassAdress = wiringPiI2CSetup (0x60); //initalisieren des cmps10
 return 1;
 }
