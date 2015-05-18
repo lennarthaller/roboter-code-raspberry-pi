@@ -20,7 +20,10 @@ int main () {
 
 	if (g_pWiringPi->InitWiringPi() != 1) {
 		cout << "Fehler" << endl;
-	}else{
+	}
+	
+	if (g_pWiringPi->InitTimer() != 1) {
+		cout << "Fehler" << endl;
 	}
 	
 	if (g_pNetwork->InitNetwork () != 1) {

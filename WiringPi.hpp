@@ -21,10 +21,12 @@ class CWiringPi : public TSingleton<CWiringPi>
   int SeriellDataAvailable (void);
   float GetCompassData (void);
   long TimeSinceStart (void);
+  int InitTimer (void);
   
   private:
   int m_nOwnSeriellAdress;
   int m_nCompassAdress;
+  unsigned long long m_nTimerToZero;
 };
 
 #endif
