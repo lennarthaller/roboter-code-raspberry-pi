@@ -40,7 +40,6 @@ int CSeriell::GetInfraredDistance () {
 }
 
 int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
-	int nSeriellData[2];
 	
 	if ((nPhotoSensor < 1)||(nPhotoSensor > 4)) {
 		std::cout << "FALSCHE LICHTSCHRANKEN NUMMER!" << std::endl;
