@@ -25,7 +25,7 @@ int CNetwork::InitNetwork () {
 		return -1;
 	}
 	
-	Log_File->Textout (BLACK, "Network initialized..");
+	Log_File->Textout (BLACK, "Network resources initialized.");
 	return 1;
 }
 
