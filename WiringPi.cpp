@@ -5,10 +5,10 @@ int CWiringPi::InitWiringPi () {
 Log_File->WriteTopic ("Init WiringPi", 1);
 
 if (wiringPiSetup () == -1) { //wiringPi initalisierung
-	Log_File->Textout (RED, "WiringPi Setup Fehlgeschlagen!");
+	Log_File->Textout (RED, "Failed to initialize WiringPi!");
 	return -1;
   }else{
-	Log_File->Textout (BLACK, "WiringPi initialisiert.");
+	Log_File->Textout (BLACK, "WiringPi initialized.");
   }
   m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 38400); //initalisierung der rs232 Schnittstelle
   m_nCompassAdress = wiringPiI2CSetup (0x60); //initalisieren des cmps10

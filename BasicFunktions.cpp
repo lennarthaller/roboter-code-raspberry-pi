@@ -8,8 +8,6 @@ CBasicFunktions::CBasicFunktions () {
 }
 
 void CBasicFunktions::UpdateSensorData () {
-
-	
 	if (m_nTimeStampSinceLastCallSensorUpdateOdometry + 1000 < g_pWiringPi->TimeSinceStart()) {
 		int nOdometryData[4];
 		
@@ -37,9 +35,6 @@ void CBasicFunktions::UpdateSensorData () {
 		}
 		m_nTimeStampSinceLastCallSensorUpdate = g_pWiringPi->TimeSinceStart();
 	}
-	
-	//std::cout << "CDD: " << g_pKnowledgeBase->GetCalculatedDrivingDirection () << std::endl; //////DEBUG
-	
 }
 
 void CBasicFunktions::CountLoopTicks () {

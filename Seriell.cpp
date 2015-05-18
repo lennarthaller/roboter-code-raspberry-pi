@@ -6,8 +6,8 @@ int CSeriell::DataAvailableNoTimeOut () {
 
 	while (g_pWiringPi->SeriellDataAvailable() < 1) {
 		if (nTimeStamp+200 < g_pWiringPi->TimeSinceStart()) {
-			Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-			Log_File->Textout (RED, "Timeout bei dem Uebertragen von Daten.");
+			Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+			Log_File->Textout (RED, "Communication error: timeout.");
 			return -1;
 		}
 	}
@@ -26,21 +26,20 @@ int CSeriell::GetInfraredDistance () {
 	if (g_pWiringPi->ReceiveSeriellData () == 0) {
 		nData = g_pWiringPi->ReceiveSeriellData ();
 		if (nData == 255) {
-			Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-			Log_File->Textout (RED, "Atemega 32 hat keine Verbindung mit dem Sensor!");
+			Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+			Log_File->Textout (RED, "Atemega 32 Failed to connect to the IR sensor!");
 			return -1;
 		}else{
 		return nData;
 		}
 	}else{
-		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
+		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		Log_File->Textout (RED, "Communication error.");
 		return -1;
 	}
 }
 
 int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
-	
 	if ((nPhotoSensor < 1)||(nPhotoSensor > 4)) {
 		std::cout << "FALSCHE LICHTSCHRANKEN NUMMER!" << std::endl;
 		return -1;
@@ -55,8 +54,8 @@ int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 	if (g_pWiringPi->ReceiveSeriellData () == nPhotoSensor) {
 		return g_pWiringPi->ReceiveSeriellData ();
 	}else{
-		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
+		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		Log_File->Textout (RED, "Communication error.");
 		return -1;
 	}
 }
@@ -77,15 +76,15 @@ float CSeriell::GetBatteryVoltage () {
 		fData = (nSeriellData[1] << 8 ) | nSeriellData[0];
 		
 		if (fData == 255) {
-			Log_File->WriteTopic ("Datenuebertragung Atmega32 - Sensor", 1);
-			Log_File->Textout (RED, "ATmega32 kann die Batteriespannung nicht messen.");
+			Log_File->WriteTopic ("Communication Atmega32 - Sensor", 1);
+			Log_File->Textout (RED, "ATmega32 failed to measure the battary voltage.");
 			return -1;
 		}else{
 		return (fData*0.028); //Batteriespannung berechnen
 		}
 	}else{
-		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
+		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		Log_File->Textout (RED, "Communication error.");
 		return -1;
 	}
 }
@@ -116,8 +115,8 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		g_pWiringPi->SendSeriellInt (nSeriellData[0]);
 		g_pWiringPi->SendSeriellInt (nSeriellData[1]);
 	}else{
-		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
+		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		Log_File->Textout (RED, "Communication error.");
 		return -1;
 	}
 	return 1;
@@ -138,8 +137,8 @@ int CSeriell::MovePML (const int nDirection) { //1 Dreht das PML in Fahrtrichtun
 	if (g_pWiringPi->ReceiveSeriellData () == 20) {
 		g_pWiringPi->SendSeriellInt (nDirection);
 	}else{
-		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
+		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		Log_File->Textout (RED, "Communication error.");
 		return -1;
 	}
 	return 1;
