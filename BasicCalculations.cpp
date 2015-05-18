@@ -10,11 +10,11 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	const int nPointsRequired = 13;
 	
 	int nInfraredData[100];
-	int nDrivingAngle = static_cast<int>(g_pKnowledgeBase->GetTargetDrivingDirection());
+	float fDrivingAngle = g_pKnowledgeBase->GetTargetDrivingDirection();
 	int nCounterRight = 0;
 	int nCounterLeft = 0;
 	int nAverage = 0;
-	int nStartForSearching = 50 + static_cast<int>(nDrivingAngle/1.8);
+	int nStartForSearching = 50 + static_cast<int>(fDrivingAngle/1.8);
 	int i = 0;
 	int nDrivingDirectionRight = 0;
 	int nDrivingDirectionLeft = 0;
@@ -36,7 +36,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 			nCounterRight ++;
 			nStepsRequiredRight ++;
 			if (nCounterRight == nPointsRequired) {
-				nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
+				nDrivingDirectionRight = (nStartForSearching + i - 55) *1.8;
 				break;
 			}
 		}else{
@@ -51,7 +51,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 			nCounterLeft ++;
 			nStepsRequiredLeft ++;
 			if (nCounterLeft == nPointsRequired) {
-				nDrivingDirectionLeft = (nStartForSearching + i -55) *1.8;
+				nDrivingDirectionLeft = (nStartForSearching + i -45) *1.8;
 				break;
 			}
 		}else{
@@ -83,7 +83,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	float fVL = 0.0f;
 	float fVR = 0.0f;
-	const float fElapsedTime = ((1/10000) * nDeltaT);
+	const double fElapsedTime = ((1/10000) * nDeltaT);
 	float fDeltaTheta = 0.0f;
 	
 	const float fXPosOld = g_pKnowledgeBase->OdometryPosition()->fX;
@@ -104,6 +104,8 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	fX = fXPosOld + (((fVL+fVR)/2) * fElapsedTime * sin (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fY = fYposOld + (((fVL+fVR)/2) * fElapsedTime * cos (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fTheta = fThetaOld + (fDeltaTheta * fElapsedTime);
+	
+	std::cout << fX << std::endl;
 	
 	g_pKnowledgeBase->OdometryPosition()->fX = fX;
 	g_pKnowledgeBase->OdometryPosition()->fY = fY;
