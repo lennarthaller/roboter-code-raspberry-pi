@@ -26,7 +26,8 @@ int CSeriell::GetInfraredDistance () {
 	if (g_pWiringPi->ReceiveSeriellData () == 0) {
 		nData = g_pWiringPi->ReceiveSeriellData ();
 		if (nData == 255) {
-			//std::cout << "FEHLERHAFTE IR MESSUNG!" << std::endl;
+			Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
+			Log_File->Textout (RED, "Atemega 32 hat keine Verbindung mit dem Sensor!");
 			return -1;
 		}else{
 		return nData;
@@ -53,9 +54,7 @@ int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 	}
 	
 	if (g_pWiringPi->ReceiveSeriellData () == nPhotoSensor) {
-		nSeriellData[0] = g_pWiringPi->ReceiveSeriellData ();
-		nSeriellData[1] = g_pWiringPi->ReceiveSeriellData ();
-		return ((nSeriellData[1] << 8 ) | nSeriellData[0]);
+		return g_pWiringPi->ReceiveSeriellData ();
 	}else{
 		Log_File->WriteTopic ("Datenuebertragung Raspberry Pi - Atmega32", 1);
 		Log_File->Textout (RED, "Fehler bei dem Uebertragen von Daten.");
