@@ -48,11 +48,13 @@ int main () {
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 		//cout << endl;
-		//usleep (2000000); 
+		usleep (500000); 
 		
-		Scanner.Scan();
-		g_pCBasicFunktions->UpdateSensorData ();
-		g_pCBasicFunktions->CountLoopTicks ();
+		std::cout << g_pSeriell->GetInfraredDistance () << std::endl;
+		
+		//Scanner.Scan();
+		//g_pCBasicFunktions->UpdateSensorData ();
+		//g_pCBasicFunktions->CountLoopTicks ();
 	}
 	
 	Log_File->Del ();
