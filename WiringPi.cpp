@@ -5,10 +5,10 @@ int CWiringPi::InitWiringPi () {
 Log_File->WriteTopic ("Init WiringPi", 1);
 
 if (wiringPiSetup () == -1) { //wiringPi initalisierung
-	Log_File->Textout (RED, "WiringPi Setup Fehlgeschlagen!");
+	Log_File->Textout (RED, "Failed to initialize WiringPi!");
 	return -1;
   }else{
-	Log_File->Textout (BLACK, "WiringPi initialisiert.");
+	Log_File->Textout (BLACK, "WiringPi initialized.");
   }
   m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 38400); //initalisierung der rs232 Schnittstelle
   m_nCompassAdress = wiringPiI2CSetup (0x60); //initalisieren des cmps10
@@ -42,5 +42,17 @@ long CWiringPi::TimeSinceStart () {
 		std::cout << "ERROR: SYSTEM CLOCK OFFLINE" << std::endl;
 	}	
 	//return (((Time.tv_sec - 1429623010) * 10000) + Time.tv_nsec / 100000);
-	return (((Time.tv_sec - 1430823010) * 10000) + Time.tv_nsec / 100000);
+	return (((Time.tv_sec - m_nTimerToZero) * 10000) + Time.tv_nsec / 100000);
+}
+
+int CWiringPi::InitTimer () {
+	Log_File->WriteTopic ("Init system timer", 1);
+	timespec Time;
+	if (clock_gettime (CLOCK_REALTIME, &Time) == -1) {
+		Log_File->Textout (RED, "Failed to initialize the timer!");
+		return -1;
+	}	
+	m_nTimerToZero = Time.tv_sec;
+	Log_File->Textout (BLACK, "Sytem timer initialized.");
+	return 1;
 }

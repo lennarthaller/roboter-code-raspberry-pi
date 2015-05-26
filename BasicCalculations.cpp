@@ -7,15 +7,19 @@ CBasicCalculations::CBasicCalculations () {
 }
 
 void CBasicCalculations::CalculateDrivingDirection () {
+	const int nPointsRequired = 13;
+	
 	int nInfraredData[100];
-	int nDrivingAngle = static_cast<int>(g_pKnowledgeBase->GetTargetDrivingDirection());
+	float fDrivingAngle = g_pKnowledgeBase->GetTargetDrivingDirection();
 	int nCounterRight = 0;
 	int nCounterLeft = 0;
 	int nAverage = 0;
-	int nStartForSearching = 50 + static_cast<int>(nDrivingAngle/1.8);
+	int nStartForSearching = 50 + static_cast<int>(fDrivingAngle/1.8);
 	int i = 0;
 	int nDrivingDirectionRight = 0;
 	int nDrivingDirectionLeft = 0;
+	int nStepsRequiredRight = 0;
+	int nStepsRequiredLeft = 0;
 
 	for (int i=0; i<100; i++) {
 		nInfraredData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
@@ -30,9 +34,9 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	while (nStartForSearching + i > 0) { //Das Array richtung 0 durchlaufen
 		if ((nInfraredData[nStartForSearching + i] >= nAverage)&&(nInfraredData[nStartForSearching + i] >= 25)) {
 			nCounterRight ++;
-			if (nCounterRight == 11) {
-			
-			nDrivingDirectionRight = (nStartForSearching + i -45) *1.8;
+			nStepsRequiredRight ++;
+			if (nCounterRight == nPointsRequired) {
+				nDrivingDirectionRight = (nStartForSearching + i - 55) *1.8;
 				break;
 			}
 		}else{
@@ -45,8 +49,9 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	while (nStartForSearching + i < 100) { //Das Array richtung 100 durchlaufen
 		if ((nInfraredData[nStartForSearching + i] >= nAverage)&&(nInfraredData[nStartForSearching + i] >= 25)) {
 			nCounterLeft ++;
-			if (nCounterLeft == 11) {
-				nDrivingDirectionLeft = (nStartForSearching + i -55) *1.8;
+			nStepsRequiredLeft ++;
+			if (nCounterLeft == nPointsRequired) {
+				nDrivingDirectionLeft = (nStartForSearching + i -45) *1.8;
 				break;
 			}
 		}else{
@@ -55,30 +60,22 @@ void CBasicCalculations::CalculateDrivingDirection () {
 		i++;
 	}
 
-	//Welcher Wert soll zurückgegeben werden:
-	
-	/*if (nDrivingDirectionLeft > (nDrivingDirectionRight*-1)) {
-		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
-	}else{
-		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
-	}*/
-	if ((nCounterRight >= 11)&&(nCounterLeft < 11)) {
-		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
-	} 
-
-	if ((nCounterLeft >= 11)&&(nCounterRight < 11)) {
-		g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
-	}
-
-	if ((nCounterRight >= 11)&&(nCounterLeft >= 11)) {
-		if (nCounterRight >= nCounterLeft) {
-			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
-			}else{
+	//Welcher Wert soll zurückgegeben werden:	
+	if ((nCounterLeft >= nPointsRequired)&&(nCounterRight >= nPointsRequired)) {
+		if (nStepsRequiredRight <= nStepsRequiredLeft) {
 			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
-			}
-	} 
-
-	if ((nCounterRight < 11)&&(nCounterLeft < 11)) {
+		}else{
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
+		}
+	}else{
+		if (nCounterRight >= nPointsRequired) {
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
+		}
+		if (nCounterLeft >= nPointsRequired){
+			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionLeft);
+		}
+	}
+	if ((nCounterLeft < nPointsRequired)&&(nCounterRight < nPointsRequired)) {
 		g_pKnowledgeBase->SetCalculatedDrivingDirection (-180);
 	}
 }
@@ -107,6 +104,8 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	fX = fXPosOld + (((fVL+fVR)/2) * fElapsedTime * sin (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fY = fYposOld + (((fVL+fVR)/2) * fElapsedTime * cos (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fTheta = fThetaOld + (fDeltaTheta * fElapsedTime);
+	
+	std::cout << fX << std::endl;
 	
 	g_pKnowledgeBase->OdometryPosition()->fX = fX;
 	g_pKnowledgeBase->OdometryPosition()->fY = fY;
