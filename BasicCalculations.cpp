@@ -86,7 +86,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	float fVL = 0.0f;
 	float fVR = 0.0f;
-	const float fElapsedTime = ((1/10000) * nDeltaT);
+	const float fElapsedTime = ((1.0/10000.0) * nDeltaT);
 	float fDeltaTheta = 0.0f;
 	
 	const float fXPosOld = g_pKnowledgeBase->OdometryPosition()->fX;
