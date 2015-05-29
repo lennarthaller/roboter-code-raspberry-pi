@@ -1,7 +1,7 @@
 #include "BasicCalculations.hpp"
 
 CBasicCalculations::CBasicCalculations () {
-	m_fLegthOfAxis = 34.4;
+	m_fLegthOfAxis = 34.4f;
 	m_fTireCircumference = 61.26f;
 	m_nTicksPerTurn = 32;
 }
@@ -94,21 +94,21 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	float fY = 0.0f;
 	float fTheta = 0.0f;
 	
-	float fTicksL = static_cast<float>((*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+1) + (*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2)) / 2;
-	float fTicksR = static_cast<float>((*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+0) + (*g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2;
+	float fTicksL = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+1) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2)) / 2);
+	float fTicksR = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+0) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2);
 	
-	fVL = fTicksL * m_fTireCircumference) / m_nTicksPerTurn;
-	fVL *= (1/fElapsedTime);
-	fVR = fTicksR * m_fTireCircumference) / m_nTicksPerTurn;
-	fVR *= (1/fElapsedTime);
+	fVL = fTicksL * m_fTireCircumference / m_nTicksPerTurn;
+	fVL *= (1.0/fElapsedTime);
+	fVR = fTicksR * m_fTireCircumference / m_nTicksPerTurn;
+	fVR *= (1.0/fElapsedTime);
 	
-	fDeltaTheta = (fVL - fVR) / m_fLegthOfAxis;
+	fDeltaTheta = (fVL - fVR) / m_fLegthOfAxis; //length of axis
 	
 	fX = fXPosOld + (((fVL+fVR)/2) * fElapsedTime * sin (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fY = fYposOld + (((fVL+fVR)/2) * fElapsedTime * cos (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fTheta = fThetaOld + (fDeltaTheta * fElapsedTime);
 	
-	std::cout << fX << std::endl; //////DEBUG
+	//std::cout << fX << std::endl; //////DEBUG
 	
 	g_pKnowledgeBase->OdometryPosition()->fX = fX;
 	g_pKnowledgeBase->OdometryPosition()->fY = fY;
