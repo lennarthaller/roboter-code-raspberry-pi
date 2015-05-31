@@ -80,10 +80,9 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	}
 }
 
-void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
+void CBasicCalculations::CalculatePositionFromOdometry () {
 	float fVL = 0.0f;
 	float fVR = 0.0f;
-	const float fElapsedTime = ((1.0/10000.0) * nDeltaT);
 	float fDeltaTheta = 0.0f;
 	
 	const float fXPosOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nX);
@@ -98,17 +97,24 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	float fTicksR = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+0) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2);
 	
 	fVL = fTicksL * m_fTireCircumference / m_nTicksPerTurn;
-	fVL *= (1.0/fElapsedTime);
 	fVR = fTicksR * m_fTireCircumference / m_nTicksPerTurn;
-	fVR *= (1.0/fElapsedTime);
 	
 	fDeltaTheta = (fVL - fVR) / m_fLegthOfAxis; //length of axis
 	
-	fX = fXPosOld + (((fVL+fVR)/2) * fElapsedTime * sin (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
-	fY = fYposOld + (((fVL+fVR)/2) * fElapsedTime * cos (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
-	fTheta = fThetaOld + (fDeltaTheta * fElapsedTime);
+	fX = fXPosOld + (((fVL+fVR)/2) * sin (fThetaOld + (0.5 * fDeltaTheta)));
+	fY = fYposOld + (((fVL+fVR)/2) * cos (fThetaOld + (0.5 * fDeltaTheta)));
+	fTheta = fThetaOld + (fDeltaTheta);
 	
-	std::cout << fX << std::endl; //////DEBUG
+	if (fTheta > 2 * M_PI) {
+		fTheta -= 2 * M_PI;
+	}
+	
+	if (fTheta < 0) {
+		fTheta += 2 * M_PI;
+	}
+		
+	
+	std::cout << fTheta << std::endl; //////DEBUG
 	
 	g_pKnowledgeBase->OdometryPosition()->nX = static_cast <int> (fX);
 	g_pKnowledgeBase->OdometryPosition()->nY = static_cast <int> (fY);
