@@ -1,6 +1,6 @@
 #include "PID.hpp"
 
-CNetworkProtocol::CNetworkProtocol (float fDt, float fP, float fI, float fD) {
+CPidController::CPidController (float fDt, float fP, float fI, float fD) {
 	for (int i=0; i<3; i++) {
 		m_nData[i] = 0;
 	}
@@ -12,7 +12,7 @@ CNetworkProtocol::CNetworkProtocol (float fDt, float fP, float fI, float fD) {
 	m_fD = fD;
 }
 
-int CNetworkProtocol::Calculate (int nSetpointValue, int nActualValue) [
+int CPidController::Calculate (int nSetpointValue, int nActualValue) [
 	m_nData[1] = m_nData[0]
 	m_nData[2] = m_nData[1]
 	m_nData[0] = nSetpointValue - nActualValue;

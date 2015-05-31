@@ -1,10 +1,10 @@
 #ifndef PID_HPP
 #define PID_HPP
 
-class CNetworkProtocol
+class CPidController
 {
 public:
-	CNetworkProtocol (float fDt, float fP, float fI, float fD);
+	CPidController (float fDt, float fP, float fI, float fD);
 	int Calculate (int nSetpointValue, int nActualValue);
 	
 private:
