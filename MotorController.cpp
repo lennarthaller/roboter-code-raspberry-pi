@@ -2,7 +2,7 @@
 
 CMotorController::CMotorController () {
 	const float fUpdateTime = 0.1f;
-	const float fP = 0.2f;
+	const float fP = 0.3f;
 	const float fI = 0.3f;
 	const float fD = 0.4f;
 	
@@ -17,7 +17,7 @@ CMotorController::CMotorController () {
 
 void CMotorController::UpdateMotors () {
 	for (int i=0;i<4;i++) {
-		m_nControlValue[i] += (PidMotor[i]->Calculate (5, *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+i))*2);
+		m_nControlValue[i] += (PidMotor[i]->Calculate (5, *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+i))*1);
 		
 		if (m_nControlValue[i] > 255) {
 			m_nControlValue[i] = 255;
