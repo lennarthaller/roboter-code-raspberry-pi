@@ -112,9 +112,6 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 	if (fTheta < 0) {
 		fTheta += 2 * M_PI;
 	}
-		
-	
-	std::cout << fTheta << std::endl; //////DEBUG
 	
 	g_pKnowledgeBase->OdometryPosition()->nX = static_cast <int> (fX);
 	g_pKnowledgeBase->OdometryPosition()->nY = static_cast <int> (fY);
