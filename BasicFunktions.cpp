@@ -18,11 +18,12 @@ void CBasicFunktions::UpdateSensorData () {
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
 		g_pKnowledgeBase->SetOdometryTicksSinceLastUpdate(nOdometryData);
 		g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
+		g_pMotorController->UpdateMotors (); //Control Motors
 		m_nTimeStampSinceLastCallSensorUpdateOdometry = g_pWiringPi->TimeSinceStart();
 	}
 	
 	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pWiringPi->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?	
-		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
+		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated		
 		
 		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
 			if (g_pNetwork->ConnectToClient() == 1) {

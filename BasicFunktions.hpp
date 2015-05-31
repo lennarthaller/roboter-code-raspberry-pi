@@ -8,6 +8,7 @@
 #include "Seriell.hpp"
 #include "BasicCalculations.hpp"
 #include "NetworkProtocol.hpp"
+#include "MotorController.hpp"
 
 #include <iostream>
 
