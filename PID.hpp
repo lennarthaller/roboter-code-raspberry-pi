@@ -1,10 +1,6 @@
 #ifndef PID_HPP
 #define PID_HPP
 
-#include "KnowledgeBase.hpp"
-
-#include <iostream>
-
 class CNetworkProtocol
 {
 public:
