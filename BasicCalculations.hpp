@@ -14,7 +14,7 @@ class CBasicCalculations : public TSingleton<CBasicCalculations>
 	CBasicCalculations ();
 	
 	void 	CalculateDrivingDirection ();
-	void 	CalculatePositionFromOdometry (const int nDeltaT);
+	void 	CalculatePositionFromOdometry ();
 	
 	private:
 	float m_fLegthOfAxis;
