@@ -1,8 +1,8 @@
 #include "KnowledgeBase.hpp"
 
 CKnowledgeBase::CKnowledgeBase () {
-	OdometryPositionData.fX = 0.0;
-	OdometryPositionData.fY = 0.0;
+	OdometryPositionData.nX = 0.0;
+	OdometryPositionData.nY = 0.0;
 	OdometryPositionData.fTheta = 0.0;
 	m_fCalculatedDrivingDirection = 0;
 	m_fTargetDrivingAngle = 0;

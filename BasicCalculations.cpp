@@ -86,8 +86,8 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	const float fElapsedTime = ((1.0/10000.0) * nDeltaT);
 	float fDeltaTheta = 0.0f;
 	
-	const float fXPosOld = g_pKnowledgeBase->OdometryPosition()->fX;
-	const float fYposOld = g_pKnowledgeBase->OdometryPosition()->fY;
+	const float fXPosOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nX);
+	const float fYposOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nY);
 	const float fThetaOld = g_pKnowledgeBase->OdometryPosition()->fTheta;
 	
 	float fX = 0.0f;
@@ -108,9 +108,9 @@ void CBasicCalculations::CalculatePositionFromOdometry (const int nDeltaT) {
 	fY = fYposOld + (((fVL+fVR)/2) * fElapsedTime * cos (fThetaOld + (0.5 * fDeltaTheta * fElapsedTime)));
 	fTheta = fThetaOld + (fDeltaTheta * fElapsedTime);
 	
-	//std::cout << fX << std::endl; //////DEBUG
+	std::cout << fX << std::endl; //////DEBUG
 	
-	g_pKnowledgeBase->OdometryPosition()->fX = fX;
-	g_pKnowledgeBase->OdometryPosition()->fY = fY;
+	g_pKnowledgeBase->OdometryPosition()->nX = static_cast <int> (fX);
+	g_pKnowledgeBase->OdometryPosition()->nY = static_cast <int> (fY);
 	g_pKnowledgeBase->OdometryPosition()->fTheta = fTheta;
 }

@@ -9,8 +9,8 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 {
 	private:
 	typedef struct {
-		float fX;
-		float fY;
+		int nX;
+		int nY;
 		float fTheta; //in radian! (counterclockwise from x-axis)
 	} Position;
 	
