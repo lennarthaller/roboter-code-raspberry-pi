@@ -40,21 +40,25 @@ int main () {
 	//cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
-	/*g_pSeriell->SetMotorPower (1,50);
-	g_pSeriell->SetMotorPower (2,60);
-	g_pSeriell->SetMotorPower (3,60);
-	g_pSeriell->SetMotorPower (4,45); */
+	for (int i=0; i<4; i++) {
+		int a = g_pSeriell->GetPhotoSensorData(i+1); // init readout
+	}
+	
+	g_pSeriell->SetMotorPower (1,100);
+	g_pSeriell->SetMotorPower (2,104);
+	g_pSeriell->SetMotorPower (3,100);
+	g_pSeriell->SetMotorPower (4,102);
 	while (1==1) { 
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 		//cout << endl;
-		usleep (500000); 
+		//usleep (500000); 
 		
-		std::cout << g_pSeriell->GetInfraredDistance () << std::endl;
+		//std::cout << g_pSeriell->GetInfraredDistance () << std::endl;
 		
 		//Scanner.Scan();
-		//g_pCBasicFunktions->UpdateSensorData ();
-		//g_pCBasicFunktions->CountLoopTicks ();
+		g_pCBasicFunktions->UpdateSensorData ();
+		g_pCBasicFunktions->CountLoopTicks ();
 	}
 	
 	Log_File->Del ();
