@@ -17,7 +17,7 @@ void CBasicFunktions::UpdateSensorData () {
 		
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
 		g_pKnowledgeBase->SetOdometryTicksSinceLastUpdate(nOdometryData);
-		g_pBasicCalculations->CalculatePositionFromOdometry (1000); //Neue Position auf grund der odometrie berechnen
+		g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
 		m_nTimeStampSinceLastCallSensorUpdateOdometry = g_pWiringPi->TimeSinceStart();
 	}
 	
