@@ -41,13 +41,10 @@ int main () {
 	cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
 	for (int i=0; i<4; i++) {
+		g_pSeriell->SetMotorPower(i+1, 0);
 		int a = g_pSeriell->GetPhotoSensorData(i+1); // init readout
 	}
 	
-	g_pSeriell->SetMotorPower (1,100);
-	g_pSeriell->SetMotorPower (2,104);
-	g_pSeriell->SetMotorPower (3,100);
-	g_pSeriell->SetMotorPower (4,102);
 	while (1==1) { 
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
