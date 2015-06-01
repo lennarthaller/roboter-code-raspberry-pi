@@ -2,9 +2,9 @@
 
 CMotorController::CMotorController () {
 	const float fUpdateTime = 0.1f;
-	const float fP = 0.3f;
-	const float fI = 0.3f;
-	const float fD = 0.4f;
+	const float fP = 1.2f;
+	const float fI = 0.4f;
+	const float fD = 0.2f;
 	
 	for (int i=0;i<4;i++) {
 		PidMotor[i] = new CPidController (fUpdateTime, fP, fI, fD);;
