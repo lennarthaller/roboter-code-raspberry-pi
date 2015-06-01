@@ -13,8 +13,8 @@ CPidController::CPidController (float fDt, float fP, float fI, float fD) {
 }
 
 int CPidController::Calculate (int nSetpointValue, int nActualValue) {
-	m_nDeviation[1] = m_nDeviation[0];
 	m_nDeviation[2] = m_nDeviation[1];
+	m_nDeviation[1] = m_nDeviation[0];
 	m_nDeviation[0] = nSetpointValue - nActualValue;
 	
 	int nCalculatedValue = static_cast<int> ((m_fP * m_nDeviation[0]) + (m_fD * (m_nDeviation[0]-m_nDeviation[1]) / m_fDt) + (m_fI * m_fDt * (m_nDeviation[0]+m_nDeviation[1]+m_nDeviation[2])));
