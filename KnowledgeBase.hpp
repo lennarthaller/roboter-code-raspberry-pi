@@ -11,7 +11,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	typedef struct {
 		int nX;
 		int nY;
-		float fTheta; //in radian! (counterclockwise from x-axis)
+		float fTheta; //in radian! (clockwise from y-axis)
 	} Position;
 	
 	Position OdometryPositionData;
