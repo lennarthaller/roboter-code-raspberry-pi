@@ -7,7 +7,7 @@ CMotorController::CMotorController () {
 	const float fD = 0.2f;
 	
 	for (int i=0;i<4;i++) {
-		PidMotor[i] = new CPidController (fUpdateTime, fP, fI, fD);;
+		PidMotor[i] = new CPidController (fUpdateTime, fP, fI, fD);
 	}
 	
 	for (int i=0;i<4;i++) {
