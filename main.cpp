@@ -7,6 +7,7 @@
 #include "Logfile.hpp"
 #include "LidarScan.hpp"
 #include "BasicFunktions.hpp"
+#include "I2C.hpp"
 
 using namespace std;
 
@@ -27,6 +28,10 @@ int main () {
 	}
 	
 	if (g_pNetwork->InitNetwork () != 1) {
+		cout << "Fehler" << endl;
+	}
+	
+	if (g_pI2C->InitI2C() != 1) {
 		cout << "Fehler" << endl;
 	}
 

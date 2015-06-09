@@ -11,17 +11,28 @@ if (wiringPiSetup () == -1) { //wiringPi initalisierung
 	Log_File->Textout (BLACK, "WiringPi initialized.");
   }
   m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 38400); //initalisierung der rs232 Schnittstelle
-  m_nCompassAdress = wiringPiI2CSetup (0x60); //initalisieren des cmps10
 return 1;
+}
+
+int CWiringPi::I2CRead (int nDevice, int nRegister) {
+	return wiringPiI2CReadReg8 (nDevice, nRegister);
+}
+
+void CWiringPi::I2CWrite (int nDevice, int nRegister, int nData) {
+	if ((nData < 256)&&(nData > -1)) {
+		wiringPiI2CWriteReg8 (int nDevice, int nRegister, int nData);
+	}else{
+		std::cout << "ZU GROSSE ZAHL! (I2C)" << std::endl;
+	}
 }
 
 int CWiringPi::SendSeriellInt (int nData) {
 	if ((nData < 256)&&(nData > -1)) {
-	serialPutchar (m_nOwnSeriellAdress, static_cast<char> (nData));	
-	return 1;
+		serialPutchar (m_nOwnSeriellAdress, static_cast<char> (nData));	
+		return 1;
 	}
-	std::cout << "ZU GROSSE ZAHL!" << std::endl;
-return -1;
+	std::cout << "ZU GROSSE ZAHL! (SERIELL)" << std::endl;
+	return -1;
 }
 
 int CWiringPi::ReceiveSeriellData () {
@@ -32,10 +43,6 @@ int CWiringPi::ReceiveSeriellData () {
 	return serialDataAvail (m_nOwnSeriellAdress); 
  }
  
-float CWiringPi::GetCompassData () {
-	return static_cast<float>  (((wiringPiI2CReadReg8 (m_nCompassAdress, 2) << 8) | wiringPiI2CReadReg8 (m_nCompassAdress, 3)) / 10);
-}
-
 long CWiringPi::TimeSinceStart () {
 	timespec Time;
 	if (clock_gettime (CLOCK_REALTIME, &Time) == -1) {
