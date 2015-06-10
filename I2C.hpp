@@ -8,7 +8,7 @@
 
 #define g_pI2C CI2C::Get()
 
-class I2C : public TSingleton<I2C>
+class CI2C : public TSingleton<CI2C>
 {
   public:
 	int InitI2C (void);
