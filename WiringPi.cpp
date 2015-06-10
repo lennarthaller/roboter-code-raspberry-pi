@@ -20,7 +20,7 @@ int CWiringPi::I2CRead (int nDevice, int nRegister) {
 
 void CWiringPi::I2CWrite (int nDevice, int nRegister, int nData) {
 	if ((nData < 256)&&(nData > -1)) {
-		wiringPiI2CWriteReg8 (int nDevice, int nRegister, int nData);
+		wiringPiI2CWriteReg8 (nDevice, nRegister, nData);
 	}else{
 		std::cout << "ZU GROSSE ZAHL! (I2C)" << std::endl;
 	}
