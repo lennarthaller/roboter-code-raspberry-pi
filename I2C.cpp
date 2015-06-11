@@ -10,6 +10,12 @@ int CI2C::InitI2C () {
 		m_bError = true;
 	}
 	
+	m_nLidarAdress = wiringPiI2CSetup (0x62); //initalisieren des cmps10
+	if (m_nLidarAdress == -1) {
+		Log_File->Textout (RED, "Failed to initialize the LiDAR!");
+		m_bError = true;
+	}
+	
 	if (m_bError == false) {
 		Log_File->Textout (BLACK, "I2C bus initialized.");
 		return 1;
@@ -20,4 +26,12 @@ int CI2C::InitI2C () {
 
 float CI2C::GetCompassData () {
 	return static_cast<float>  (((g_pWiringPi->I2CRead (m_nCompassAdress, 2) << 8) | g_pWiringPi->I2CRead (m_nCompassAdress, 3)) / 10);
+}
+
+void CI2C::StartLidarMeasurement () {
+	g_pWiringPi->I2CWrite (m_nLidarAdress, 0, 4);
+}
+
+int CI2C::GetLidarDistance () {
+	return ((g_pWiringPi->I2CRead (m_nLidarAdress, 15) << 8) | g_pWiringPi->I2CRead (m_nLidarAdress, 16));
 }
