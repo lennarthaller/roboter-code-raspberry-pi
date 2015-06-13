@@ -14,8 +14,6 @@ using namespace std;
 int main () {
 	Log_File->CreateLogfile();
 	
-	CLidar Lidar;
-	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
 
@@ -39,6 +37,8 @@ int main () {
 		cout << "Fehler" << endl;
 	}
 
+	CLidar Lidar;
+	
 	/*if (g_pNetwork->ConnectToClient () != 1) {
 		cout << "Fehler" << endl;
 	}*/ 
