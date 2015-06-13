@@ -4,6 +4,7 @@ CLidarScan::CLidarScan () {
 	m_nTimeStampSinceLastCall = 0;
 	m_nScanStepCounter = 0;
 	m_bScanActive = true;
+	m_bNewMeasurement = true;
 	
 	Medianfilter = new CMedianfilter (5, 100);
 	
@@ -13,16 +14,32 @@ CLidarScan::CLidarScan () {
 }
 
 void CLidarScan::Scan () {
+	int nCurrentMeasurement = 0;
+	
 	if (m_bScanActive == true) {	//Scan durchführen
 		
-		if (m_nTimeStampSinceLastCall + 400 < g_pWiringPi->TimeSinceStart()) { //45 Millisekunde seit dem letzten Aufruf vergangen? (350)
+		if (m_bNewMeasurement == true) {
+			g_pI2C->StartLidarMeasurement ();
+			m_bNewMeasurement = false;
+		}else{
+			nCurrentMeasurement = g_pI2C->GetLidarDistance ();
+		}
+		
+		if (nCurrentMeasurement > 4000) {
+			nCurrentMeasurement = 0;
+			m_bNewMeasurement = true;
+		}
+		
+		if ((nCurrentMeasurement > 0)&&(m_nTimeStampSinceLastCall + 250 < g_pTimer->TimeSinceStart())) { //measurement is in range
+			
+			m_bNewMeasurement = true;
 			
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
-				m_nScanData[m_nScanStepCounter] = g_pSeriell->GetInfraredDistance ();
-				//std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
+				m_nScanData[m_nScanStepCounter] = nCurrentMeasurement;
+				std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 				g_pSeriell->MovePML (1);
 				m_nScanStepCounter ++;
-				m_nTimeStampSinceLastCall = g_pWiringPi->TimeSinceStart();
+				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
 			
 			}else{		//Scan fertig			
 				m_nScanStepCounter = 0;
@@ -35,12 +52,12 @@ void CLidarScan::Scan () {
 		}
 	
 	}else{	//Zurückdrehen
-		if (m_nTimeStampSinceLastCall + 20 < g_pWiringPi->TimeSinceStart()) { //0.1 Millisekunde seit dem letzten Aufruf vergangen?
+		if (m_nTimeStampSinceLastCall + 45 < g_pTimer->TimeSinceStart()) { //3 Millisekunde seit dem letzten Aufruf vergangen?
 			
 			if (m_nScanStepCounter < 100) {
 				g_pSeriell->MovePML (0);
 				m_nScanStepCounter ++;
-				m_nTimeStampSinceLastCall = g_pWiringPi->TimeSinceStart();
+				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
 				
 			}else{
 				m_nScanStepCounter = 0;

@@ -1,11 +1,12 @@
 #ifndef LIDARSCAN_HPP
 #define LIDARSCAN_HPP
 
-#include "WiringPi.hpp"
+#include "Timer.hpp"
 #include "Seriell.hpp"
 #include "KnowledgeBase.hpp"
 #include "BasicCalculations.hpp" 
 #include "Medianfilter.hpp"
+#include "I2C.hpp"
 
 #include <iostream>
 #include <unistd.h>
@@ -22,6 +23,7 @@ class CLidarScan
 		long    m_nTimeStampSinceLastCall;
 		int		m_nScanStepCounter;
 		bool 	m_bScanActive;
+		bool 	m_bNewMeasurement;
 		CMedianfilter *Medianfilter;
 };
 
