@@ -3,8 +3,9 @@
 CLidar::CLidar () {
 	m_nTimeStampSinceLastCall = 0;
 	m_nScanStepCounter = 0;
+	m_nCurrentMeasurement = 0;
 	m_bScanActive = true;
-	m_bNewMeasurement = true;
+	m_bRequestNewMeasurement = true;
 	
 	Medianfilter = new CMedianfilter (5, 100);
 	
@@ -13,29 +14,15 @@ CLidar::CLidar () {
 	}
 }
 
-void CLidar::Scan () {
-	int nCurrentMeasurement = 0;
-	
+void CLidar::Scan () {	
 	if (m_bScanActive == true) {	//Scan durchführen
 		
-		if (m_bNewMeasurement == true) {
-			g_pI2C->StartLidarMeasurement ();
-			m_bNewMeasurement = false;
-		}else{
-			nCurrentMeasurement = g_pI2C->GetLidarDistance ();
-		}
-		
-		if (nCurrentMeasurement > 4000) {
-			nCurrentMeasurement = 0;
-			m_bNewMeasurement = true;
-		}
-		
-		if ((nCurrentMeasurement > 0)&&(m_nTimeStampSinceLastCall + 250 < g_pTimer->TimeSinceStart())) { //measurement is in range
+		if ((NewMeasurementAvailable() == true)&&(m_nTimeStampSinceLastCall + 250 < g_pTimer->TimeSinceStart())) { //measurement is in range
 			
-			m_bNewMeasurement = true;
+			m_bRequestNewMeasurement = true;
 			
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
-				m_nScanData[m_nScanStepCounter] = nCurrentMeasurement;
+				m_nScanData[m_nScanStepCounter] = m_nCurrentMeasurement;
 				std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 				g_pSeriell->MovePML (1);
 				m_nScanStepCounter ++;
@@ -66,4 +53,25 @@ void CLidar::Scan () {
 			}
 		}
 	}
+}
+
+bool CLidar::NewMeasurementAvailable () {
+	if (m_bRequestNewMeasurement == true) {
+		g_pI2C->StartLidarMeasurement ();
+		m_bRequestNewMeasurement = false;
+		return false;
+	}else{
+		m_nCurrentMeasurement = g_pI2C->GetLidarDistance ();
+	}
+		
+	if (m_nCurrentMeasurement > 4000) {
+		m_nCurrentMeasurement = 0;
+		m_bRequestNewMeasurement = true;
+		return false;
+	}
+	
+	if (m_nCurrentMeasurement < 1) {
+		return false;
+	}
+	return true;
 }

@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <wiringPi.h>
 
 class CLidar
 {
@@ -18,9 +19,12 @@ class CLidar
 		void 	Scan ();
 		
 	private:
+		bool NewMeasurementAvailable ();
+	
 		int 	m_nScanData[100];
 		long    m_nTimeStampSinceLastCall;
 		int		m_nScanStepCounter;
+		int 	m_nCurrentMeasurement;
 		bool 	m_bScanActive;
 		bool 	m_bNewMeasurement;
 		CMedianfilter *Medianfilter;
