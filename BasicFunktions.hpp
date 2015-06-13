@@ -1,7 +1,7 @@
 #ifndef BASICFUNKTIONS_HPP
 #define BASICFUNKTIONS_HPP
 
-#include "WiringPi.hpp"
+#include "Timer.hpp"
 #include "Network.hpp"
 #include "Singleton.hpp"
 #include "KnowledgeBase.hpp"
