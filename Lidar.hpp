@@ -1,5 +1,5 @@
-#ifndef LIDARSCAN_HPP
-#define LIDARSCAN_HPP
+#ifndef LIDAR_HPP
+#define LIDAR_HPP
 
 #include "Timer.hpp"
 #include "Seriell.hpp"
@@ -11,11 +11,10 @@
 #include <iostream>
 #include <unistd.h>
 
-class CLidarScan
+class CLidar
 {
 	public:
-		CLidarScan ();
-		
+		CLidar ();
 		void 	Scan ();
 		
 	private:

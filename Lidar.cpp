@@ -1,6 +1,6 @@
-#include "LidarScan.hpp"
+#include "Lidar.hpp"
 
-CLidarScan::CLidarScan () {
+CLidar::CLidar () {
 	m_nTimeStampSinceLastCall = 0;
 	m_nScanStepCounter = 0;
 	m_bScanActive = true;
@@ -13,7 +13,7 @@ CLidarScan::CLidarScan () {
 	}
 }
 
-void CLidarScan::Scan () {
+void CLidar::Scan () {
 	int nCurrentMeasurement = 0;
 	
 	if (m_bScanActive == true) {	//Scan durchführen

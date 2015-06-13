@@ -5,7 +5,7 @@
 #include "Seriell.hpp"
 #include "Network.hpp"
 #include "Logfile.hpp"
-#include "LidarScan.hpp"
+#include "Lidar.hpp"
 #include "BasicFunktions.hpp"
 #include "I2C.hpp"
 
@@ -14,7 +14,7 @@ using namespace std;
 int main () {
 	Log_File->CreateLogfile();
 	
-	CLidarScan Scanner;
+	CLidar Lidar;
 	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
@@ -63,7 +63,7 @@ int main () {
 		usleep (300000); 
 		std::cout << g_pI2C->GetLidarDistance () << std::endl; */
 		
-		Scanner.Scan();
+		Lidar.Scan();
 		g_pCBasicFunktions->UpdateSensorData ();
 		g_pCBasicFunktions->CountLoopTicks ();
 	}
