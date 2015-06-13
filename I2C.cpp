@@ -6,34 +6,58 @@ int CI2C::InitI2C () {
 	
 	m_nCompassAdress = wiringPiI2CSetup (0x60); //initialisation of the cmps10
 	if (m_nCompassAdress == -1) {
-		Log_File->Textout (RED, "Failed to initialize the compass!");
+		Log_File->Textout (RED, "Failed to initialise the compass!");
 		m_bError = true;
 	}
 	
 	m_nLidarAdress = wiringPiI2CSetup (0x62); //initialisation of the LiDAR
 	if (m_nLidarAdress == -1) {
-		Log_File->Textout (RED, "Failed to initialize the LiDAR!");
+		Log_File->Textout (RED, "Failed to initialise the LiDAR!");
 		m_bError = true;
 	}else{
-		g_pWiringPi->I2CWrite (m_nLidarAdress, 2, 128); //set LiDAR acquisition count (128 = default)
+		I2CWrite (m_nLidarAdress, 2, 180); //set LiDAR acquisition count (128 = default)
 	}
 	
 	if (m_bError == false) {
-		Log_File->Textout (BLACK, "I2C bus initialized.");
+		Log_File->Textout (BLACK, "I2C bus initialised.");
 		return 1;
 	}else{
 		return -1;
 	}
 }
 
+int CI2C::InitWiringPi () {
+Log_File->WriteTopic ("Init WiringPi", 1);
+
+if (wiringPiSetup () == -1) { //wiringPi initalisation
+	Log_File->Textout (RED, "Failed to initialise WiringPi!");
+	return -1;
+  }else{
+	Log_File->Textout (BLACK, "WiringPi initialised.");
+  }
+return 1;
+}
+
 float CI2C::GetCompassData () {
-	return static_cast<float>  (((g_pWiringPi->I2CRead (m_nCompassAdress, 2) << 8) | g_pWiringPi->I2CRead (m_nCompassAdress, 3)) / 10);
+	return static_cast<float>  (((I2CRead (m_nCompassAdress, 2) << 8) | I2CRead (m_nCompassAdress, 3)) / 10);
 }
 
 void CI2C::StartLidarMeasurement () {
-	g_pWiringPi->I2CWrite (m_nLidarAdress, 0, 4);
+	I2CWrite (m_nLidarAdress, 0, 4);
 }
 
 int CI2C::GetLidarDistance () {
-	return ((g_pWiringPi->I2CRead (m_nLidarAdress, 15) << 8) | g_pWiringPi->I2CRead (m_nLidarAdress, 16));
+	return ((I2CRead (m_nLidarAdress, 15) << 8) | I2CRead (m_nLidarAdress, 16));
+}
+
+int CI2C::I2CRead (int nDevice, int nRegister) {
+	return wiringPiI2CReadReg8 (nDevice, nRegister);
+}
+
+void CI2C::I2CWrite (int nDevice, int nRegister, int nData) {
+	if ((nData < 256)&&(nData > -1)) {
+		wiringPiI2CWriteReg8 (nDevice, nRegister, nData);
+	}else{
+		std::cout << "ZU GROSSE ZAHL! (I2C)" << std::endl;
+	}
 }
