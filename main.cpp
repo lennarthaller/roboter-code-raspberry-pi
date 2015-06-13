@@ -19,11 +19,15 @@ int main () {
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
 
-	if (g_pWiringPi->InitWiringPi() != 1) {
+	if (g_pI2C->InitWiringPi() != 1) {
 		cout << "Fehler" << endl;
 	}
 	
-	if (g_pWiringPi->InitTimer() != 1) {
+	if (g_pTimer->InitTimer() != 1) {
+		cout << "Fehler" << endl;
+	}
+	
+	if (g_pSeriell->InitSeriell() != 1) {
 		cout << "Fehler" << endl;
 	}
 	
@@ -54,18 +58,18 @@ int main () {
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 		//cout << endl;
-		//usleep (500000); 
+		/*usleep (200000); 
+		g_pI2C->StartLidarMeasurement ();
+		usleep (300000); 
+		std::cout << g_pI2C->GetLidarDistance () << std::endl; */
 		
-		//std::cout << g_pSeriell->GetInfraredDistance () << std::endl;
-		
-		//Scanner.Scan();
+		Scanner.Scan();
 		g_pCBasicFunktions->UpdateSensorData ();
 		g_pCBasicFunktions->CountLoopTicks ();
 	}
 	
 	Log_File->Del ();
 	g_pNetwork->Del ();
-	g_pWiringPi->Del ();
 	g_pSeriell->Del ();
 	g_pKnowledgeBase->Del ();
 	g_pBasicCalculations->Del ();
