@@ -20,13 +20,15 @@ class CLidar
 		
 	private:
 		bool NewMeasurementAvailable ();
+		void TurnLidar (int nDirection);
 	
 		int 	m_nScanData[100];
 		long    m_nTimeStampSinceLastCall;
+		long    m_nTimeStampLidarturn;
 		int		m_nScanStepCounter;
 		int 	m_nCurrentMeasurement;
 		bool 	m_bScanActive;
-		bool 	m_bNewMeasurement;
+		bool 	m_bRequestNewMeasurement;
 		CMedianfilter *Medianfilter;
 };
 

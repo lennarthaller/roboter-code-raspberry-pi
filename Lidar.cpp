@@ -4,8 +4,12 @@ CLidar::CLidar () {
 	m_nTimeStampSinceLastCall = 0;
 	m_nScanStepCounter = 0;
 	m_nCurrentMeasurement = 0;
+	m_nTimeStampLidarturn = 0;
 	m_bScanActive = true;
 	m_bRequestNewMeasurement = true;
+	
+	pinMode (0, OUTPUT);
+	pinMode (2, OUTPUT);
 	
 	Medianfilter = new CMedianfilter (5, 100);
 	
@@ -24,7 +28,7 @@ void CLidar::Scan () {
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
 				m_nScanData[m_nScanStepCounter] = m_nCurrentMeasurement;
 				std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
-				g_pSeriell->MovePML (1);
+				TurnLidar (1);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
 			
@@ -42,7 +46,7 @@ void CLidar::Scan () {
 		if (m_nTimeStampSinceLastCall + 45 < g_pTimer->TimeSinceStart()) { //3 Millisekunde seit dem letzten Aufruf vergangen?
 			
 			if (m_nScanStepCounter < 100) {
-				g_pSeriell->MovePML (0);
+				TurnLidar (0);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
 				
@@ -74,4 +78,17 @@ bool CLidar::NewMeasurementAvailable () {
 		return false;
 	}
 	return true;
+}
+
+void CLidar::TurnLidar (int nDirection) {
+	digitalWrite (0, HIGH);
+	
+	if (nDirection == 0) { //Set direction
+		digitalWrite (2, LOW);
+	}
+	if (nDirection == 1) {
+		digitalWrite (2, HIGH);
+	}
+	//usleep (1); 
+	digitalWrite (0, LOW);
 }
