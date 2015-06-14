@@ -11,7 +11,7 @@ CLidar::CLidar () {
 	pinMode (0, OUTPUT);
 	pinMode (2, OUTPUT);
 	
-	Medianfilter = new CMedianfilter (5, 100);
+	Medianfilter = new CMedianfilter (3, 100);
 	
 	for (int i=0;i<100;i++) {
 		m_nScanData[i] = 0;
@@ -21,7 +21,7 @@ CLidar::CLidar () {
 void CLidar::Scan () {	
 	if (m_bScanActive == true) {	//Scan durchführen
 		
-		if ((NewMeasurementAvailable() == true)&&(m_nTimeStampSinceLastCall + 250 < g_pTimer->TimeSinceStart())) { //measurement is in range
+		if ((NewMeasurementAvailable() == true)&&(m_nTimeStampSinceLastCall + 45 < g_pTimer->TimeSinceStart())) { //measurement is in range
 			
 			m_bRequestNewMeasurement = true;
 			
@@ -38,6 +38,7 @@ void CLidar::Scan () {
 				m_nTimeStampSinceLastCall = 0;
 				Medianfilter->FilterData (m_nScanData);
 				g_pKnowledgeBase->SetScannerData(Medianfilter->GetFilteredData());
+				//g_pKnowledgeBase->SetScannerData(m_nScanData);
 				g_pBasicCalculations->CalculateDrivingDirection();
 			}
 		}
@@ -68,7 +69,7 @@ bool CLidar::NewMeasurementAvailable () {
 		m_nCurrentMeasurement = g_pI2C->GetLidarDistance ();
 	}
 		
-	if (m_nCurrentMeasurement > 4000) {
+	if (m_nCurrentMeasurement > 4001) {
 		m_nCurrentMeasurement = 0;
 		m_bRequestNewMeasurement = true;
 		return false;
