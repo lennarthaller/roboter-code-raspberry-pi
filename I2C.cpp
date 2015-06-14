@@ -15,7 +15,7 @@ int CI2C::InitI2C () {
 		Log_File->Textout (RED, "Failed to initialise the LiDAR!");
 		m_bError = true;
 	}else{
-		I2CWrite (m_nLidarAdress, 2, 180); //set LiDAR acquisition count (128 = default)
+		I2CWrite (m_nLidarAdress, 0, 0); //set LiDAR acquisition count (128 = default)
 	}
 	
 	if (m_bError == false) {
@@ -39,7 +39,7 @@ return 1;
 }
 
 float CI2C::GetCompassData () {
-	return static_cast<float>  (((I2CRead (m_nCompassAdress, 2) << 8) | I2CRead (m_nCompassAdress, 3)) / 10);
+	return static_cast<float>  (((wiringPiI2CReadReg8 (m_nCompassAdress, 2) << 8) | wiringPiI2CReadReg8 (m_nCompassAdress, 3)) / 10);
 }
 
 void CI2C::StartLidarMeasurement () {
@@ -47,11 +47,7 @@ void CI2C::StartLidarMeasurement () {
 }
 
 int CI2C::GetLidarDistance () {
-	return ((I2CRead (m_nLidarAdress, 15) << 8) | I2CRead (m_nLidarAdress, 16));
-}
-
-int CI2C::I2CRead (int nDevice, int nRegister) {
-	return wiringPiI2CReadReg8 (nDevice, nRegister);
+	return ((wiringPiI2CReadReg8 (m_nLidarAdress, 15) << 8) | wiringPiI2CReadReg8 (m_nLidarAdress, 16));
 }
 
 void CI2C::I2CWrite (int nDevice, int nRegister, int nData) {
