@@ -49,9 +49,9 @@ int main () {
 	//cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
-	for (int i=0; i<4; i++) {
-		g_pSeriell->SetMotorPower(i+1, 0);
-		int a = g_pSeriell->GetPhotoSensorData(i+1); // init readout
+	for (int i=1; i<5; i++) {
+		g_pSeriell->SetMotorPower(i, 0);
+		g_pSeriell->GetPhotoSensorData(i); // init readout
 	}
 	
 	while (1==1) { 
@@ -61,7 +61,7 @@ int main () {
 		/*usleep (200000); 
 		g_pI2C->StartLidarMeasurement ();
 		usleep (300000); 
-		std::cout << g_pI2C->GetLidarDistance () << std::endl; */
+		std::cout << g_pI2C->GetLidarDistance () << std::endl;  */
 		
 		Lidar.Scan();
 		g_pCBasicFunktions->UpdateSensorData ();
