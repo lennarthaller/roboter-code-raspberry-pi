@@ -16,7 +16,7 @@ class CLidar
 {
 	public:
 		CLidar ();
-		void 	Scan ();
+		void Scan ();
 		
 	private:
 		bool NewMeasurementAvailable ();
