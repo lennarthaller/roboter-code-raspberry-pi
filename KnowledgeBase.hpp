@@ -1,7 +1,10 @@
 #ifndef KNOWLEDGEBASE_HPP
 #define KNOWLEDGEBASE_HPP
 
-#include "WiringPi.hpp"
+#include <iostream>
+#include "Singleton.hpp"
+#include "Logfile.hpp"
+#include <stdint.h>
 
 #define g_pKnowledgeBase CKnowledgeBase::Get()
 

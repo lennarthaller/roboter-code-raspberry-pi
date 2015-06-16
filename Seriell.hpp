@@ -4,15 +4,17 @@
 #include <iostream>
 #include "Singleton.hpp"
 #include "Logfile.hpp"
-#include "WiringPi.hpp"
+#include "Timer.hpp"
 #include "KnowledgeBase.hpp"
+
+#include <wiringSerial.h>
 
 #define g_pSeriell CSeriell::Get()
 
 class CSeriell : public TSingleton<CSeriell>
 {
   public:
-  int GetInfraredDistance (void);
+  int InitSeriell (void);
   int GetPhotoSensorData (const int nPhotoSensor);
   float GetBatteryVoltage (void);
   int SetMotorPower (const int nMotor, const int nPower);
@@ -20,6 +22,10 @@ class CSeriell : public TSingleton<CSeriell>
   
   private:
   int DataAvailableNoTimeOut (void);
+  int SendSeriellInt (int nData);
+  int ReceiveSeriellData (void);
+  
+  int m_nOwnSeriellAdress;
 };
 
 #endif

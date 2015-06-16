@@ -25,7 +25,7 @@ int CNetwork::InitNetwork () {
 		return -1;
 	}
 	
-	Log_File->Textout (BLACK, "Network resources initialized.");
+	Log_File->Textout (BLACK, "Network resources initialised.");
 	return 1;
 }
 
@@ -46,16 +46,16 @@ int CNetwork::ConnectToClient () {
 }
 
 int CNetwork::Send (void) {
-		if (send(m_nSocketFromClient, m_chBuffer, m_nBytes, 0) == -1) {
-			Log_File->Textout (RED, "Network sending error!");
-			return -1;
-		}else{
-			for (int i=0; i<m_nBytes; i++) {
-				m_chBuffer[i] = 0;
-			}
-			m_nBytes = 0;
-			return 1;
+	if (send(m_nSocketFromClient, m_chBuffer, m_nBytes, 0) == -1) {
+		Log_File->Textout (RED, "Network sending error!");
+		return -1;
+	}else{
+		for (int i=0; i<m_nBytes; i++) {
+			m_chBuffer[i] = 0;
 		}
+		m_nBytes = 0;
+		return 1;
+	}
 }
 
 void CNetwork::CreatePackage (uint16_t nData) {

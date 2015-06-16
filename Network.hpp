@@ -28,7 +28,7 @@ class CNetwork : public TSingleton<CNetwork>
 	int Send (void);
 	int Receive (void);
 	void CreatePackage (uint16_t nData);
-  private:
+  private:  
 	int m_nSocketFromServer;
 	int m_nSocketFromClient;
 	int m_nBytes;

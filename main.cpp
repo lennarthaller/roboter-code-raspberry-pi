@@ -5,31 +5,40 @@
 #include "Seriell.hpp"
 #include "Network.hpp"
 #include "Logfile.hpp"
-#include "LidarScan.hpp"
+#include "Lidar.hpp"
 #include "BasicFunktions.hpp"
+#include "I2C.hpp"
 
 using namespace std;
 
 int main () {
 	Log_File->CreateLogfile();
 	
-	CLidarScan Scanner;
-	
 	cout << "Roboter test Programm v0.1" << endl;
 	cout << "von" << endl << "Lennart Haller" << endl;
 
-	if (g_pWiringPi->InitWiringPi() != 1) {
+	if (g_pI2C->InitWiringPi() != 1) {
 		cout << "Fehler" << endl;
 	}
 	
-	if (g_pWiringPi->InitTimer() != 1) {
+	if (g_pTimer->InitTimer() != 1) {
+		cout << "Fehler" << endl;
+	}
+	
+	if (g_pSeriell->InitSeriell() != 1) {
 		cout << "Fehler" << endl;
 	}
 	
 	if (g_pNetwork->InitNetwork () != 1) {
 		cout << "Fehler" << endl;
 	}
+	
+	if (g_pI2C->InitI2C() != 1) {
+		cout << "Fehler" << endl;
+	}
 
+	CLidar Lidar;
+	
 	/*if (g_pNetwork->ConnectToClient () != 1) {
 		cout << "Fehler" << endl;
 	}*/ 
@@ -40,27 +49,27 @@ int main () {
 	//cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 	
-	for (int i=0; i<4; i++) {
-		g_pSeriell->SetMotorPower(i+1, 0);
-		int a = g_pSeriell->GetPhotoSensorData(i+1); // init readout
+	for (int i=1; i<5; i++) {
+		g_pSeriell->SetMotorPower(i, 0);
+		g_pSeriell->GetPhotoSensorData(i); // init readout
 	}
 	
 	while (1==1) { 
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 		//cout << "Betriebsspannung: " << g_pSeriell->GetBatteryVoltage() << endl;
 		//cout << endl;
-		//usleep (500000); 
+		/*usleep (200000); 
+		g_pI2C->StartLidarMeasurement ();
+		usleep (300000); 
+		std::cout << g_pI2C->GetLidarDistance () << std::endl;  */
 		
-		//std::cout << g_pSeriell->GetInfraredDistance () << std::endl;
-		
-		//Scanner.Scan();
+		Lidar.Scan();
 		g_pCBasicFunktions->UpdateSensorData ();
 		g_pCBasicFunktions->CountLoopTicks ();
 	}
 	
 	Log_File->Del ();
 	g_pNetwork->Del ();
-	g_pWiringPi->Del ();
 	g_pSeriell->Del ();
 	g_pKnowledgeBase->Del ();
 	g_pBasicCalculations->Del ();
