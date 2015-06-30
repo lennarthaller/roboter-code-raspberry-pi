@@ -87,7 +87,7 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 	
 	const float fXPosOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nX);
 	const float fYposOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nY);
-	const float fThetaOld = g_pKnowledgeBase->OdometryPosition()->fTheta;
+	const float fThetaOld = g_pKnowledgeBase->OdometryPosition()->fTheta * M_PI / 180.0f;
 	
 	float fX = 0.0f;
 	float fY = 0.0f;
@@ -115,5 +115,5 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 	
 	g_pKnowledgeBase->OdometryPosition()->nX = static_cast <int> (fX);
 	g_pKnowledgeBase->OdometryPosition()->nY = static_cast <int> (fY);
-	g_pKnowledgeBase->OdometryPosition()->fTheta = fTheta;
+	g_pKnowledgeBase->OdometryPosition()->fTheta = fTheta * 180.0f / M_PI;
 }
