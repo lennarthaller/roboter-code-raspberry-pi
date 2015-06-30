@@ -4,6 +4,9 @@ CKnowledgeBase::CKnowledgeBase () {
 	OdometryPositionData.nX = 0.0;
 	OdometryPositionData.nY = 0.0;
 	OdometryPositionData.fTheta = 0.0;
+	LidarPositionData.nX = 0.0;
+	LidarPositionData.nY = 0.0;
+	LidarPositionData.fTheta = 0.0;
 	m_fCalculatedDrivingDirection = 0;
 	m_fTargetDrivingAngle = 0;
 	m_nMainLoopTicksPerSecond = 0;

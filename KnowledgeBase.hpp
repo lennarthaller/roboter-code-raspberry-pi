@@ -14,10 +14,11 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	typedef struct {
 		int nX;
 		int nY;
-		float fTheta; //in radian! (clockwise from y-axis)
+		float fTheta; //in degrees! (clockwise from y-axis)
 	} Position;
 	
 	Position OdometryPositionData;
+	Position LidarPositionData;
 	unsigned long m_nOdometryTicks[4];
 	int		m_nOdometryTicksSinceLastupdate[4];
 	int 	m_nScannerData[100];
@@ -40,6 +41,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	void 	SetTargetDrivingDirection (float fDirection) {m_fTargetDrivingAngle = fDirection;}
 	float 	GetTargetDrivingDirection () {return m_fTargetDrivingAngle;}
 	Position* OdometryPosition () {return &OdometryPositionData;}
+	Position* LidarPosition () {return &LidarPositionData;}
 	void 	SetOdometryTicks (int nOdometryTicks[]);
 	unsigned long* 	GetOdometryTicks () {return m_nOdometryTicks;}
 	void 	SetOdometryTicksSinceLastUpdate (int nOdometryTicks[]);
