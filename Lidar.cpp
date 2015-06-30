@@ -12,6 +12,7 @@ CLidar::CLidar () {
 	pinMode (2, OUTPUT);
 	
 	Medianfilter = new CMedianfilter (3, 100);
+	Localisation = new CLocalisation ();
 	
 	for (int i=0;i<100;i++) {
 		m_nScanData[i] = 0;
@@ -38,8 +39,9 @@ void CLidar::Scan () {
 				m_nTimeStampSinceLastCall = 0;
 				Medianfilter->FilterData (m_nScanData);
 				g_pKnowledgeBase->SetScannerData(Medianfilter->GetFilteredData());
-				//g_pKnowledgeBase->SetScannerData(m_nScanData);
+				//g_pKnowledgeBase->SetScannerData(m_nScanData); //unfiltered data
 				g_pBasicCalculations->CalculateDrivingDirection();
+				Localisation->Localise ();
 			}
 		}
 	
