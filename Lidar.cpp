@@ -12,6 +12,7 @@ CLidar::CLidar () {
 	pinMode (2, OUTPUT);
 	
 	Medianfilter = new CMedianfilter (3, 100);
+	Localisation = new CLocalisation ();
 	
 	for (int i=0;i<100;i++) {
 		m_nScanData[i] = 0;
@@ -27,7 +28,7 @@ void CLidar::Scan () {
 			
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
 				m_nScanData[m_nScanStepCounter] = m_nCurrentMeasurement;
-				std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
+				//std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 				TurnLidar (1);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
@@ -38,8 +39,9 @@ void CLidar::Scan () {
 				m_nTimeStampSinceLastCall = 0;
 				Medianfilter->FilterData (m_nScanData);
 				g_pKnowledgeBase->SetScannerData(Medianfilter->GetFilteredData());
-				//g_pKnowledgeBase->SetScannerData(m_nScanData);
+				//g_pKnowledgeBase->SetScannerData(m_nScanData); //unfiltered data
 				g_pBasicCalculations->CalculateDrivingDirection();
+				Localisation->Localise ();
 			}
 		}
 	

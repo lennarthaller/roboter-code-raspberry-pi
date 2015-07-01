@@ -6,6 +6,7 @@
 #include "KnowledgeBase.hpp"
 #include "BasicCalculations.hpp" 
 #include "Medianfilter.hpp"
+#include "Localisation.hpp"
 #include "I2C.hpp"
 
 #include <iostream>
@@ -30,6 +31,7 @@ class CLidar
 		bool 	m_bScanActive;
 		bool 	m_bRequestNewMeasurement;
 		CMedianfilter *Medianfilter;
+		CLocalisation *Localisation;
 };
 
 #endif
