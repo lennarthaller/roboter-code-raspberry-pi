@@ -3,8 +3,8 @@
 
 #include "KnowledgeBase.hpp"
 
-#include <iostream>
 #include <math.h>
+#include <iostream>
 
 class CLocalisation
 {
@@ -21,9 +21,9 @@ class CLocalisation
 		ScanDataCartesianCoordinates m_CurrentScan[100];
 		ScanDataCartesianCoordinates m_LastScan[100];
 		
-		sind (float fAngle);
-		cosd (float fAngle);
-		atand (float fAngle);
+		float sind (float fAngle);
+		float cosd (float fAngle);
+		float atand (float fAngle);
 };
 
 #endif
