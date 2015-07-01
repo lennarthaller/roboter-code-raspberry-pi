@@ -15,9 +15,9 @@ void CNetworkProtocol::SendKnowledgeBase () {
 	g_pNetwork->CreatePackage (Check ((g_pKnowledgeBase->GetTargetDrivingDirection()+90)*100, 5)); //Target direction * 100 (1 int)
 	g_pNetwork->CreatePackage (Check ((g_pKnowledgeBase->GetCurrentBatteryVoltage()*100), 6)); //operating voltage * 100 (1 int)
 	g_pNetwork->CreatePackage (Check (g_pKnowledgeBase->GetMainLoopTicksPerSecond()/10000, 7)); //loop ticks /10000 (1 int)
-	g_pNetwork->CreatePackage (Check (g_pKnowledgeBase->OdometryPosition()->nX+15000, 8)); //X + 15000 Pos (1 int)
-	g_pNetwork->CreatePackage (Check (g_pKnowledgeBase->OdometryPosition()->nY+15000, 9)); //Y + 15000 Pos (1 int)
-	g_pNetwork->CreatePackage (Check ((g_pKnowledgeBase->OdometryPosition()->fTheta+10)*1000, 10)); //(Theta +10) * 1000 (1 int)
+	g_pNetwork->CreatePackage (Check (g_pKnowledgeBase->LidarPosition()->nX+15000, 8)); //X + 15000 Pos (1 int)
+	g_pNetwork->CreatePackage (Check (g_pKnowledgeBase->LidarPosition()->nY+15000, 9)); //Y + 15000 Pos (1 int)
+	g_pNetwork->CreatePackage (Check ((g_pKnowledgeBase->LidarPosition()->fTheta+10)*1000, 10)); //(Theta +10) * 1000 (1 int)
 	
 	g_pNetwork->Send ();
 }
