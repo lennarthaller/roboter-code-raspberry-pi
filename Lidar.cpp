@@ -28,7 +28,7 @@ void CLidar::Scan () {
 			
 			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
 				m_nScanData[m_nScanStepCounter] = m_nCurrentMeasurement;
-				std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
+				//std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 				TurnLidar (1);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
