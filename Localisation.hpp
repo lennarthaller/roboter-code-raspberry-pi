@@ -23,7 +23,6 @@ class CLocalisation
 		
 		float sind (float fAngle);
 		float cosd (float fAngle);
-		float atand (float fAngle);
 };
 
 #endif
