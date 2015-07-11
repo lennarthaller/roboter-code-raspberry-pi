@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cmath>
+#include <pthread.h>
 
 #include "Seriell.hpp"
 #include "Network.hpp"
@@ -36,12 +37,13 @@ int main () {
 	if (g_pI2C->InitI2C() != 1) {
 		cout << "Fehler" << endl;
 	}
-
-	CLidar Lidar;
 	
-	/*if (g_pNetwork->ConnectToClient () != 1) {
+	CLidar Lidar;
+	pthread_t LidarThread;
+	
+	if (g_pNetwork->ConnectToClient () != 1) {
 		cout << "Fehler" << endl;
-	}*/ 
+	}
 	
 	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
@@ -54,9 +56,9 @@ int main () {
 		g_pSeriell->GetPhotoSensorData(i); // init readout
 	}
 	
-	if (gLidar.StartScanning(); != 1) { ///Start the LiDAR scan
-		cout << "Fehler" << endl;
-	}
+	if (pthread_create (&LidarThread, NULL, &CLidar::GetScanner, &Lidar) != 0) { ///Start the LiDAR scan
+		cout << "Fehler bei starten des Lidar threads" << endl;
+	} 
 			
 	while (1==1) { 
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
