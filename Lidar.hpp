@@ -17,7 +17,8 @@ class CLidar
 {
 	public:
 		CLidar ();
-		int StartScanning ();
+		void *StartScanning ();
+		static void *GetScanner (void *context) {return ((CLidar *)context)->StartScanning();}
 		
 	private:
 		bool NewMeasurementAvailable ();

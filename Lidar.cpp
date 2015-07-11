@@ -19,22 +19,23 @@ CLidar::CLidar () {
 	}
 }
 
-int CLidar::StartScanning () {	
-	PI_THREAD (Scanning) {
+void *CLidar::StartScanning () {	
 	
-		if (m_bScanActive == true) {	//Scan durchführen
+	for (;;) {
 		
+		if (m_bScanActive == true) {	//Scan durchführen
+			
 			if ((NewMeasurementAvailable() == true)&&(m_nTimeStampSinceLastCall + 45 < g_pTimer->TimeSinceStart())) { //measurement is in range
-			
+				
 				m_bRequestNewMeasurement = true;
-			
+				
 				if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
 					m_nScanData[m_nScanStepCounter] = m_nCurrentMeasurement;
 					//std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 					TurnLidar (1);
 					m_nScanStepCounter ++;
 					m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
-			
+		
 				}else{		//Scan fertig			
 					m_nScanStepCounter = 0;
 					m_bScanActive = false;
@@ -63,7 +64,6 @@ int CLidar::StartScanning () {
 			}
 		}
 	}
-	return (piThreadCreate (Scanning));
 }
 
 bool CLidar::NewMeasurementAvailable () {
