@@ -12,13 +12,13 @@
 #include <iostream>
 #include <unistd.h>
 #include <wiringPi.h>
+#include <thread>
 
 class CLidar
 {
 	public:
 		CLidar ();
-		void *StartScanning ();
-		static void *GetScanner (void *context) {return ((CLidar *)context)->StartScanning();}
+		void Scan ();
 		
 	private:
 		bool NewMeasurementAvailable ();
