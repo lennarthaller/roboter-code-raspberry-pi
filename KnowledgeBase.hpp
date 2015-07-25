@@ -1,10 +1,12 @@
 #ifndef KNOWLEDGEBASE_HPP
 #define KNOWLEDGEBASE_HPP
 
-#include <iostream>
 #include "Singleton.hpp"
 #include "Logfile.hpp"
+
 #include <stdint.h>
+#include <iostream>
+#include <atomic>
 
 #define g_pKnowledgeBase CKnowledgeBase::Get()
 
@@ -12,9 +14,9 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 {
 	private:
 	typedef struct {
-		int nX;
-		int nY;
-		float fTheta; //in rad! (clockwise from y-axis)
+		std::atomic<int> nX;
+		std::atomic<int>  nY;
+		std::atomic<float>  fTheta; //in rad! (clockwise from y-axis)
 	} Position;
 	
 	Position OdometryPositionData;
