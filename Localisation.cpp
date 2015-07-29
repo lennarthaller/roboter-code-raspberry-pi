@@ -20,9 +20,9 @@ void CLocalisation::Localise () {
 	}
 	float fDistananceBetweenPoints = 0.0f;
 	float fDistananceBetweenPointsOld = 0.0f;
-	float nMatchedPoints = 0;
+	int nMatchedPoints = 0;
 	float fSummOfError = 0.0f;
-	
+
 	float fSummOfMatchedXMatchedScan = 0.0f;
 	float fSummOfMatchedXNewScann = 0.0f;
 	float fSummOfMatchedYMatchedScan = 0.0f;
@@ -31,28 +31,28 @@ void CLocalisation::Localise () {
 	float fSXMatchedYNew = 0.0f;
 	float fSYMatchedXNew = 0.0f;
 	float fSYMatchedNew = 0.0f;
-	
+
 	float fXPos = static_cast<float> (g_pKnowledgeBase->OdometryPosition()->nX);
 	float fYPos = static_cast<float> (g_pKnowledgeBase->OdometryPosition()->nY);
 	float fTheta = g_pKnowledgeBase->OdometryPosition()->fTheta;
-	
+
 	bool bWasMatched = false;
 
 	for (int i=0;i<100;i++) {
 		m_LastScan[i].fX = m_CurrentScan[i].fX;
 		m_LastScan[i].fY = m_CurrentScan[i].fY;
-		
+
 		m_CurrentScan[i].fX = (*(g_pKnowledgeBase->GetScannerData()+i)) * cosd (1.8*i);
 		m_CurrentScan[i].fY = (*(g_pKnowledgeBase->GetScannerData()+i)) * sind (1.8*i);
 	}
-	
+
 	for (int l=0;l<10;l++) { //Number of ICP iterations
-	
+
 		for (int i=0;i<100;i++) {
 			TranslatedScan[i].fX = ((cos (fTheta) + (-sin(fTheta))) * m_CurrentScan[i].fX) + fXPos;
 			TranslatedScan[i].fY = ((sin (fTheta) + cos(fTheta)) * m_CurrentScan[i].fY) + fYPos;
 		}
-	
+
 		for (int i=0;i<100;i++) {
 			fDistananceBetweenPointsOld = 1000.0f;
 			for (int j=0;j<100;j++) {
@@ -81,20 +81,20 @@ void CLocalisation::Localise () {
 		float fA, fB;
 		fA = (fSummOfMatchedXMatchedScan*fSummOfMatchedYNewScan)+(nMatchedPoints*fSYMatchedXNew)-(nMatchedPoints*fSXMatchedYNew)-(fSummOfMatchedXNewScann*fSummOfMatchedYMatchedScan);
 		fB = (nMatchedPoints*fSXMatchedNew)+(nMatchedPoints*fSYMatchedNew)-(fSummOfMatchedXMatchedScan*fSummOfMatchedXNewScann)-(fSummOfMatchedYMatchedScan*fSummOfMatchedYNewScan);
-		
+
 		fTheta = atan (fA/fB);
 		fXPos = (fSummOfMatchedXMatchedScan - (cos(fTheta)*fSummOfMatchedXNewScann) + (sin(fTheta)*fSummOfMatchedYNewScan)) / nMatchedPoints;
 		fYPos = (fSummOfMatchedYMatchedScan - (sin(fTheta)*fSummOfMatchedXNewScann) - (cos(fTheta)*fSummOfMatchedYNewScan)) / nMatchedPoints;
-		
+
 		std::cout << "Matched Points: " << nMatchedPoints << std::endl << std::endl; ///DEBUG
 		std::cout << "X: " << fXPos << std::endl; ///DEBUG
 		std::cout << "Y: " << fYPos << std::endl; ///DEBUG
 		std::cout << "Theta: " << fTheta << std::endl; ///DEBUG
-		
+
 		fDistananceBetweenPointsOld = 0.0f;
 		nMatchedPoints = 0;
 		fSummOfError = 0.0f;
-	
+
 		fSummOfMatchedXMatchedScan = 0.0f;
 		fSummOfMatchedXNewScann = 0.0f;
 		fSummOfMatchedYMatchedScan = 0.0f;
@@ -104,16 +104,16 @@ void CLocalisation::Localise () {
 		fSYMatchedXNew = 0.0f;
 		fSYMatchedNew = 0.0f;
 	}
-	
+
 	g_pKnowledgeBase->LidarPosition()->nX += static_cast<int> (fXPos);
 	g_pKnowledgeBase->LidarPosition()->nY += static_cast<int> (fYPos);
-	g_pKnowledgeBase->LidarPosition()->fTheta += fTheta;
-	
+	g_pKnowledgeBase->LidarPosition()->fTheta = (fTheta + g_pKnowledgeBase->LidarPosition()->fTheta);
+
 	//std::cout << "X: " << fXPos << std::endl; ///DEBUG
 	//std::cout << "Y: " << fYPos << std::endl; ///DEBUG
 	//std::cout << "Theta: " << fTheta << std::endl; ///DEBUG
 	//std::cout << "Matched Points: " << nMatchedPoints << std::endl << std::endl; ///DEBUG
-	
+
 	g_pKnowledgeBase->OdometryPosition()->nX = 0;
 	g_pKnowledgeBase->OdometryPosition()->nY = 0;
 	g_pKnowledgeBase->OdometryPosition()->fTheta = 0.0f;
