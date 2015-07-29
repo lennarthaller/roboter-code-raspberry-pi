@@ -1,6 +1,8 @@
 #ifndef TSINGLETON
 #define TSINGLETON
 
+#include <iostream>
+
 template <class T>
 class TSingleton
 {
@@ -12,18 +14,18 @@ class TSingleton
 
         virtual ~TSingleton () {
         }
-		
+
 		inline static T* Get () {
             if (!m_pSingleton) {
-                m_pSingleton = new T;   
+                m_pSingleton = new T;
 			}
             return (m_pSingleton);
-        } 
+        }
 
         static void Del () {
-           
+
             if (m_pSingleton) {
-                delete (m_pSingleton);  
+                delete (m_pSingleton);
                 m_pSingleton = NULL;
             }
         }
