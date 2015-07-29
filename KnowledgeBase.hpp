@@ -15,10 +15,10 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	private:
 	typedef struct {
 		std::atomic<int> nX;
-		std::atomic<int>  nY;
-		std::atomic<float>  fTheta; //in rad! (clockwise from y-axis)
+		std::atomic<int> nY;
+		std::atomic<float> fTheta; //in rad! (clockwise from y-axis)
 	} Position;
-	
+
 	Position OdometryPositionData;
 	Position LidarPositionData;
 	unsigned long m_nOdometryTicks[4];
@@ -30,10 +30,10 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	bool 	m_bIsConnected;
 	int 	m_nCurrentMotorPower[4]; //0 = Motor 1..
 	float 	m_fCurrentBattteryVoltage;
-	
+
 	public:
 	CKnowledgeBase ();
-	
+
 	void 	SetScannerData (int nSensorData[]);
 	int* 	GetScannerData () {return m_nScannerData;}
 	void 	SetCurrentMotorPower (int nCurrentMotorPower, int nMotorNumber);
