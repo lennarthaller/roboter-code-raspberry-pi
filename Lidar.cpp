@@ -7,54 +7,54 @@ CLidar::CLidar () {
 	m_nTimeStampLidarturn = 0;
 	m_bScanActive = true;
 	m_bRequestNewMeasurement = true;
-	
+
 	pinMode (0, OUTPUT);
 	pinMode (2, OUTPUT);
-	
+
 	Medianfilter = new CMedianfilter (3, 100);
 	Localisation = new CLocalisation ();
-	
+
 	for (int i=0;i<100;i++) {
 		m_nScanData[i] = 0;
 	}
 }
 
-void CLidar::Scan () {	
-		
-	if (m_bScanActive == true) {	//Scan durchführen
-		
+void CLidar::Scan () {
+
+	if (m_bScanActive == true) {	//Scan durchfï¿½hren
+
 		if ((NewMeasurementAvailable() == true)&&(m_nTimeStampSinceLastCall + 45 < g_pTimer->TimeSinceStart())) { //measurement is in range
-			
+
 			m_bRequestNewMeasurement = true;
-			
-			if (m_nScanStepCounter < 100) {		//Läuft der Scan noch? (noch keine 100 Schritte)
+
+			if (m_nScanStepCounter < 100) {		//Lï¿½uft der Scan noch? (noch keine 100 Schritte)
 				m_nScanData[m_nScanStepCounter] = m_nCurrentMeasurement;
 				//std::cout << m_nScanData[m_nScanStepCounter] << std::endl; ////DEBUG
 				TurnLidar (1);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
-	
-			}else{		//Scan fertig			
+
+			}else{		//Scan fertig
 				m_nScanStepCounter = 0;
 				m_bScanActive = false;
 				m_nTimeStampSinceLastCall = 0;
 				Medianfilter->FilterData (m_nScanData);
 				g_pKnowledgeBase->SetScannerData(Medianfilter->GetFilteredData());
 				g_pBasicCalculations->CalculateDrivingDirection();
-				
-				std::thread LocalisationThread (Localisation->Localise);
-				LocalisationThread.join ();
+
+				std::thread LocalisationThread (&CLocalisation::Localise, Localisation); //starting the localisation algoithm in a seperate thread
+				LocalisationThread.detach (); //detach thread from main thread
 			}
 		}
 
-	}else{	//Zurückdrehen
+	}else{	//Zurï¿½ckdrehen
 		if (m_nTimeStampSinceLastCall + 45 < g_pTimer->TimeSinceStart()) { //3 Millisekunde seit dem letzten Aufruf vergangen?
-			
+
 			if (m_nScanStepCounter < 100) {
 				TurnLidar (0);
 				m_nScanStepCounter ++;
 				m_nTimeStampSinceLastCall = g_pTimer->TimeSinceStart();
-			
+
 			}else{
 				m_nScanStepCounter = 0;
 				m_nTimeStampSinceLastCall = 0;
@@ -72,13 +72,13 @@ bool CLidar::NewMeasurementAvailable () {
 	}else{
 		m_nCurrentMeasurement = g_pI2C->GetLidarDistance ();
 	}
-		
+
 	if (m_nCurrentMeasurement > 4001) {
 		m_nCurrentMeasurement = 0;
 		m_bRequestNewMeasurement = true;
 		return false;
 	}
-	
+
 	if (m_nCurrentMeasurement < 1) {
 		return false;
 	}
@@ -87,13 +87,13 @@ bool CLidar::NewMeasurementAvailable () {
 
 void CLidar::TurnLidar (int nDirection) {
 	digitalWrite (0, HIGH);
-	
+
 	if (nDirection == 0) { //Set direction
 		digitalWrite (2, LOW);
 	}
 	if (nDirection == 1) {
 		digitalWrite (2, HIGH);
 	}
-	//usleep (1); 
+	//usleep (1);
 	digitalWrite (0, LOW);
 }
