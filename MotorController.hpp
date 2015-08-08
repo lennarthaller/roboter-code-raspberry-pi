@@ -14,9 +14,9 @@ class CMotorController : public TSingleton<CMotorController>
 	public:
 		CMotorController();
 		void UpdateMotors ();
-		
+
 	private:
-		CPidController *PidMotor[4];		
+		CPidController *PidMotor[4];
 		int m_nControlValue[4];
 };
 

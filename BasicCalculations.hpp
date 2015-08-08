@@ -12,10 +12,10 @@ class CBasicCalculations : public TSingleton<CBasicCalculations>
 {
 	public:
 	CBasicCalculations ();
-	
+
 	void 	CalculateDrivingDirection ();
 	void 	CalculatePositionFromOdometry ();
-	
+
 	private:
 	float m_fLegthOfAxis;
 	float m_fTireCircumference;

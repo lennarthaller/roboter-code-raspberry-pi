@@ -8,7 +8,7 @@ CBasicCalculations::CBasicCalculations () {
 
 void CBasicCalculations::CalculateDrivingDirection () {
 	const int nPointsRequired = 13;
-	
+
 	int nInfraredData[100];
 	float fDrivingAngle = g_pKnowledgeBase->GetTargetDrivingDirection();
 	int nCounterRight = 0;
@@ -24,7 +24,7 @@ void CBasicCalculations::CalculateDrivingDirection () {
 	for (int i=0; i<100; i++) {
 		nInfraredData[i] = *(g_pKnowledgeBase->GetScannerData() +i);
 	}
-	
+
 	for (int i=0;i<100;i++) { //Durschnittliche Entfernung des Scans
 		nAverage += nInfraredData[i];
 	}
@@ -40,10 +40,10 @@ void CBasicCalculations::CalculateDrivingDirection () {
 				break;
 			}
 		}else{
-			nCounterRight = 0;		
+			nCounterRight = 0;
 		}
 		i--;
-	} 
+	}
 
 	i = -5;
 	while (nStartForSearching + i < 100) { //Das Array richtung 100 durchlaufen
@@ -55,12 +55,12 @@ void CBasicCalculations::CalculateDrivingDirection () {
 				break;
 			}
 		}else{
-			nCounterLeft = 0;		
+			nCounterLeft = 0;
 		}
 		i++;
 	}
 
-	//Welcher Wert soll zurückgegeben werden:	
+	//Welcher Wert soll zurückgegeben werden:
 	if ((nCounterLeft >= nPointsRequired)&&(nCounterRight >= nPointsRequired)) {
 		if (nStepsRequiredRight <= nStepsRequiredLeft) {
 			g_pKnowledgeBase->SetCalculatedDrivingDirection (nDrivingDirectionRight);
@@ -84,35 +84,35 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 	float fVL = 0.0f;
 	float fVR = 0.0f;
 	float fDeltaTheta = 0.0f;
-	
+
 	const float fXPosOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nX);
 	const float fYposOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nY);
 	const float fThetaOld = g_pKnowledgeBase->OdometryPosition()->fTheta;
-	
+
 	float fX = 0.0f;
 	float fY = 0.0f;
 	float fTheta = 0.0f;
-	
+
 	float fTicksL = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+1) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2)) / 2);
 	float fTicksR = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+0) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2);
-	
+
 	fVL = fTicksL * m_fTireCircumference / m_nTicksPerTurn;
 	fVR = fTicksR * m_fTireCircumference / m_nTicksPerTurn;
-	
+
 	fDeltaTheta = (fVL - fVR) / m_fLegthOfAxis; //length of axis
-	
+
 	fX = fXPosOld + (((fVL+fVR)/2) * sin (fThetaOld + (0.5 * fDeltaTheta)));
 	fY = fYposOld + (((fVL+fVR)/2) * cos (fThetaOld + (0.5 * fDeltaTheta)));
 	fTheta = fThetaOld + (fDeltaTheta);
-	
+
 	if (fTheta > 2 * M_PI) {
 		fTheta -= 2 * M_PI;
 	}
-	
+
 	if (fTheta < 0) {
 		fTheta += 2 * M_PI;
 	}
-	
+
 	g_pKnowledgeBase->OdometryPosition()->nX = static_cast <int> (fX);
 	g_pKnowledgeBase->OdometryPosition()->nY = static_cast <int> (fY);
 	g_pKnowledgeBase->OdometryPosition()->fTheta = fTheta;

@@ -8,13 +8,13 @@
 #include "Singleton.hpp"
 
 // Defines
-#define MAX_BUFFER 4096           // Maximale Größe für den Buffer
+#define MAX_BUFFER 4096           // Maximale Grï¿½ï¿½e fï¿½r den Buffer
 #define L_FAIL false              // Funktion war erfolgreich
 #define L_OK   true               // Funktion ist fehlgeschlagen
 #define Log_File Clogfile::Get () // Makro zur einfachen Verwendung
 
 
-// Farben für den Text
+// Farben fï¿½r den Text
 enum FONTCOLORS
 {
     BLACK,

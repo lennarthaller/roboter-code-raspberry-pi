@@ -4,7 +4,7 @@
 #include "Timer.hpp"
 #include "Seriell.hpp"
 #include "KnowledgeBase.hpp"
-#include "BasicCalculations.hpp" 
+#include "BasicCalculations.hpp"
 #include "Medianfilter.hpp"
 #include "Localisation.hpp"
 #include "I2C.hpp"
@@ -19,11 +19,11 @@ class CLidar
 	public:
 		CLidar ();
 		void Scan ();
-		
+
 	private:
 		bool NewMeasurementAvailable ();
 		void TurnLidar (int nDirection);
-	
+
 		int 	m_nScanData[100];
 		long    m_nTimeStampSinceLastCall;
 		long    m_nTimeStampLidarturn;

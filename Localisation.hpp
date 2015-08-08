@@ -11,16 +11,16 @@ class CLocalisation
 	public:
 		CLocalisation ();
 		void Localise ();
-		
+
 	private:
 		typedef struct {
 			float fX;
 			float fY;
 		} ScanDataCartesianCoordinates;
-	
+
 		ScanDataCartesianCoordinates m_CurrentScan[100];
 		ScanDataCartesianCoordinates m_LastScan[100];
-		
+
 		float sind (float fAngle);
 		float cosd (float fAngle);
 };

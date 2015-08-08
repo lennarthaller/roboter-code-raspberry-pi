@@ -18,11 +18,11 @@ class CI2C : public TSingleton<CI2C>
 	float GetCompassData (void);
 	void StartLidarMeasurement (void);
 	int GetLidarDistance (void);
-	
+
   private:
 	int I2CRead (int nDevice, int nRegister);
 	void I2CWrite (int nDevice, int nRegister, int nData);
-  
+
 	int m_nCompassAdress;
 	int m_nLidarAdress;
 	bool m_bError;
