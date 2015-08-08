@@ -7,6 +7,7 @@ int CTiM551Driver::InitLaserScanner () {
  int nResult = libusb_init (&ctx);
  if (nResult != 0) {
    Log_File->Textout (RED, "Failed to initialise Libusb!");
+   return 1;
  }
 
   libusb_set_debug(ctx_, 3); //Set the verbosity level to 3 as suggested in the documentation
@@ -17,6 +18,7 @@ int CTiM551Driver::InitLaserScanner () {
 
  if (device_handle == NULL) {
    Log_File->Textout (RED, "Libusb cannot open the device!");
+   return 1;
  }else{
    Log_File->Textout (BLACK, "Libusb opened the device.");
  }
@@ -30,6 +32,7 @@ int CTiM551Driver::InitLaserScanner () {
  result = libusb_claim_interface(device_handle, 0); //Claim the interface 0
  if (result < 0) {
    Log_File->Textout (RED, "Libusb cannot claim the interface!");
+   return 1;
  }
 
  Log_File->Textout (BLACK, "TiM551 was succesfully initialised.");
