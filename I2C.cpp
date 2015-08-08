@@ -3,13 +3,13 @@
 int CI2C::InitI2C () {
 	Log_File->WriteTopic ("Init I2C bus", 1);
 	m_bError = false;
-	
+
 	m_nCompassAdress = wiringPiI2CSetup (0x60); //initialisation of the cmps10
 	if (m_nCompassAdress == -1) {
 		Log_File->Textout (RED, "Failed to initialise the compass!");
 		m_bError = true;
 	}
-	
+
 	m_nLidarAdress = wiringPiI2CSetup (0x62); //initialisation of the LiDAR
 	if (m_nLidarAdress == -1) {
 		Log_File->Textout (RED, "Failed to initialise the LiDAR!");
@@ -17,7 +17,7 @@ int CI2C::InitI2C () {
 	}else{
 		I2CWrite (m_nLidarAdress, 0, 0); //set LiDAR acquisition count (128 = default)
 	}
-	
+
 	if (m_bError == false) {
 		Log_File->Textout (BLACK, "I2C bus initialised.");
 		return 1;

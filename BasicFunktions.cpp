@@ -10,21 +10,21 @@ CBasicFunktions::CBasicFunktions () {
 void CBasicFunktions::UpdateSensorData () {
 	if (m_nTimeStampSinceLastCallSensorUpdateOdometry + 1000 < g_pTimer->TimeSinceStart()) {
 		int nOdometryData[4];
-		
+
 		for(int i=0;i<4;i++) {
 			nOdometryData[i] = g_pSeriell->GetPhotoSensorData(i+1);
 		}
-		
+
 		g_pKnowledgeBase->SetOdometryTicks(nOdometryData); //Odoemtrie updated
 		g_pKnowledgeBase->SetOdometryTicksSinceLastUpdate(nOdometryData);
 		g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
 		//g_pMotorController->UpdateMotors (); //Control Motors
 		m_nTimeStampSinceLastCallSensorUpdateOdometry = g_pTimer->TimeSinceStart();
 	}
-	
-	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pTimer->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?	
-		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated		
-		
+
+	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pTimer->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?
+		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
+
 		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
 			if (g_pNetwork->ConnectToClient() == 1) {
 				g_pKnowledgeBase->SetIsConnected(true);

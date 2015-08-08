@@ -3,7 +3,7 @@
 CMedianfilter::CMedianfilter (int SizeOfFilter, int NumberOfDatapoints) {
 	m_nSizeOfFilter = SizeOfFilter;
 	m_nNumberOfDatapoints = NumberOfDatapoints;
-	
+
 	if (NumberOfDatapoints > 100) {
 		std::cout << "DATASET FOR THE MEDIAN FILLTER IS TOO LARGE!" << std::endl;
 	}
@@ -11,7 +11,7 @@ CMedianfilter::CMedianfilter (int SizeOfFilter, int NumberOfDatapoints) {
 
  void CMedianfilter::FilterData (int Data[]) {
 	 std::vector<int> DataVec (m_nSizeOfFilter);
-	 
+
 	for (int i=0;i<m_nNumberOfDatapoints; i++) {
 		m_nFilteredData[i] = Data[i];
 	}
