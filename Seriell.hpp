@@ -19,12 +19,12 @@ class CSeriell : public TSingleton<CSeriell>
   float GetBatteryVoltage (void);
   int SetMotorPower (const int nMotor, const int nPower);
   int MovePML (const int nDirection);
-  
+
   private:
   int DataAvailableNoTimeOut (void);
   int SendSeriellInt (int nData);
   int ReceiveSeriellData (void);
-  
+
   int m_nOwnSeriellAdress;
 };
 

@@ -7,10 +7,10 @@ Clogfile::Clogfile ()
 }
 
 // Destruktor
-//Gibt Ende-Meldung aus und schließ das Logfile
+//Gibt Ende-Meldung aus und schlieï¿½ das Logfile
 Clogfile::~Clogfile ()
 {
-    // logfile-Ende schreiben und Datei schließen
+    // logfile-Ende schreiben und Datei schlieï¿½en
     //Textout ("<br><br>===End of logfile===</font></body></html>");
     fclose (m_logfile);
 }
@@ -25,16 +25,16 @@ void Clogfile::CreateLogfile ()
     Textout ("<body><font face='courier new'>");
     //fopen_s(&m_logfile, LogName, "a");
 
-    // logfile schließen und mit append wieder öffnen
+    // logfile schlieï¿½en und mit append wieder ï¿½ffnen
     fclose (m_logfile);
      m_logfile = fopen ("Logfile.html", "a");
 }
 
 //WriteTopic
-//Überschrift erzeugen
+//ï¿½berschrift erzeugen
 void Clogfile::WriteTopic (const char *Topic, int Size)
 {
-    // Überschrift schreiben und flushen
+    // ï¿½berschrift schreiben und flushen
     Textout ("<table cellspacing='0' cellpadding='0' width='100%%' ");
     Textout ("bgcolor='#DFDFE5'>\n<tr>\n<td>\n<font face='arial' ");
     TextoutF ("size='+%i'>\n", Size);
@@ -98,7 +98,7 @@ void Clogfile::TextoutF (const char *Text, ...)
 {
     char *buffer = new char[MAX_BUFFER];    // char-Buffer
 
-    va_list pArgList;                       // Liste der übergebenen Argumente
+    va_list pArgList;                       // Liste der ï¿½bergebenen Argumente
 
 
     // String aus den Argumenten erstellen
@@ -116,7 +116,7 @@ void Clogfile::TextoutF (int Color, const char *Text, ...)
 {
     char *buffer = new char[MAX_BUFFER];    // char-Buffer
 
-    va_list pArgList;                       // Liste der übergebenen Argumente
+    va_list pArgList;                       // Liste der ï¿½bergebenen Argumente
 
 
     // String aus den Argumenten erstellen
@@ -134,7 +134,7 @@ void Clogfile::TextoutF (int Color, bool List,const char *Text, ...)
 {
     char *buffer = new char[MAX_BUFFER];  // char-Buffer
 
-    va_list pArgList;          // Liste der übergebenen Argumente
+    va_list pArgList;          // Liste der ï¿½bergebenen Argumente
 
 
     // String aus den Argumenten erstellen
@@ -147,7 +147,7 @@ void Clogfile::TextoutF (int Color, bool List,const char *Text, ...)
 }
 
 // FunctionResult
-//OK oder ERROR für Funktionsaufruf ausgeben
+//OK oder ERROR fï¿½r Funktionsaufruf ausgeben
 void Clogfile::FunctionResult (const char *Name, const char *ErrorMessage, bool Result)
 {
     if (L_OK == Result)
