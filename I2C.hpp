@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "Singleton.hpp"
-#include "Logfile.hpp"
+#include "Tracer.hpp"
 
 #include <wiringPiI2C.h>
 #include <wiringPi.h>

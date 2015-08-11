@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include "Singleton.hpp"
-#include "Logfile.hpp"
+#include "Tracer.hpp"
 
 #include <sys/types.h>
 #include <sys/socket.h>
