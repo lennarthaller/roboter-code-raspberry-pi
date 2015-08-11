@@ -12,8 +12,8 @@ int CTiM551Driver::InitLaserScanner () {
 
   libusb_set_debug(ctx_, 3); //Set the verbosity level to 3 as suggested in the documentation
 
- int vendorID = 0x19A2; // SICK AG
- int deviceID = 0x5001; // TIM3XX
+ int nVendorID = 0x19A2; // SICK AG
+ int nDeviceID = 0x5001; // TIM3XX
  libusb_device_handle = libusb_open_device_with_vid_pid (ctx, 0x19A2, 0x5001); //If available, open the first SICK TIM3xx device
 
  if (device_handle == NULL) {
