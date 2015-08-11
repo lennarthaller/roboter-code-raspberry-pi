@@ -1,18 +1,15 @@
-#ifndef __Clogfile
-#define __Clogfile
+#ifndef LOGFILE_HPP
+#define LOGFILE_HPP
 
 // Includes
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Singleton.hpp"
 
 // Defines
 #define MAX_BUFFER 4096           // Maximale Gr��e f�r den Buffer
 #define L_FAIL false              // Funktion war erfolgreich
 #define L_OK   true               // Funktion ist fehlgeschlagen
-#define Log_File Clogfile::Get () // Makro zur einfachen Verwendung
-
 
 // Farben f�r den Text
 enum FONTCOLORS
@@ -24,7 +21,7 @@ enum FONTCOLORS
     PURPLE
 };
 
-class Clogfile : public TSingleton<Clogfile>
+class Clogfile
 {
     // Memberfunktionen
     public:
