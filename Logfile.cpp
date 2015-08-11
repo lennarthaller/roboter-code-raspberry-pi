@@ -1,4 +1,4 @@
-#include "Tracer.hpp"
+#include "Logfile.hpp"
 
 // Konstruktor
 Clogfile::Clogfile ()
