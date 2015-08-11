@@ -5,6 +5,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 
 // Defines
 #define MAX_BUFFER 4096           // Maximale Gr��e f�r den Buffer
@@ -30,9 +31,9 @@ class Clogfile
         ~Clogfile      ();
         void CreateLogfile  (void);
         void WriteTopic     (const char *Topic, int Size);
-        void Textout        (const char *Text);
-        void Textout        (int Color, const char *Text);
-        void Textout        (int Color, bool List, const char *Text);
+        void Textout        (std::string Text);
+        void Textout        (int Color, std::string Text);
+        void Textout        (int Color, bool List,std::string Text);
         void TextoutF       (const char *Text, ...);
         void TextoutF       (int Color, const char *Text, ...);
         void TextoutF       (int Color, bool List, const char *Text, ...);
