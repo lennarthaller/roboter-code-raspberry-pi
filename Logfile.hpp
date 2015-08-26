@@ -19,7 +19,8 @@ enum FONTCOLORS
     RED,
     GREEN,
     BLUE,
-    PURPLE
+    PURPLE,
+    ORANGE
 };
 
 class Clogfile

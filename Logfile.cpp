@@ -80,6 +80,8 @@ void Clogfile::Textout (int Color, bool List, std::string Text)
             Textout ("<font color=blue>");   break;
         case PURPLE:
             Textout ("<font color=purple>"); break;
+        case ORANGE:
+            Textout ("<font color=orange>"); break;
     };
 
     //Text schreiben
