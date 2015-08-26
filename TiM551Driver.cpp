@@ -12,8 +12,8 @@ int CTiM551Driver::InitLaserScanner () {
 
   libusb_set_debug(ctx_, 3); //Set the verbosity level to 3 as suggested in the documentation
 
- int nVendorID = 0x19A2; // SICK AG
- int nDeviceID = 0x5001; // TIM3XX
+ const int nVendorID = 0x19A2; // SICK AG
+ const int nDeviceID = 0x5001; // TIM3XX
  libusb_device_handle = libusb_open_device_with_vid_pid (ctx, 0x19A2, 0x5001); //If available, open the first SICK TIM3xx device
 
  if (device_handle == NULL) {
@@ -37,6 +37,34 @@ int CTiM551Driver::InitLaserScanner () {
 
  //Log_file->Textout (BLACK, "TiM551 was succesfully initialised.");
  return 0;
+}
+
+
+int CTiM551Driver::sendSOPASCommand (const char *request) {
+  if (device_handle == NULL) {
+  //Log_file->Textout (RED, "Libusb - device not open!");
+  return 1;
+  }
+
+  const int buffSize = 1000;
+  int result = 0;
+  unsigned char receiveBuffer[buffSize];
+  int actual_length = 0;
+  int requestLength = strlen(request);
+  
+  result = libusb_bulk_transfer(device_handle, (2 | LIBUSB_ENDPOINT_OUT), (unsigned char*)request, requestLength, &actual_length, 0);
+  if (result != 0 || actual_length != requestLength) {
+    //Log_file->Textout (RED, "Libusb write error.");
+    return 1;
+  }
+
+  result = libusb_bulk_transfer(device_handle, (1 | LIBUSB_ENDPOINT_IN), receiveBuffer, buffSize, &actual_length, 1000);
+  if (result != 0) {
+  //Log_file->Textout (RED, "Libusb read error.");
+  return 1;
+  }
+
+  return 0;
 }
 
 int CTiM551Driver::CloseLaserScanner () {
