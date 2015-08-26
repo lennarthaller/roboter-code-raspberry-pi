@@ -14,7 +14,7 @@ int CTracer::TracerInit (int nDebugLevel) {
 void CTracer::Trace (int DebugLevel, std::ostringstream Text) {
   std::string message;
   switch (DebugLevel)
-  {
+{
       case ERROR: {
         message = "[ERROR]: ";
         message.append (Text.str());
@@ -29,7 +29,7 @@ void CTracer::Trace (int DebugLevel, std::ostringstream Text) {
         if (m_nSelectedDebugLevel >= WARNING) {
             std::cout << message << std::endl;
         }
-        Logfile->Textout (PURPLE, message);
+        Logfile->Textout (ORANGE, message);
         break;
       }
         
