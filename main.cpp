@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cmath>
-#include <cstdlib> //standart c lib for atoi
+#include <sstream> //lib for stringstream
 
 #include "Seriell.hpp"
 #include "Network.hpp"
@@ -12,13 +12,22 @@
 
 int main (int argc, char* argv[]) {
 
-/*if ((argc != 2)||(atoi(argv[1] < 0))||(atoi(argv[1] > 3))) { //Checking if the cmd line parameter was valid
+	std::istringstream ss(argv[1]);
+	int debugLevel;
+
+if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter was valid
 	std::cout << "You have to specify a valid debug level (0-3)." << std::endl;
 	std::cout << "Exiting." << std::endl;
 	return 0;
-}else{ */
-	g_pTracer->TracerInit(atoi(argv[1]));
-//}
+}else{
+	if ((debugLevel < 0)||(debugLevel > 3)) { //Checking if the cmd line parameter is in range
+		std::cout << "You have to specify a valid debug level (0-3)." << std::endl;
+		std::cout << "Exiting." << std::endl;
+		return 0;
+	}else{
+		g_pTracer->TracerInit(debugLevel);
+	}
+}
 
 	g_pTracer->Trace (NOTE, "Roboter test Programm v0.1");
 	g_pTracer->Trace (NOTE, "2015, Lennart Haller");
@@ -59,8 +68,6 @@ int main (int argc, char* argv[]) {
 		g_pSeriell->SetMotorPower(i, 0);
 		g_pSeriell->GetPhotoSensorData(i); // init readout
 	}
-
-	std::cout << "Test" << std::endl;
 
 	while (1==1) {
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
