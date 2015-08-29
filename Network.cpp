@@ -5,12 +5,12 @@ CNetwork::CNetwork () {
 	m_nSocketFromClient = 0;
 	m_nBytes = 0;
 	SizeOfClientSocket = sizeof(AdressfromClient);
-	
+
 	AdressFromServer.sin_addr.s_addr = INADDR_ANY;
-	AdressFromServer.sin_port = htons(7000);            
+	AdressFromServer.sin_port = htons(7000);
 	AdressFromServer.sin_family = AF_INET;
 }
-	
+
 int CNetwork::InitNetwork () {
 	Log_File->WriteTopic ("Network initialization", 1);
 	m_nSocketFromServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -19,12 +19,12 @@ int CNetwork::InitNetwork () {
 			Log_File->Textout (RED, "Failed to set up the network!");
 			return -1;
 	}
-	
+
 	if (bind(m_nSocketFromServer, (struct sockaddr*) &AdressFromServer, sizeof(AdressFromServer)) == -1) {
 		Log_File->Textout (RED, "Failed to bind the socket!");
 		return -1;
 	}
-	
+
 	Log_File->Textout (BLACK, "Network resources initialised.");
 	return 1;
 }
@@ -34,7 +34,7 @@ int CNetwork::ConnectToClient () {
 		Log_File->Textout (RED, "No incoming connection!");
 		return -1;
 	}
-	
+
 	m_nSocketFromClient = accept(m_nSocketFromServer, (struct sockaddr*) &AdressfromClient, &SizeOfClientSocket);
 	if (m_nSocketFromClient == -1) {
 		return -1;

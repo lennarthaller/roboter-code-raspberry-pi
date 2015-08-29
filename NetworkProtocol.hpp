@@ -10,7 +10,7 @@ class CNetworkProtocol
 {
 public:
 	void SendKnowledgeBase ();
-	
+
 private:
 	uint16_t Check (float fNumber, int nError);
 	uint16_t Check (int nNumber, int nError);

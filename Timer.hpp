@@ -10,10 +10,10 @@
 
 class CTimer : public TSingleton<CTimer>
 {
-  public:  
+  public:
   long TimeSinceStart (void);
   int InitTimer (void);
-  
+
   private:
   unsigned long long m_nTimerToZero;
 };
