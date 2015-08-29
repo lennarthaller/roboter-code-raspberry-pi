@@ -9,7 +9,7 @@
 #include <string.h>
 */
 
-#include "Logfile.hpp"
+#include "Tracer.hpp"
 
 class CTiM551Driver
 {

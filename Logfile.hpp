@@ -1,18 +1,16 @@
-#ifndef __Clogfile
-#define __Clogfile
+#ifndef LOGFILE_HPP
+#define LOGFILE_HPP
 
 // Includes
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "Singleton.hpp"
+#include <string>
 
 // Defines
 #define MAX_BUFFER 4096           // Maximale Gr��e f�r den Buffer
 #define L_FAIL false              // Funktion war erfolgreich
 #define L_OK   true               // Funktion ist fehlgeschlagen
-#define Log_File Clogfile::Get () // Makro zur einfachen Verwendung
-
 
 // Farben f�r den Text
 enum FONTCOLORS
@@ -21,10 +19,11 @@ enum FONTCOLORS
     RED,
     GREEN,
     BLUE,
-    PURPLE
+    PURPLE,
+    ORANGE
 };
 
-class Clogfile : public TSingleton<Clogfile>
+class Clogfile
 {
     // Memberfunktionen
     public:
@@ -33,9 +32,9 @@ class Clogfile : public TSingleton<Clogfile>
         ~Clogfile      ();
         void CreateLogfile  (void);
         void WriteTopic     (const char *Topic, int Size);
-        void Textout        (const char *Text);
-        void Textout        (int Color, const char *Text);
-        void Textout        (int Color, bool List, const char *Text);
+        void Textout        (std::string Text);
+        void Textout        (int Color, std::string Text);
+        void Textout        (int Color, bool List,std::string Text);
         void TextoutF       (const char *Text, ...);
         void TextoutF       (int Color, const char *Text, ...);
         void TextoutF       (int Color, bool List, const char *Text, ...);

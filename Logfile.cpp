@@ -45,23 +45,23 @@ void Clogfile::WriteTopic (const char *Topic, int Size)
 
 // Textout
 //Text ins logfile schreiben (schwarz)
-void Clogfile::Textout (const char *Text)
+void Clogfile::Textout (std::string Text)
 {
     // Text schreiben und flushen
-    fprintf (m_logfile, Text);
+    fprintf (m_logfile, Text.c_str());
     fflush (m_logfile);
 }
 
 // Textout
 //Text ins logfile schreiben (farbig)
-void Clogfile::Textout (int Color, const char *Text)
+void Clogfile::Textout (int Color, std::string Text)
 {
     Textout (Color, false, Text);
 }
 
 // Textout
 //Text ins logfile schreiben (farbig, Liste)
-void Clogfile::Textout (int Color, bool List, const char *Text)
+void Clogfile::Textout (int Color, bool List, std::string Text)
 {
     //Listen-Tag schreiben
     if (List == true)
@@ -80,6 +80,8 @@ void Clogfile::Textout (int Color, bool List, const char *Text)
             Textout ("<font color=blue>");   break;
         case PURPLE:
             Textout ("<font color=purple>"); break;
+        case ORANGE:
+            Textout ("<font color=orange>"); break;
     };
 
     //Text schreiben

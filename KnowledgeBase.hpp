@@ -2,7 +2,7 @@
 #define KNOWLEDGEBASE_HPP
 
 #include "Singleton.hpp"
-#include "Logfile.hpp"
+#include "Tracer.hpp"
 
 #include <stdint.h>
 #include <iostream>

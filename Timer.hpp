@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "Singleton.hpp"
-#include "Logfile.hpp"
+#include "Tracer.hpp"
 #include <time.h>
 
 #define g_pTimer CTimer::Get()

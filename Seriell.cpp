@@ -1,14 +1,14 @@
 #include "Seriell.hpp"
 
 int CSeriell::InitSeriell () {
-	Log_File->WriteTopic ("Initialising Seriell bus", 1);
+	//Log_file->WriteTopic ("Initialising Seriell bus", 1);
 	m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 38400); //initalisierung der rs232 Schnittstelle
 
 	if (m_nOwnSeriellAdress == -1) {
-		Log_File->Textout (RED, "Failed to initialise the seriell bus!");
+		//Log_file->Textout (RED, "Failed to initialise the seriell bus!");
 		return -1;
 	}else{
-		Log_File->Textout (BLACK, "Seriell bus initialised.");
+		//Log_file->Textout (BLACK, "Seriell bus initialised.");
 		return 1;
 	}
 }
@@ -19,8 +19,8 @@ int CSeriell::DataAvailableNoTimeOut () {
 
 	while (serialDataAvail (m_nOwnSeriellAdress) < 1) {
 		if (nTimeStamp+200 < g_pTimer->TimeSinceStart()) {
-			Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-			Log_File->Textout (RED, "Communication error: timeout.");
+			//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+			//Log_file->Textout (RED, "Communication error: timeout.");
 			return -1;
 		}
 	}
@@ -42,8 +42,8 @@ int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 	if (ReceiveSeriellData () == nPhotoSensor) {
 		return ReceiveSeriellData ();
 	}else{
-		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Communication error.");
+		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		//Log_file->Textout (RED, "Communication error.");
 		return -1;
 	}
 }
@@ -64,15 +64,15 @@ float CSeriell::GetBatteryVoltage () {
 		fData = (nSeriellData[1] << 8 ) | nSeriellData[0];
 
 		if (fData == 255) {
-			Log_File->WriteTopic ("Communication Atmega32 - Sensor", 1);
-			Log_File->Textout (RED, "ATmega32 failed to measure the battary voltage.");
+			//Log_file->WriteTopic ("Communication Atmega32 - Sensor", 1);
+			//Log_file->Textout (RED, "ATmega32 failed to measure the battary voltage.");
 			return -1;
 		}else{
 		return (fData*0.028); //Batteriespannung berechnen
 		}
 	}else{
-		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Communication error.");
+		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		//Log_file->Textout (RED, "Communication error.");
 		return -1;
 	}
 }
@@ -102,8 +102,8 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		SendSeriellInt (nSeriellData[0]);
 		SendSeriellInt (nSeriellData[1]);
 	}else{
-		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Communication error.");
+		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		//Log_file->Textout (RED, "Communication error.");
 		return -1;
 	}
 	return 1;
@@ -124,8 +124,8 @@ int CSeriell::MovePML (const int nDirection) { //1 Dreht das PML in Fahrtrichtun
 	if (ReceiveSeriellData () == 20) {
 		SendSeriellInt (nDirection);
 	}else{
-		Log_File->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		Log_File->Textout (RED, "Communication error.");
+		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
+		//Log_file->Textout (RED, "Communication error.");
 		return -1;
 	}
 	return 1;
