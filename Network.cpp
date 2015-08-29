@@ -12,27 +12,26 @@ CNetwork::CNetwork () {
 }
 
 int CNetwork::InitNetwork () {
-	////Log_file->WriteTopic ("Network initialization", 1);
 	m_nSocketFromServer = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	fcntl(m_nSocketFromServer, F_SETFL, O_NONBLOCK);
 		if (m_nSocketFromServer == -1) {
-			////Log_file->Textout (RED, "Failed to set up the network!");
+			g_pTracer->Trace (ERROR, "Failed to set up the network!");
 			return -1;
 	}
 
 	if (bind(m_nSocketFromServer, (struct sockaddr*) &AdressFromServer, sizeof(AdressFromServer)) == -1) {
-		////Log_file->Textout (RED, "Failed to bind the socket!");
+		g_pTracer->Trace (ERROR, "Failed to bind the socket!");
 		return -1;
 	}
 
-	////Log_file->Textout (BLACK, "Network resources initialised.");
+	g_pTracer->Trace (NOTE, "Network resources initialised.");
 
 	return 1;
 }
 
 int CNetwork::ConnectToClient () {
 	if (listen(m_nSocketFromServer, 3) != 0) {
-		//Log_file->Textout (RED, "No incoming connection!");
+			g_pTracer->Trace (ERROR, "No incoming connection!");
 		return -1;
 	}
 
@@ -40,15 +39,14 @@ int CNetwork::ConnectToClient () {
 	if (m_nSocketFromClient == -1) {
 		return -1;
 	}else{
-		//Log_file->Textout (BLACK, "Network connected.");
-		std::cout << "Verbindung hergestellt." << std::endl; /////DEBUG
+		g_pTracer->Trace (NOTE, "Network connected.");
 		return 1;
 	}
 }
 
 int CNetwork::Send (void) {
 	if (send(m_nSocketFromClient, m_chBuffer, m_nBytes, 0) == -1) {
-		//Log_file->Textout (RED, "Network sending error!");
+		g_pTracer->Trace (ERROR, "Network sending error!");
 		return -1;
 	}else{
 		for (int i=0; i<m_nBytes; i++) {

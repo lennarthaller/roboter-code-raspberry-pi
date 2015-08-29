@@ -9,13 +9,12 @@ long CTimer::TimeSinceStart () {
 }
 
 int CTimer::InitTimer () {
-	//Log_file->WriteTopic ("Init system timer", 1);
 	timespec Time;
 	if (clock_gettime (CLOCK_REALTIME, &Time) == -1) {
-		//Log_file->Textout (RED, "Failed to initialise the timer!");
+		g_pTracer->Trace (ERROR, "Failed to initialise the timer!");
 		return -1;
 	}
 	m_nTimerToZero = Time.tv_sec;
-	//Log_file->Textout (BLACK, "Sytem timer initialised.");
+	g_pTracer->Trace (NOTE, "Sytem timer initialised.");
 	return 1;
 }

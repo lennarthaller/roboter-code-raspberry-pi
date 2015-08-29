@@ -1,14 +1,13 @@
 #include "Seriell.hpp"
 
 int CSeriell::InitSeriell () {
-	//Log_file->WriteTopic ("Initialising Seriell bus", 1);
 	m_nOwnSeriellAdress = serialOpen ("/dev/ttyAMA0", 38400); //initalisierung der rs232 Schnittstelle
 
 	if (m_nOwnSeriellAdress == -1) {
-		//Log_file->Textout (RED, "Failed to initialise the seriell bus!");
+		g_pTracer->Trace (ERROR, "Failed to initialise the seriell bus!");
 		return -1;
 	}else{
-		//Log_file->Textout (BLACK, "Seriell bus initialised.");
+		g_pTracer->Trace (NOTE, "Seriell bus initialised.");
 		return 1;
 	}
 }
@@ -19,8 +18,7 @@ int CSeriell::DataAvailableNoTimeOut () {
 
 	while (serialDataAvail (m_nOwnSeriellAdress) < 1) {
 		if (nTimeStamp+200 < g_pTimer->TimeSinceStart()) {
-			//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-			//Log_file->Textout (RED, "Communication error: timeout.");
+			g_pTracer->Trace (ERROR, "Communication error: timeout.");
 			return -1;
 		}
 	}
@@ -29,7 +27,7 @@ int CSeriell::DataAvailableNoTimeOut () {
 
 int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 	if ((nPhotoSensor < 1)||(nPhotoSensor > 4)) {
-		std::cout << "FALSCHE LICHTSCHRANKEN NUMMER!" << std::endl;
+		g_pTracer->Trace (WARNING, "Wrong number for the photo sensor.");
 		return -1;
 	}
 
@@ -42,8 +40,7 @@ int CSeriell::GetPhotoSensorData (const int nPhotoSensor) {
 	if (ReceiveSeriellData () == nPhotoSensor) {
 		return ReceiveSeriellData ();
 	}else{
-		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		//Log_file->Textout (RED, "Communication error.");
+		g_pTracer->Trace (ERROR, "Error while communicating with the ATmega32.");
 		return -1;
 	}
 }
@@ -64,15 +61,13 @@ float CSeriell::GetBatteryVoltage () {
 		fData = (nSeriellData[1] << 8 ) | nSeriellData[0];
 
 		if (fData == 255) {
-			//Log_file->WriteTopic ("Communication Atmega32 - Sensor", 1);
-			//Log_file->Textout (RED, "ATmega32 failed to measure the battary voltage.");
+			g_pTracer->Trace (ERROR, "ATmega32 failed to measure the battary voltage.");
 			return -1;
 		}else{
 		return (fData*0.028); //Batteriespannung berechnen
 		}
 	}else{
-		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		//Log_file->Textout (RED, "Communication error.");
+		g_pTracer->Trace (ERROR, "Error while communicating with the ATmega32.");
 		return -1;
 	}
 }
@@ -83,12 +78,12 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 	nSeriellData[1] = (nPower >> 8);
 
 	if ((nMotor < 1)||(nMotor > 4)) {
-		std::cout << "FALSCHE MOTOR NUMMER!" << std::endl;
+		g_pTracer->Trace (WARNING, "Wrong number for the motor.");
 		return -1;
 	}
 
 	if ((nPower < -255)||(nPower > 255)) {
-		std::cout << "FALSCHE NUMMER FUER DIE MOTORKRAFT!" << std::endl;
+		g_pTracer->Trace (WARNING, "Wrong number for the motor power.");
 		return -1;
 	}
 
@@ -102,8 +97,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 		SendSeriellInt (nSeriellData[0]);
 		SendSeriellInt (nSeriellData[1]);
 	}else{
-		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		//Log_file->Textout (RED, "Communication error.");
+		g_pTracer->Trace (ERROR, "Error while communicating with the ATmega32.");
 		return -1;
 	}
 	return 1;
@@ -111,7 +105,7 @@ int CSeriell::SetMotorPower (const int nMotor, const int nPower) {
 
 int CSeriell::MovePML (const int nDirection) { //1 Dreht das PML in Fahrtrichtung links
 	if ((nDirection < 0)||(nDirection > 1)) {
-		std::cout << "FALSCHE NUMMER FUER DIE RICHTUNG!" << std::endl;
+		g_pTracer->Trace (WARNING, "Wrong number for the motor direction.");
 		return -1;
 	}
 
@@ -124,8 +118,7 @@ int CSeriell::MovePML (const int nDirection) { //1 Dreht das PML in Fahrtrichtun
 	if (ReceiveSeriellData () == 20) {
 		SendSeriellInt (nDirection);
 	}else{
-		//Log_file->WriteTopic ("Communication Raspberry Pi - Atmega32", 1);
-		//Log_file->Textout (RED, "Communication error.");
+		g_pTracer->Trace (ERROR, "Error while communicating with the ATmega32.");
 		return -1;
 	}
 	return 1;
@@ -136,7 +129,7 @@ int CSeriell::SendSeriellInt (int nData) {
 		serialPutchar (m_nOwnSeriellAdress, static_cast<char> (nData));
 		return 1;
 	}
-	std::cout << "ZU GROSSE ZAHL! (SERIELL)" << std::endl;
+	g_pTracer->Trace (WARNING, "Number too large. (seriell)");
 	return -1;
 }
 

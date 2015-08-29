@@ -6,20 +6,20 @@ int CI2C::InitI2C () {
 
 	m_nCompassAdress = wiringPiI2CSetup (0x60); //initialisation of the cmps10
 	if (m_nCompassAdress == -1) {
-		////Log_file->Textout (RED, "Failed to initialise the compass!");
+		g_pTracer->Trace (ERROR, "Failed to initialise the compass!");
 		m_bError = true;
 	}
 
 	m_nLidarAdress = wiringPiI2CSetup (0x62); //initialisation of the LiDAR
 	if (m_nLidarAdress == -1) {
-		////Log_file->Textout (RED, "Failed to initialise the LiDAR!");
+		g_pTracer->Trace (ERROR, "Failed to initialise the LiDAR!");
 		m_bError = true;
 	}else{
 		I2CWrite (m_nLidarAdress, 0, 0); //set LiDAR acquisition count (128 = default)
 	}
 
 	if (m_bError == false) {
-		////Log_file->Textout (BLACK, "I2C bus initialised.");
+		g_pTracer->Trace (NOTE, "I2C bus initialised.");
 		return 1;
 	}else{
 		return -1;
@@ -27,13 +27,11 @@ int CI2C::InitI2C () {
 }
 
 int CI2C::InitWiringPi () {
-////Log_file->WriteTopic ("Init WiringPi", 1);
-
 if (wiringPiSetup () == -1) { //wiringPi initalisation
-	////Log_file->Textout (RED, "Failed to initialise WiringPi!");
+		g_pTracer->Trace (ERROR, "Failed to initialise WiringPi!");
 	return -1;
   }else{
-	////Log_file->Textout (BLACK, "WiringPi initialised.");
+		g_pTracer->Trace (NOTE, "WiringPi initialised.");
   }
 return 1;
 }
@@ -54,6 +52,6 @@ void CI2C::I2CWrite (int nDevice, int nRegister, int nData) {
 	if ((nData < 256)&&(nData > -1)) {
 		wiringPiI2CWriteReg8 (nDevice, nRegister, nData);
 	}else{
-		std::cout << "ZU GROSSE ZAHL! (I2C)" << std::endl;
+			g_pTracer->Trace (WARNING, "Number is too large. (I2C)");
 	}
 }
