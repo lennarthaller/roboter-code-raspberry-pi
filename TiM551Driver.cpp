@@ -51,7 +51,7 @@ int CTiM551Driver::sendSOPASCommand (const char *request) {
   unsigned char receiveBuffer[buffSize];
   int actual_length = 0;
   int requestLength = strlen(request);
-  
+
   result = libusb_bulk_transfer(device_handle, (2 | LIBUSB_ENDPOINT_OUT), (unsigned char*)request, requestLength, &actual_length, 0);
   if (result != 0 || actual_length != requestLength) {
     //Log_file->Textout (RED, "Libusb write error.");
