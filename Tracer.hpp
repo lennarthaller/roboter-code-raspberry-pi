@@ -7,7 +7,7 @@
 #include "Logfile.hpp"
 
 #define g_pTracer CTracer::Get()
-
+#define TEXT std::ostringstream Text
 enum DEBUGLEVEL
 {
     ERROR,
@@ -21,13 +21,13 @@ class CTracer : public TSingleton<CTracer>
   public:
   int TracerInit (int nDebugLevel);
   void TracerEnd ();
-  void Trace (int DebugLevel, std::ostringstream Text);
-  
+  void Trace (int DebugLevel, std::string Text);
+
   private:
-  CLogfile *Logfile;
+  Clogfile *Logfile;
   bool m_bIsInitialised;
   int m_nSelectedDebugLevel;
-  
+
 };
 
 #endif

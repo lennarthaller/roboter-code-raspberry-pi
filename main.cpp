@@ -10,21 +10,19 @@
 #include "BasicFunktions.hpp"
 #include "I2C.hpp"
 
-using namespace std;
-
 int main (int argc, char* argv[]) {
 
-if ((argc != 2)||(atoi(argv[1] < 0))||(atoi(argv[1] > 3))) { //Checking if the cmd line parameter was valid
+/*if ((argc != 2)||(atoi(argv[1] < 0))||(atoi(argv[1] > 3))) { //Checking if the cmd line parameter was valid
 	std::cout << "You have to specify a valid debug level (0-3)." << std::endl;
 	std::cout << "Exiting." << std::endl;
-	return 0; 
-}else{
-	g_pTracer->TracerInit(atoi(argv[1]);
-}
+	return 0;
+}else{ */
+	g_pTracer->TracerInit(atoi(argv[1]));
+//}
 
 	g_pTracer->Trace (NOTE, "Roboter test Programm v0.1");
 	g_pTracer->Trace (NOTE, "2015, Lennart Haller");
-	
+
 	if (g_pI2C->InitWiringPi() != 1) {
 		g_pTracer->Trace (ERROR, "Failed to initialise WiringPi.");
 	}
@@ -55,12 +53,14 @@ if ((argc != 2)||(atoi(argv[1] < 0))||(atoi(argv[1] > 3))) { //Checking if the c
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
 	//g_pSeriell->SetMotorPower (1,150);
 	//cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
-	g_pTracer->Trace (DEBUG, "Betriebsspannung: "<< g_pSeriell->GetBatteryVoltage());
+	g_pTracer->Trace (DEBUG, "Betriebsspannung: " + std::to_string(g_pSeriell->GetBatteryVoltage()));
 
 	for (int i=1; i<5; i++) {
 		g_pSeriell->SetMotorPower(i, 0);
 		g_pSeriell->GetPhotoSensorData(i); // init readout
 	}
+
+	std::cout << "Test" << std::endl;
 
 	while (1==1) {
 		//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
