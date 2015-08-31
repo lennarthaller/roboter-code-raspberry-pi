@@ -6,7 +6,6 @@
 #include "Seriell.hpp"
 #include "Network.hpp"
 #include "Tracer.hpp"
-#include "Lidar.hpp"
 #include "BasicFunktions.hpp"
 #include "I2C.hpp"
 
@@ -56,8 +55,6 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 		g_pTracer->Trace (ERROR, "Failed to connect to the network client.");
 	}
 
-	CLidar Lidar;
-
 	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
 	//g_pSeriell->SetMotorPower (1,150);
@@ -77,7 +74,6 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 		g_pI2C->StartLidarMeasurement ();
 		usleep (300000);
 		std::cout << g_pI2C->GetLidarDistance () << std::endl;  */
-		Lidar.Scan();
 		g_pCBasicFunktions->UpdateSensorData ();
 		g_pCBasicFunktions->CountLoopTicks ();
 	}
