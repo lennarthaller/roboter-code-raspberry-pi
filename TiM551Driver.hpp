@@ -1,32 +1,29 @@
 #ifndef TIM551DRIVER_HPP
 #define TIM551DRIVER_HPP
 
-#include <iostream>
-//#include <libusb-1.0/libusb.h>
 #include <libusb.h>
 #include <string.h>
 #include <vector>
-//#include <stdio.h>
-
-/*#include <stdlib.h>
-*/
 
 #include "Tracer.hpp"
+#include "KnowledgeBase.hpp"
 
 class CTiM551Driver
 {
   public:
     int InitLaserScanner ();
-    int CloseLaserScanner ();
-    int GetData ();
+    int UpdateData ();
+    unsigned short int* GetCurrentData () {return m_nDistanceValue;}
 
   private:
-   int sendSOPASCommand (const char *request, std::vector<unsigned char> &reply);
+   int sendSOPASCommand (const char *request, std::vector<char *> &Fields, bool ReturnData);
 
     // libusb
     libusb_context *ctx;
     ssize_t numberOfDevices;
     libusb_device_handle *device_handle;
+
+    unsigned short int m_nDistanceValue[271];
 
 };
 #endif

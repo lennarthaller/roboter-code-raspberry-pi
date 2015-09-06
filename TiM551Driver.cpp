@@ -38,13 +38,13 @@ int CTiM551Driver::InitLaserScanner () {
 }
 
 
-int CTiM551Driver::sendSOPASCommand (const char *request, std::vector<unsigned char> &reply) {
+int CTiM551Driver::sendSOPASCommand (const char *request, std::vector<char *> &Fields, bool ReturnData) {
   if (device_handle == NULL) {
     g_pTracer->Trace (ERROR, "Libusb - device not open.");
     return -1;
   }
 
-  const int buffSize = 1000;
+  const int buffSize = 30000;
   int result = 0;
   unsigned char receiveBuffer[buffSize];
   int actual_length = 0;
@@ -62,34 +62,43 @@ int CTiM551Driver::sendSOPASCommand (const char *request, std::vector<unsigned c
     return -1;
   }
 
-  receiveBuffer[actual_length] = 0;
-  reply.clear();
-  for(int i = 0; i < actual_length; i++) {
-    reply.push_back(receiveBuffer[i]);
-  }
+  if (ReturnData == true) {
+    receiveBuffer[actual_length] = 0;
 
+    //tokenize the data and store it in the vector
+    char* buffer_pos = (char*)receiveBuffer;
+    char *dstart, *dend;
+    dstart = strchr (buffer_pos, 0x02);
+    dend = strchr (dstart + 1, 0x03);
+    size_t dlength = dend - dstart;
+    *dend = '\0';
+    dstart++;
+
+    char* chCurrentField = strtok (dstart, " ");
+    Fields.push_back (chCurrentField);
+    while (chCurrentField != NULL) {
+      chCurrentField = strtok(NULL, " ");
+      Fields.push_back(chCurrentField);
+    }
+  }
   return 1;
 }
 
-int CTiM551Driver::GetData () {
-  const char requestScanData[] = {"\x02sEN LMDscandata\x03\0"};
-  std::vector<unsigned char> ReplyFromSensor;
-  int result = sendSOPASCommand(requestScanData, ReplyFromSensor);
+int CTiM551Driver::UpdateData () {
+  //Send the "requst one data set" SOPAS command
+  const char requestScanData[] = {"\x02sRN LMDscandata\x03\0"};
+  std::vector<char *> DataFromSensor;
+  int result = sendSOPASCommand(requestScanData, DataFromSensor, true);
   if (result != 1)  {
     g_pTracer->Trace (ERROR, "Libusb - failed to receive scan.");
   }
-    int nCounter = 0;
-    for (std::vector<unsigned char>::iterator it=ReplyFromSensor.begin(); it != ReplyFromSensor.end(); it++) {
-      	g_pTracer->Trace (DEBUG, std::to_string(ReplyFromSensor.at(nCounter)));
-        nCounter ++;
-    }
-  return 1;
 
-}
+  unsigned short int nNumberOfData = 0;
+  sscanf(DataFromSensor.at(25), "%hx", &nNumberOfData);
 
-
-int CTiM551Driver::CloseLaserScanner () {
+  for (int i=0; i<nNumberOfData; i++) {
+    sscanf(DataFromSensor.at(26+i), "%hx", &m_nDistanceValue[i]);
+  }
 
   return 1;
-
 }
