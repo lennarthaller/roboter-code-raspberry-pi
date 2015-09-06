@@ -8,7 +8,6 @@
 #include "Tracer.hpp"
 #include "BasicFunktions.hpp"
 #include "I2C.hpp"
-#include "TiM551Driver.hpp"
 
 int main (int argc, char* argv[]) {
 
@@ -31,8 +30,6 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 
 	g_pTracer->Trace (NOTE, "Roboter test Programm v0.1");
 	g_pTracer->Trace (NOTE, "2015, Lennart Haller");
-
-	CTiM551Driver LaserScanner;
 
 	if (g_pI2C->InitWiringPi() != 1) {
 		g_pTracer->Trace (ERROR, "Failed to initialise WiringPi.");
@@ -58,17 +55,11 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 		g_pTracer->Trace (ERROR, "Failed to connect to the network client.");
 	}
 
-	if (LaserScanner.InitLaserScanner () != 1) {
-		g_pTracer->Trace (ERROR, "Failed to initialise the laser scanner.");
-	}
-
 	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
 	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
 	//g_pSeriell->SetMotorPower (1,150);
 	//cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
 	g_pTracer->Trace (DEBUG, "Betriebsspannung: " + std::to_string(g_pSeriell->GetBatteryVoltage()));
-
-	LaserScanner.GetData ();
 
 	for (int i=1; i<5; i++) {
 		g_pSeriell->SetMotorPower(i, 0);
@@ -84,6 +75,7 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 		usleep (300000);
 		std::cout << g_pI2C->GetLidarDistance () << std::endl;  */
 		g_pCBasicFunktions->UpdateSensorData ();
+		g_pCBasicFunktions->UpdateLaserScanner ();
 		g_pCBasicFunktions->CountLoopTicks ();
 	}
 	g_pNetwork->Del ();
