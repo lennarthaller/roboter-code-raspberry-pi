@@ -23,7 +23,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	Position LidarPositionData;
 	unsigned long m_nOdometryTicks[4];
 	int		m_nOdometryTicksSinceLastupdate[4];
-	int 	m_nScannerData[100];
+	unsigned short int 	m_nScannerData[271];
 	float 	m_fCalculatedDrivingDirection;
 	float 	m_fTargetDrivingAngle;
 	int 	m_nMainLoopTicksPerSecond;
@@ -34,8 +34,8 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 	public:
 	CKnowledgeBase ();
 
-	void 	SetScannerData (int nSensorData[]);
-	int* 	GetScannerData () {return m_nScannerData;}
+	void 	SetScannerData (unsigned short int nSensorData[]);
+	unsigned short int* 	GetScannerData () {return m_nScannerData;}
 	void 	SetCurrentMotorPower (int nCurrentMotorPower, int nMotorNumber);
 	int* 	GetCurrentMotorPower () {return m_nCurrentMotorPower;}
 	void 	SetCalculatedDrivingDirection (float fDirection) {m_fCalculatedDrivingDirection = fDirection;}

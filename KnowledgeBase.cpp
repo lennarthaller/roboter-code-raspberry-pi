@@ -14,7 +14,7 @@ CKnowledgeBase::CKnowledgeBase () {
 	m_bIsConnected = false;
 
 
-	for (int i=0;i<100;i++) {
+	for (int i=0;i<271;i++) {
 		m_nScannerData[i] = 0;
 	}
 
@@ -27,8 +27,8 @@ CKnowledgeBase::CKnowledgeBase () {
 	}
 }
 
-void CKnowledgeBase::SetScannerData (int nScanerData[]) {
-	for (int i=0; i<100;i++) {
+void CKnowledgeBase::SetScannerData (unsigned short int nScanerData[]) {
+	for (int i=0; i<271;i++) {
 		m_nScannerData[i] = nScanerData[i];
 	}
 }
