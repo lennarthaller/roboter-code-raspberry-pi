@@ -3,8 +3,14 @@
 CBasicFunktions::CBasicFunktions () {
 	m_nTimeStampSinceLastCallSensorUpdate = 0;
 	m_nTimeStampSinceLastCallSensorUpdateOdometry = 0;
+	m_nTimeStampSinceLastCallSensorUpdateLaserScanner = 0;
 	m_nTimeStampSinceLastCallLoopTicks = 0;
 	m_nLoopTicks = 0;
+
+	LaserScanner = new CTiM551Driver ();
+	if (LaserScanner->InitLaserScanner () != 1) {
+		g_pTracer->Trace (ERROR, "Failed to initialise the laser scanner.");
+	}
 }
 
 void CBasicFunktions::UpdateSensorData () {
@@ -33,6 +39,14 @@ void CBasicFunktions::UpdateSensorData () {
 			NetworkProtocol.SendKnowledgeBase ();
 		}
 		m_nTimeStampSinceLastCallSensorUpdate = g_pTimer->TimeSinceStart();
+	}
+}
+
+void CBasicFunktions::UpdateLaserScanner () {
+	if (m_nTimeStampSinceLastCallSensorUpdateLaserScanner + 660 < g_pTimer->TimeSinceStart()) {
+		LaserScanner->UpdateData();
+		g_pKnowledgeBase->SetScannerData(LaserScanner->GetCurrentData());
+		m_nTimeStampSinceLastCallSensorUpdateLaserScanner = g_pTimer->TimeSinceStart();
 	}
 }
 

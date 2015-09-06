@@ -9,6 +9,7 @@
 #include "BasicCalculations.hpp"
 #include "NetworkProtocol.hpp"
 #include "MotorController.hpp"
+#include "TiM551Driver.hpp"
 
 #include <iostream>
 
@@ -21,15 +22,17 @@ class CBasicFunktions : public TSingleton<CBasicFunktions>
 
   void UpdateSensorData ();
   void CountLoopTicks ();
+  void UpdateLaserScanner ();
 
   private:
   double m_nTimeStampSinceLastCallSensorUpdate;
   double m_nTimeStampSinceLastCallLoopTicks;
   double m_nTimeStampSinceLastCallSensorUpdateOdometry;
+  double m_nTimeStampSinceLastCallSensorUpdateLaserScanner;
   int 	 m_nLoopTicks;
 
-  CNetworkProtocol NetworkProtocol;
-
+  CTiM551Driver     *LaserScanner;
+  CNetworkProtocol  NetworkProtocol;
 };
 
 #endif
