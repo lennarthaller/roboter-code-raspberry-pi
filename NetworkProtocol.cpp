@@ -4,8 +4,8 @@ void CNetworkProtocol::SendKnowledgeBase () {
 	for (int i=0;i<4;i++) {
 		g_pNetwork->CreatePackage (Check (*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+i), 1)); //Odometry Ticks (4 ints)
 	}
-	for (int i=0;i<100;i++) {
-		g_pNetwork->CreatePackage (Check (*(g_pKnowledgeBase->GetScannerData()+i), 2)); //Scanner data (100 ints)
+	for (int i=0;i<271;i++) {
+		g_pNetwork->CreatePackage (Check (*(g_pKnowledgeBase->GetScannerData()+i), 2)); //Scanner data (271 ints)
 	}
 	for (int i=0;i<4;i++) {
 		g_pNetwork->CreatePackage (Check (*(g_pKnowledgeBase->GetCurrentMotorPower()+i), 3)); //Motor Power (4 ints)
