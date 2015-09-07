@@ -1,6 +1,6 @@
 #include "NetworkProtocol.hpp"
 
-void CNetworkProtocol::SendKnowledgeBase () {
+int CNetworkProtocol::SendKnowledgeBase () {
 	for (int i=0;i<4;i++) {
 		g_pNetwork->CreatePackage (Check (*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+i), 1)); //Odometry Ticks (4 ints)
 	}
@@ -19,7 +19,7 @@ void CNetworkProtocol::SendKnowledgeBase () {
 	g_pNetwork->CreatePackage (Check (g_pKnowledgeBase->LidarPosition()->nY+15000, 9)); //Y + 15000 Pos (1 int)
 	g_pNetwork->CreatePackage (Check ((g_pKnowledgeBase->LidarPosition()->fTheta+10)*1000, 10)); //(Theta +10) * 1000 (1 int)
 
-	g_pNetwork->Send ();
+	return (g_pNetwork->Send ());
 }
 
 uint16_t CNetworkProtocol::Check (float fNumber, int nError) {
