@@ -39,7 +39,7 @@ int CNetwork::ConnectToClient () {
 	if (m_nSocketFromClient == -1) {
 		return -1;
 	}else{
-		g_pTracer->Trace (NOTE, "Network connected.");
+		g_pTracer->Trace (NOTE, "Network client connected.");
 		return 1;
 	}
 }
