@@ -1,10 +1,12 @@
 #include "BasicFunktions.hpp"
 
 CBasicFunktions::CBasicFunktions () {
-	m_nTimeStampSinceLastCallSensorUpdate = 0;
+	m_nTimeStampSinceLastCallPhotoSensorsUpdate = 0;
 	m_nTimeStampSinceLastCallSensorUpdateOdometry = 0;
 	m_nTimeStampSinceLastCallSensorUpdateLaserScanner = 0;
+	m_nTimeStampSinceLastCallNetwork = 0;
 	m_nTimeStampSinceLastCallLoopTicks = 0;
+	m_nTimeStampSinceLastBatteryvoltage = 0;
 	m_nLoopTicks = 0;
 
 	LaserScanner = new CTiM551Driver ();
@@ -13,8 +15,9 @@ CBasicFunktions::CBasicFunktions () {
 	}
 }
 
-void CBasicFunktions::UpdateSensorData () {
-	if (m_nTimeStampSinceLastCallSensorUpdateOdometry + 1000 < g_pTimer->TimeSinceStart()) {
+//Update the photo sensors
+void CBasicFunktions::UpdatePhotoSensors () {
+	if (m_nTimeStampSinceLastCallPhotoSensorsUpdate + 1000 < g_pTimer->TimeSinceStart()) {
 		int nOdometryData[4];
 
 		for(int i=0;i<4;i++) {
@@ -25,23 +28,11 @@ void CBasicFunktions::UpdateSensorData () {
 		g_pKnowledgeBase->SetOdometryTicksSinceLastUpdate(nOdometryData);
 		g_pBasicCalculations->CalculatePositionFromOdometry (); //Neue Position auf grund der odometrie berechnen
 		//g_pMotorController->UpdateMotors (); //Control Motors
-		m_nTimeStampSinceLastCallSensorUpdateOdometry = g_pTimer->TimeSinceStart();
-	}
-
-	if (m_nTimeStampSinceLastCallSensorUpdate + 2000 < g_pTimer->TimeSinceStart()) { //200 Millisekunde seit dem letzten Aufruf vergangen?
-		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
-
-		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
-			if (g_pNetwork->ConnectToClient() == 1) {
-				g_pKnowledgeBase->SetIsConnected(true);
-			}
-		}else{
-			NetworkProtocol.SendKnowledgeBase ();
-		}
-		m_nTimeStampSinceLastCallSensorUpdate = g_pTimer->TimeSinceStart();
+		m_nTimeStampSinceLastCallPhotoSensorsUpdate = g_pTimer->TimeSinceStart();
 	}
 }
 
+//Update the laser scanner
 void CBasicFunktions::UpdateLaserScanner () {
 	if (m_nTimeStampSinceLastCallSensorUpdateLaserScanner + 660 < g_pTimer->TimeSinceStart()) {
 		LaserScanner->UpdateData();
@@ -50,11 +41,37 @@ void CBasicFunktions::UpdateLaserScanner () {
 	}
 }
 
+//Count the ticks of a loop per second
 void CBasicFunktions::CountLoopTicks () {
 	m_nLoopTicks ++;
 	if (m_nTimeStampSinceLastCallLoopTicks + 10000 < g_pTimer->TimeSinceStart()) {
 		g_pKnowledgeBase->SetMainLoopTicksPerSecond (m_nLoopTicks);
 		m_nLoopTicks = 0;
 		m_nTimeStampSinceLastCallLoopTicks = g_pTimer->TimeSinceStart();
+	}
+}
+
+//Check if there is an incoming connection. If the robot is connected, send the KnowledgeBase
+void CBasicFunktions::ManageNetwork () {
+	if (m_nTimeStampSinceLastCallNetwork + 3000 < g_pTimer->TimeSinceStart()) {
+		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
+			if (g_pNetwork->ConnectToClient() == 1) {
+				g_pKnowledgeBase->SetIsConnected(true);
+			}
+		}else{
+			if (NetworkProtocol.SendKnowledgeBase () != 1) {
+				g_pKnowledgeBase->SetIsConnected(false);
+				g_pTracer->Trace (WARNING, "Network client disconnected?");
+			}
+		}
+		m_nTimeStampSinceLastCallNetwork = g_pTimer->TimeSinceStart();
+	}
+}
+
+//Update the battery voltage
+void CBasicFunktions::UpdateBatteryVoltage () {
+	if (m_nTimeStampSinceLastBatteryvoltage + 5000 < g_pTimer->TimeSinceStart()) {
+		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
+		m_nTimeStampSinceLastBatteryvoltage = g_pTimer->TimeSinceStart();
 	}
 }
