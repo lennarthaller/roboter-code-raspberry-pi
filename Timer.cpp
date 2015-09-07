@@ -15,6 +15,6 @@ int CTimer::InitTimer () {
 		return -1;
 	}
 	m_nTimerToZero = Time.tv_sec;
-	g_pTracer->Trace (NOTE, "Sytem timer initialised.");
+	g_pTracer->Trace (NOTE, "System timer initialised.");
 	return 1;
 }
