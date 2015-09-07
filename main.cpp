@@ -28,8 +28,8 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 	}
 }
 
-	g_pTracer->Trace (NOTE, "Roboter test Programm v0.1");
-	g_pTracer->Trace (NOTE, "2015, Lennart Haller");
+	g_pTracer->Trace (NOTE, "Robot operation programm v0.1");
+	g_pTracer->Trace (NOTE, "2015, Lennart Haller"); 
 
 	if (g_pI2C->InitWiringPi() != 1) {
 		g_pTracer->Trace (ERROR, "Failed to initialise WiringPi.");
@@ -51,15 +51,7 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 		g_pTracer->Trace (ERROR, "Failed to initialise the I2C driver.");
 	}
 
-	if (g_pNetwork->ConnectToClient () != 1) {
-		g_pTracer->Trace (ERROR, "Failed to connect to the network client.");
-	}
-
-	//cout << "Aktuelle Entfernung zu naechstem Hinderniss: " << g_pSeriell->GetInfraredDistance () << endl;
-	//cout << "Atueller Kompas Wert: " << g_pWiringPi->GetCompassData() << endl;
-	//g_pSeriell->SetMotorPower (1,150);
-	//cout << "Lichtschranke 1: " << g_pSeriell->GetPhotoSensorData(1) << endl;
-	g_pTracer->Trace (DEBUG, "Betriebsspannung: " + std::to_string(g_pSeriell->GetBatteryVoltage()));
+	g_pTracer->Trace (DEBUG, "Current operating voltage: " + std::to_string(g_pSeriell->GetBatteryVoltage()));
 
 	for (int i=1; i<5; i++) {
 		g_pSeriell->SetMotorPower(i, 0);
@@ -74,9 +66,11 @@ if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter w
 		g_pI2C->StartLidarMeasurement ();
 		usleep (300000);
 		std::cout << g_pI2C->GetLidarDistance () << std::endl;  */
-		g_pCBasicFunktions->UpdateSensorData ();
+		g_pCBasicFunktions->UpdatePhotoSensors ();
 		g_pCBasicFunktions->UpdateLaserScanner ();
 		g_pCBasicFunktions->CountLoopTicks ();
+		g_pCBasicFunktions->ManageNetwork ();
+		g_pCBasicFunktions->UpdateBatteryVoltage ();
 	}
 	g_pNetwork->Del ();
 	g_pSeriell->Del ();
