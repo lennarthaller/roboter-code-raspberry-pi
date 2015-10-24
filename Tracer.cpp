@@ -17,7 +17,7 @@ void CTracer::Trace (int DebugLevel, std::string Text) {
   switch (DebugLevel)
 {
       case ERROR: {
-        message = "[ERROR]: ";
+        message = "[ERROR]:   ";
         message.append (Text);
         std::cout << message << std::endl;
         Logfile->Textout (RED, message);
@@ -35,7 +35,7 @@ void CTracer::Trace (int DebugLevel, std::string Text) {
       }
 
       case NOTE: {
-        message = "[NOTE]: ";
+        message = "[NOTE]:    ";
         message.append (Text);
         if (m_nSelectedDebugLevel >= NOTE) {
             std::cout << message << std::endl;
@@ -45,7 +45,7 @@ void CTracer::Trace (int DebugLevel, std::string Text) {
       }
 
       case DEBUG: {
-        message = "[DEBUG]: ";
+        message = "[DEBUG]:   ";
         message.append (Text);
         if (m_nSelectedDebugLevel >= DEBUG) {
             std::cout << message << std::endl;
