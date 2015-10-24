@@ -46,7 +46,7 @@ int CNetwork::ConnectToClient () {
 
 int CNetwork::Send (void) {
 	if (send(m_nSocketFromClient, m_chBuffer, m_nBytes, 0) == -1) {
-		g_pTracer->Trace (ERROR, "Network sending error!");
+		g_pTracer->Trace (NOTE, "Network client disconnected.");
 		return -1;
 	}else{
 		for (int i=0; i<m_nBytes; i++) {
