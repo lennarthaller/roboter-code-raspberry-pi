@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
-#include <iostream>
+#include "Tracer.hpp"
 
 class CMedianfilter
 {
@@ -16,7 +16,7 @@ class CMedianfilter
 	private:
 	int m_nSizeOfFilter;
 	int m_nNumberOfDatapoints;
-	int m_nFilteredData[100];
+	int m_nFilteredData[1000];
 };
 
 #endif
