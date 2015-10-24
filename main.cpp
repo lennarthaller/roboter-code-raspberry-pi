@@ -14,22 +14,16 @@ int main (int argc, char* argv[]) {
 	std::istringstream ss(argv[1]);
 	int debugLevel;
 
-if ((argc != 2)||(!(ss >> debugLevel))) { //Checking if the cmd line parameter was valid
+if ((argc != 2)||(!(ss >> debugLevel))||(debugLevel < 0)||(debugLevel > 3)) { //Checking if the cmd line parameter was valid
 	std::cout << "You have to specify a valid debug level (0-3)." << std::endl;
 	std::cout << "Exiting." << std::endl;
 	return 0;
 }else{
-	if ((debugLevel < 0)||(debugLevel > 3)) { //Checking if the cmd line parameter is in range
-		std::cout << "You have to specify a valid debug level (0-3)." << std::endl;
-		std::cout << "Exiting." << std::endl;
-		return 0;
-	}else{
 		g_pTracer->TracerInit(debugLevel);
-	}
 }
 
-	g_pTracer->Trace (NOTE, "Robot operation programm v0.1");
-	g_pTracer->Trace (NOTE, "2015, Lennart Haller"); 
+	g_pTracer->Trace (DEBUG, "Robot operation programm v0.1");
+	g_pTracer->Trace (DEBUG, "2015, Lennart Haller");
 
 	if (g_pI2C->InitWiringPi() != 1) {
 		g_pTracer->Trace (ERROR, "Failed to initialise WiringPi.");
