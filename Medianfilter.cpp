@@ -4,8 +4,8 @@ CMedianfilter::CMedianfilter (int SizeOfFilter, int NumberOfDatapoints) {
 	m_nSizeOfFilter = SizeOfFilter;
 	m_nNumberOfDatapoints = NumberOfDatapoints;
 
-	if (NumberOfDatapoints > 100) {
-		std::cout << "DATASET FOR THE MEDIAN FILLTER IS TOO LARGE!" << std::endl;
+	if (NumberOfDatapoints > 1000) {
+		g_pTracer->Trace (ERROR, "Dataset for the medianfilter is too large.");
 	}
 }
 
