@@ -1,11 +1,11 @@
 #include "KnowledgeBase.hpp"
 
 CKnowledgeBase::CKnowledgeBase () {
-	OdometryPositionData.nX = 0.0;
-	OdometryPositionData.nY = 0.0;
+	OdometryPositionData.fX = 0.0;
+	OdometryPositionData.fY = 0.0;
 	OdometryPositionData.fTheta = 0.0;
-	LidarPositionData.nX = 0.0;
-	LidarPositionData.nY = 0.0;
+	LidarPositionData.fX = 0.0;
+	LidarPositionData.fY = 0.0;
 	LidarPositionData.fTheta = 0.0;
 	m_fCalculatedDrivingDirection = 0;
 	m_fTargetDrivingAngle = 0;

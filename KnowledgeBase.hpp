@@ -14,8 +14,8 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 {
 	private:
 	typedef struct {
-		std::atomic<int> nX;
-		std::atomic<int> nY;
+		std::atomic<float> fX;
+		std::atomic<float> fY;
 		std::atomic<float> fTheta; //in rad! (clockwise from y-axis)
 	} Position;
 
