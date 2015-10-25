@@ -65,6 +65,7 @@ if ((argc != 2)||(!(ss >> debugLevel))||(debugLevel < 0)||(debugLevel > 3)) { //
 		g_pCBasicFunktions->CountLoopTicks ();
 		g_pCBasicFunktions->ManageNetwork ();
 		g_pCBasicFunktions->UpdateBatteryVoltage ();
+		g_pCBasicFunktions->MatchScans ();
 	}
 	g_pNetwork->Del ();
 	g_pSeriell->Del ();
