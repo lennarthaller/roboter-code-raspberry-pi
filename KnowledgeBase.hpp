@@ -36,7 +36,7 @@ class CKnowledgeBase : public TSingleton<CKnowledgeBase>
 
 	void 	SetScannerData (unsigned short int nSensorData[]);
 	unsigned short int* 	GetScannerData () {return m_nScannerData;}
-	void 	SetCurrentMotorPower (int nCurrentMotorPower, int nMotorNumber);
+	void 	SetCurrentMotorPower (int nMotorNumber, int nCurrentMotorPower);
 	int* 	GetCurrentMotorPower () {return m_nCurrentMotorPower;}
 	void 	SetCalculatedDrivingDirection (float fDirection) {m_fCalculatedDrivingDirection = fDirection;}
 	float 	GetCalculatedDrivingDirection () {return m_fCalculatedDrivingDirection;}
