@@ -85,16 +85,16 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 	float fVR = 0.0f;
 	float fDeltaTheta = 0.0f;
 
-	const float fXPosOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nX);
-	const float fYposOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->nY);
+	const float fXPosOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->fX);
+	const float fYposOld = static_cast <float> (g_pKnowledgeBase->OdometryPosition()->fY);
 	const float fThetaOld = g_pKnowledgeBase->OdometryPosition()->fTheta;
 
 	float fX = 0.0f;
 	float fY = 0.0f;
 	float fTheta = 0.0f;
 
-	float fTicksL = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+1) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2)) / 2);
-	float fTicksR = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+0) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2);
+	float fTicksL = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+2) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate())) / 2);
+	float fTicksR = static_cast<float>((*(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+1) + *(g_pKnowledgeBase->GetOdometryTicksSinceLastUpdate()+3)) / 2);
 
 	fVL = fTicksL * m_fTireCircumference / m_nTicksPerTurn;
 	fVR = fTicksR * m_fTireCircumference / m_nTicksPerTurn;
@@ -113,7 +113,7 @@ void CBasicCalculations::CalculatePositionFromOdometry () {
 		fTheta += 2 * M_PI;
 	}
 
-	g_pKnowledgeBase->OdometryPosition()->nX = static_cast <int> (fX);
-	g_pKnowledgeBase->OdometryPosition()->nY = static_cast <int> (fY);
+	g_pKnowledgeBase->OdometryPosition()->fX = fX;
+	g_pKnowledgeBase->OdometryPosition()->fY = fY;
 	g_pKnowledgeBase->OdometryPosition()->fTheta = fTheta;
 }

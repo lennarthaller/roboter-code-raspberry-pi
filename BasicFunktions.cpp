@@ -7,6 +7,7 @@ CBasicFunktions::CBasicFunktions () {
 	m_nTimeStampSinceLastCallNetwork = 0;
 	m_nTimeStampSinceLastCallLoopTicks = 0;
 	m_nTimeStampSinceLastBatteryvoltage = 0;
+	m_nTimeStampSinceLastScanMatching = 0;
 	m_nLoopTicks = 0;
 
 	LaserScanner = new CTiM551Driver ();
@@ -53,7 +54,7 @@ void CBasicFunktions::CountLoopTicks () {
 
 //Check if there is an incoming connection. If the robot is connected, send the KnowledgeBase
 void CBasicFunktions::ManageNetwork () {
-	if (m_nTimeStampSinceLastCallNetwork + 3000 < g_pTimer->TimeSinceStart()) {
+	if (m_nTimeStampSinceLastCallNetwork + 200 < g_pTimer->TimeSinceStart()) {
 		if(g_pKnowledgeBase->GetIsConnected() == false) { //connect to client
 			if (g_pNetwork->ConnectToClient() == 1) {
 				g_pKnowledgeBase->SetIsConnected(true);
@@ -61,7 +62,6 @@ void CBasicFunktions::ManageNetwork () {
 		}else{
 			if (NetworkProtocol.SendKnowledgeBase () != 1) {
 				g_pKnowledgeBase->SetIsConnected(false);
-				g_pTracer->Trace (WARNING, "Network client disconnected?");
 			}
 		}
 		m_nTimeStampSinceLastCallNetwork = g_pTimer->TimeSinceStart();
@@ -73,5 +73,11 @@ void CBasicFunktions::UpdateBatteryVoltage () {
 	if (m_nTimeStampSinceLastBatteryvoltage + 5000 < g_pTimer->TimeSinceStart()) {
 		g_pKnowledgeBase->SetCurrentBatteryVoltage (g_pSeriell->GetBatteryVoltage()); //battery voltage updated
 		m_nTimeStampSinceLastBatteryvoltage = g_pTimer->TimeSinceStart();
+	}
+}
+
+void CBasicFunktions::MatchScans () {
+	if (m_nTimeStampSinceLastScanMatching + 5000 < g_pTimer->TimeSinceStart()) {
+		Localisation.Localize ();
 	}
 }

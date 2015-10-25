@@ -11,6 +11,7 @@
 #include "MotorController.hpp"
 #include "TiM551Driver.hpp"
 #include "Tracer.hpp"
+#include "Localisation.hpp"
 
 #include <iostream>
 
@@ -26,6 +27,7 @@ class CBasicFunktions : public TSingleton<CBasicFunktions>
   void UpdateLaserScanner ();
   void ManageNetwork ();
   void UpdateBatteryVoltage ();
+  void MatchScans ();
 
   private:
   double m_nTimeStampSinceLastCallPhotoSensorsUpdate;
@@ -34,10 +36,12 @@ class CBasicFunktions : public TSingleton<CBasicFunktions>
   double m_nTimeStampSinceLastCallSensorUpdateLaserScanner;
   double m_nTimeStampSinceLastCallNetwork;
   double m_nTimeStampSinceLastBatteryvoltage;
+  double m_nTimeStampSinceLastScanMatching;
   int 	 m_nLoopTicks;
 
   CTiM551Driver     *LaserScanner;
   CNetworkProtocol  NetworkProtocol;
+  CLocalisation Localisation;
 };
 
 #endif
