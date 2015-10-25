@@ -2,15 +2,14 @@
 #define LOCALISATION_HPP
 
 #include "KnowledgeBase.hpp"
-
+#include "Tracer.hpp"
 #include <math.h>
-#include <iostream>
 
 class CLocalisation
 {
 	public:
 		CLocalisation ();
-		void Localise ();
+		void Localize ();
 
 	private:
 		typedef struct {
@@ -18,8 +17,8 @@ class CLocalisation
 			float fY;
 		} ScanDataCartesianCoordinates;
 
-		ScanDataCartesianCoordinates m_CurrentScan[100];
-		ScanDataCartesianCoordinates m_LastScan[100];
+		ScanDataCartesianCoordinates m_CurrentScan[271];
+		ScanDataCartesianCoordinates m_LastScan[271];
 
 		float sind (float fAngle);
 		float cosd (float fAngle);

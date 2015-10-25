@@ -1,7 +1,7 @@
 #include "Localisation.hpp"
 
 CLocalisation::CLocalisation () {
-	for (int i=0;i<100;i++) {
+	for (int i=0;i<271;i++) {
 		m_CurrentScan[i].fX = 0.0f;
 		m_CurrentScan[i].fY = 0.0f;
 		m_LastScan[i].fX = 0.0f;
@@ -9,10 +9,10 @@ CLocalisation::CLocalisation () {
 	}
 }
 
-void CLocalisation::Localise () {
-	ScanDataCartesianCoordinates MatchedPoints[100];
-	ScanDataCartesianCoordinates TranslatedScan[100];
-	for (int i=0;i<100;i++) {
+void CLocalisation::Localize () {
+	ScanDataCartesianCoordinates MatchedPoints[271];
+	ScanDataCartesianCoordinates TranslatedScan[271];
+	for (int i=0;i<271;i++) {
 		MatchedPoints[i].fX = 0.0f;
 		MatchedPoints[i].fY = 0.0f;
 		TranslatedScan[i].fX = 0.0f;
@@ -32,13 +32,13 @@ void CLocalisation::Localise () {
 	float fSYMatchedXNew = 0.0f;
 	float fSYMatchedNew = 0.0f;
 
-	float fXPos = static_cast<float> (g_pKnowledgeBase->OdometryPosition()->nX);
-	float fYPos = static_cast<float> (g_pKnowledgeBase->OdometryPosition()->nY);
+	float fXPos = g_pKnowledgeBase->OdometryPosition()->fX;
+	float fYPos = g_pKnowledgeBase->OdometryPosition()->fY;
 	float fTheta = g_pKnowledgeBase->OdometryPosition()->fTheta;
 
 	bool bWasMatched = false;
 
-	for (int i=0;i<100;i++) {
+	for (int i=0;i<271;i++) {
 		m_LastScan[i].fX = m_CurrentScan[i].fX;
 		m_LastScan[i].fY = m_CurrentScan[i].fY;
 
@@ -48,12 +48,12 @@ void CLocalisation::Localise () {
 
 	for (int l=0;l<10;l++) { //Number of ICP iterations
 
-		for (int i=0;i<100;i++) {
+		for (int i=0;i<271;i++) {
 			TranslatedScan[i].fX = ((cos (fTheta) + (-sin(fTheta))) * m_CurrentScan[i].fX) + fXPos;
 			TranslatedScan[i].fY = ((sin (fTheta) + cos(fTheta)) * m_CurrentScan[i].fY) + fYPos;
 		}
 
-		for (int i=0;i<100;i++) {
+		for (int i=0;i<271;i++) {
 			fDistananceBetweenPointsOld = 1000.0f;
 			for (int j=0;j<100;j++) {
 				fDistananceBetweenPoints = static_cast<float> (sqrt (m_LastScan[j].fX - TranslatedScan[i].fX) + sqrt (m_LastScan[j].fY - TranslatedScan[i].fY));
@@ -64,7 +64,7 @@ void CLocalisation::Localise () {
 					//bWasMatched = true;
 				}
 			}
-			if (fDistananceBetweenPointsOld < 5.0f - (l*0.5)) { /////THRESHOLD
+			if (fDistananceBetweenPointsOld < 30.0f) { /////THRESHOLD
 				//bWasMatched = false;
 				nMatchedPoints ++;
 				fSummOfError += fDistananceBetweenPointsOld;
@@ -86,10 +86,10 @@ void CLocalisation::Localise () {
 		fXPos = (fSummOfMatchedXMatchedScan - (cos(fTheta)*fSummOfMatchedXNewScann) + (sin(fTheta)*fSummOfMatchedYNewScan)) / nMatchedPoints;
 		fYPos = (fSummOfMatchedYMatchedScan - (sin(fTheta)*fSummOfMatchedXNewScann) - (cos(fTheta)*fSummOfMatchedYNewScan)) / nMatchedPoints;
 
-		std::cout << "Matched Points: " << nMatchedPoints << std::endl << std::endl; ///DEBUG
-		std::cout << "X: " << fXPos << std::endl; ///DEBUG
-		std::cout << "Y: " << fYPos << std::endl; ///DEBUG
-		std::cout << "Theta: " << fTheta << std::endl; ///DEBUG
+		g_pTracer->Trace (DEBUG, "Matched Points: " + std::to_string(nMatchedPoints));
+		g_pTracer->Trace (DEBUG, "X: " + std::to_string(fXPos));
+		g_pTracer->Trace (DEBUG, "Y: " + std::to_string(fYPos));
+		g_pTracer->Trace (DEBUG, "Theta: " + std::to_string(fTheta) + "\n");
 
 		fDistananceBetweenPointsOld = 0.0f;
 		nMatchedPoints = 0;
@@ -105,17 +105,17 @@ void CLocalisation::Localise () {
 		fSYMatchedNew = 0.0f;
 	}
 
-	g_pKnowledgeBase->LidarPosition()->nX += static_cast<int> (fXPos);
-	g_pKnowledgeBase->LidarPosition()->nY += static_cast<int> (fYPos);
-	g_pKnowledgeBase->LidarPosition()->fTheta = (fTheta + g_pKnowledgeBase->LidarPosition()->fTheta);
+	g_pKnowledgeBase->LidarPosition()->fX = fXPos + g_pKnowledgeBase->LidarPosition()->fX;
+	g_pKnowledgeBase->LidarPosition()->fY = fYPos + g_pKnowledgeBase->LidarPosition()->fY;
+	g_pKnowledgeBase->LidarPosition()->fTheta = fTheta + g_pKnowledgeBase->LidarPosition()->fTheta;
 
 	//std::cout << "X: " << fXPos << std::endl; ///DEBUG
 	//std::cout << "Y: " << fYPos << std::endl; ///DEBUG
 	//std::cout << "Theta: " << fTheta << std::endl; ///DEBUG
 	//std::cout << "Matched Points: " << nMatchedPoints << std::endl << std::endl; ///DEBUG
 
-	g_pKnowledgeBase->OdometryPosition()->nX = 0;
-	g_pKnowledgeBase->OdometryPosition()->nY = 0;
+	g_pKnowledgeBase->OdometryPosition()->fX = 0.0;
+	g_pKnowledgeBase->OdometryPosition()->fY = 0.0;
 	g_pKnowledgeBase->OdometryPosition()->fTheta = 0.0f;
 }
 
