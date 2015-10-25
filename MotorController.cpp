@@ -26,5 +26,6 @@ void CMotorController::UpdateMotors () {
 			m_nControlValue[i] = 0;
 		}
 		g_pSeriell->SetMotorPower (i+1, m_nControlValue[i]);
+		g_pKnowledgeBase->SetCurrentMotorPower (i+1, m_nControlValue[i]);
 	}
 }
