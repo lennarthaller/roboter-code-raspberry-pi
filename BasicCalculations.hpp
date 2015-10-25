@@ -2,7 +2,7 @@
 #define BASICCALCULATIONS_HPP
 
 #include "KnowledgeBase.hpp"
-#include <iostream>
+#include "Tracer.hpp"
 
 #include <math.h>
 
