@@ -11,12 +11,12 @@ class CMedianfilter
 	public:
 	CMedianfilter (int SizeOfFilter, int NumberOfDatapoints);
 	void FilterData (int Data[]);
-	int* GetFilteredData () {return m_nFilteredData;}
+	int GetFilteredData (int i) {return m_nFilteredData[i];}
 
 	private:
 	int m_nSizeOfFilter;
 	int m_nNumberOfDatapoints;
-	int m_nFilteredData[1000];
+	std::vector<int> m_nFilteredData;
 };
 
 #endif
